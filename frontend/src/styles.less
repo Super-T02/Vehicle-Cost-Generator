@@ -1,5 +1,42 @@
+@distance-left: 25px;
+@header-height: 78px;
+
 html, body {
   width: 100%;
   height: 100%;
   margin: 0;
+}
+
+nz-header {
+  position: fixed;
+  width: 100%;
+}
+
+[nz-menu] {
+  line-height: @header-height !important;
+}
+
+nz-content {
+  padding: 0 @distance-left !important;
+  margin-top: @header-height !important;
+}
+
+nz-breadcrumb {
+  margin: 16px 0 !important;
+}
+
+.inner-content {
+  background: #fff;
+  padding: 24px !important;
+  min-height: 380px !important;
+}
+
+.ant-layout-header{
+  padding: 0 @distance-left !important;
+  height: @header-height;
+  background: #ffffff ;
+}
+
+nz-footer {
+  text-align: center;
 }
