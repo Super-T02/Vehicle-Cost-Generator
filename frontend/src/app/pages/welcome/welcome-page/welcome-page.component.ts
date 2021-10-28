@@ -5,7 +5,7 @@ import {ApiService} from "../../../core/services/api.service";
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.css']
+  styleUrls: ['./welcome-page.component.less']
 })
 export class WelcomePageComponent implements OnInit {
 
