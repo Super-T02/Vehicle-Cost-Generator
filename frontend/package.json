@@ -1,5 +1,5 @@
 {
-  "name": "basic-frontend",
+  "name": "vehicle-cost-calculator",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

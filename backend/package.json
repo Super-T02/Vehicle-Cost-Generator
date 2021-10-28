@@ -1,15 +1,15 @@
 {
-  "name": "beispiel",
+  "name": "backend-vehicle-cost-calculator",
   "version": "0.0.1",
-  "description": "Boilerplate Backend",
+  "description": "Backend for the vehicle cost calculator",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon"
   },
   "keywords": [],
-  "author": "Lukas Paffen",
-  "license": "ISC",
+  "author": "Tom Freudenmann",
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
