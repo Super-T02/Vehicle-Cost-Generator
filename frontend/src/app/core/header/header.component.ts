@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
   onResize(): void {
     const innerWidth = window.innerWidth;
 
-    if(innerWidth < 490) {
+    if(innerWidth < 520) {
       this.logo = LOGO_SMALL;
       this.isMobile = true
     }
