@@ -13,8 +13,24 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.actualLogo = "logo";
-    this.logoWidth = 400;
+    this.onResize();
+  }
+
+  onResize(): void {
+    const innerWidth = window.innerWidth;
+
+    if(innerWidth < 550){
+      this.logoWidth = 57;
+      this.actualLogo = 'logo-small';
+    }
+    else if(innerWidth < 1050) {
+      this.logoWidth = 100;
+      this.actualLogo = 'logo-medium';
+    }
+    else {
+      this.actualLogo = 'logo';
+      this.logoWidth = 400;
+    }
   }
 
 }
