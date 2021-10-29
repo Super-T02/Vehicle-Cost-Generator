@@ -16,6 +16,9 @@ export class HeaderComponent implements OnInit {
     this.onResize();
   }
 
+  /**
+   * Handles the logo size
+   */
   onResize(): void {
     const innerWidth = window.innerWidth;
 
