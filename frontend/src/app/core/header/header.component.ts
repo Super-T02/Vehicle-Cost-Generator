@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Svg} from "../../models/svg.model";
+import {LOGO, LOGO_MEDIUM, LOGO_SMALL,} from "./logos";
 
 @Component({
   selector: 'app-header',
@@ -6,8 +8,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
-  logoWidth: number;
-  actualLogo: string;
+  logo: Svg;
 
   constructor() {
   }
@@ -22,18 +23,9 @@ export class HeaderComponent implements OnInit {
   onResize(): void {
     const innerWidth = window.innerWidth;
 
-    if(innerWidth < 550){
-      this.logoWidth = 57;
-      this.actualLogo = 'logo-small';
-    }
-    else if(innerWidth < 1050) {
-      this.logoWidth = 100;
-      this.actualLogo = 'logo-medium';
-    }
-    else {
-      this.actualLogo = 'logo';
-      this.logoWidth = 400;
-    }
+    if(innerWidth < 490) this.logo = LOGO_SMALL;
+    else if(innerWidth < 1024) this.logo = LOGO_MEDIUM;
+    else this.logo = LOGO;
   }
 
 }
