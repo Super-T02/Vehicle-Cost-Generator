@@ -17,6 +17,7 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzLayoutModule} from "ng-zorro-antd/layout";
 import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
 import {NzMenuModule} from "ng-zorro-antd/menu";
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 registerLocaleData(de);
 
@@ -37,7 +38,8 @@ registerLocaleData(de);
     NzDividerModule,
     NzLayoutModule,
     NzBreadCrumbModule,
-    NzMenuModule
+    NzMenuModule,
+    NzIconModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: de_DE }],
   bootstrap: [AppComponent]

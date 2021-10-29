@@ -9,6 +9,7 @@ import {LOGO, LOGO_MEDIUM, LOGO_SMALL,} from "./logos";
 })
 export class HeaderComponent implements OnInit {
   logo: Svg;
+  isMobile: boolean;
 
   constructor() {
   }
@@ -23,9 +24,18 @@ export class HeaderComponent implements OnInit {
   onResize(): void {
     const innerWidth = window.innerWidth;
 
-    if(innerWidth < 490) this.logo = LOGO_SMALL;
-    else if(innerWidth < 1024) this.logo = LOGO_MEDIUM;
-    else this.logo = LOGO;
+    if(innerWidth < 490) {
+      this.logo = LOGO_SMALL;
+      this.isMobile = true
+    }
+    else if(innerWidth < 1024) {
+      this.logo = LOGO_MEDIUM;
+      this.isMobile = false;
+    }
+    else {
+      this.logo = LOGO;
+      this.isMobile = false;
+    }
   }
 
 }

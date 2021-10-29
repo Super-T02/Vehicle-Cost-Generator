@@ -1,12 +1,28 @@
 <nz-header (window:resize)="onResize()">
+
   <img class="logo"
        src="assets/{{this.logo.name}}.svg"
        alt="Vehicle Cost Calculator Logo"
        width="{{this.logo.width}}"
+       routerLink=""
   />
+
   <ul nz-menu nzMode="horizontal">
-    <li nz-menu-item>nav 1</li>
-    <li nz-menu-item>nav 2</li>
-    <li nz-menu-item>nav 3</li>
+
+    <li nz-menu-item routerLink="">
+      <i nz-icon [nzType]="'home'" [nzTheme]="'outline'"></i>
+      <span *ngIf="!isMobile">HOME</span>
+    </li>
+
+    <li nz-menu-item routerLink="/overview">
+      <i nz-icon [nzType]="'fund-view'" [nzTheme]="'outline'"></i>
+      <span *ngIf="!isMobile">OVERVIEW</span>
+    </li>
+
+    <li nz-menu-item routerLink="/user">
+      <i nz-icon [nzType]="'user'" [nzTheme]="'outline'"></i>
+      <span *ngIf="!isMobile">USER</span>
+    </li>
   </ul>
+
 </nz-header>
