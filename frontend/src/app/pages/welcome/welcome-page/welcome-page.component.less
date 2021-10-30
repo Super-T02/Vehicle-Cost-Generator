@@ -1,6 +1,24 @@
 @import "~ng-zorro-antd/ng-zorro-antd.less";
 
+@inner-grid-padding: 30px;
+
 nz-breadcrumb-item:hover{
   color: @primary-color !important;
   cursor: pointer;
+}
+
+.mainBanner{
+  width: 100%;
+}
+
+.grid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fill, auto) ;
+}
+
+#advantages{
+  grid-column: span 2;
+  padding: @inner-grid-padding;
 }
