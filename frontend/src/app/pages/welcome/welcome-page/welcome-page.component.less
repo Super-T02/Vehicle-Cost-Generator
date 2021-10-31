@@ -1,6 +1,6 @@
 @import "~ng-zorro-antd/ng-zorro-antd.less";
 
-@inner-grid-padding: 30px;
+@inner-grid-padding: 50px;
 
 nz-breadcrumb-item:hover{
   color: @primary-color !important;
@@ -9,6 +9,12 @@ nz-breadcrumb-item:hover{
 
 .mainBanner{
   width: 100%;
+  max-width: none !important;
+}
+
+nz-divider{
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .grid{
@@ -16,9 +22,69 @@ nz-breadcrumb-item:hover{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(auto-fill, auto) ;
+  gap: @inner-grid-padding 0;
+
+  font-size: 1.3rem;
+
+  & >div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &.flex-end{
+      align-items: flex-end;
+    }
+
+    &#advantages{
+      grid-column: span 3;
+      padding: @inner-grid-padding;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, auto);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 1.8rem;
+
+
+      &>div{
+        padding: 25px 25px 0;
+      }
+    }
+
+    ol{
+      padding-left: 23px;
+    }
+  }
+
+  h1{
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  img{
+    width: 100%;
+    max-width: 500px;
+  }
 }
 
-#advantages{
+.banner{
+  grid-column: span 3;
+}
+
+.text{
   grid-column: span 2;
   padding: @inner-grid-padding;
+}
+
+
+
+.horizontal-divider {
+  border-right: 1px solid black;
+  height: 90%;
+}
+
+.background{
+  background: rgba(24, 144, 255, 0.35);
 }
