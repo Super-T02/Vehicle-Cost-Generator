@@ -41,7 +41,7 @@ nz-divider{
       padding: @inner-grid-padding;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, auto);
+      grid-template-rows: repeat(auto-fill, auto);
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -101,4 +101,51 @@ app-singup{
   align-items: center;
   justify-content: center;
   flex-direction: row !important;
+}
+
+
+@media screen and (max-width: 1024px) {
+  .grid{
+    #advantages{
+      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-rows: repeat(auto-fill, auto) !important;
+    }
+
+    #track{
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    #design{
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    #charts-icon, #free-icon{
+      padding-top: @inner-grid-padding;
+    }
+
+    #charts{
+      grid-column: 1;
+      grid-row: 4;
+    }
+
+    #free{
+      grid-column: 2;
+      grid-row: 4;
+    }
+  }
+
+  .signup{
+    flex-direction: column !important;
+  }
+
+  .banner, .text, #advantages, .signup, .pic{
+    grid-column: span 3;
+  }
+
+  .pic{
+    grid-row: 4;
+  }
+
 }

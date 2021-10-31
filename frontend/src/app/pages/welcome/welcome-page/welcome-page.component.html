@@ -14,15 +14,15 @@
     </div>
 
     <div id="advantages" class="background">
-      <i nz-icon nzType="dashboard" nzTheme="outline"></i>
-      <i nz-icon nzType="picture" nzTheme="outline"></i>
-      <i nz-icon nzType="area-chart" nzTheme="outline"></i>
-      <i nz-icon nzType="euro" nzTheme="outline"></i>
+      <i id="track-icon" nz-icon nzType="dashboard" nzTheme="outline"></i>
+      <i id="design-icon" nz-icon nzType="picture" nzTheme="outline"></i>
+      <i id="charts-icon" nz-icon nzType="area-chart" nzTheme="outline"></i>
+      <i id="free-icon" nz-icon nzType="euro" nzTheme="outline"></i>
 
-      <div>Track your costs every where</div>
-      <div>Modern Design</div>
-      <div>User friendly charts and tables</div>
-      <div>For Free!</div>
+      <div id="track">Track your costs every where</div>
+      <div id="design">Modern Design</div>
+      <div id="charts">User friendly charts and tables</div>
+      <div id="free">For Free!</div>
     </div>
 
     <div class="pic">
@@ -43,7 +43,7 @@
         Haven't signup yet?
         Signup now!
       </h1>
-      <div class="horizontal-divider"></div>
+      <div *ngIf="this.resizeService.innerWidth > this.medium" class="horizontal-divider"></div>
       <app-singup></app-singup>
 
     </div>
