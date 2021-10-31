@@ -1,0 +1,77 @@
+<form [formGroup]="signup" (ngSubmit)="onSubmit()" nz-form >
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'name'" nzRequired>Username</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The name is already used!">
+      <input
+        nz-input
+        id="name"
+        type="text"
+        formControlName="nickname"
+        placeholder="Username"
+        required
+      >
+    </nz-form-control>
+
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'email'" nzRequired>Email</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This isn't a valid E-Mail">
+      <input
+        nz-input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="E-Mail"
+        required
+      >
+    </nz-form-control>
+
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'pass'" nzRequired>Password</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24"
+      nzErrorTip="The Password must contain:
+        At least one digit [0-9]
+        At least one lowercase character [a-z]
+        At least one uppercase character [A-Z]
+        At least one special character [*.!@#$%^&(){}[]:;<>,.?/~_+-=|\]
+        At least 8 characters in length, but no more than 32."
+    >
+      <input
+        nz-input
+        id="pass"
+        type="password"
+        formControlName="password"
+        placeholder="Password"
+        required
+      >
+    </nz-form-control>
+
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'passwordCheck'" nzRequired>Repeat Password</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The passwords aren't the same!">
+      <input
+        nz-input
+        id="passwordCheck"
+        type="password"
+        formControlName="passwordCheck"
+        placeholder="Repeat Password"
+        required
+      >
+    </nz-form-control>
+
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button [nzType]="'primary'" [disabled]="!signup.valid">Signup</button>
+    </nz-form-control>
+  </nz-form-item>
+
+
+</form>
+
