@@ -1,6 +1,6 @@
 <nz-header>
 
-  <img class="logo"
+  <img *ngIf="this.resizeService.innerWidth > breakPoints.extraSmall" class="logo"
        src="assets/{{this.resizeService.logo.name}}.svg"
        alt="Vehicle Cost Calculator Logo"
        width="{{this.resizeService.logo.width}}"

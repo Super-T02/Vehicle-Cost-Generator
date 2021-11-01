@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {LOGO, LOGO_MEDIUM, LOGO_SMALL} from "../header/logos";
 import {Svg} from "../../models/svg.model";
 import {MEDIA_BREAKPOINTS} from "../../../environments/constants";
+import {BANNER, BANNER_SMALL} from "../../pages/welcome/welcome-page/banners";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class ResizeService {
   innerHeight: number;
 
   logo: Svg;
-  isMobile: boolean
+  isMobile: boolean;
+
+  banner: Svg;
 
   constructor() {
     this.onResize();
@@ -24,23 +27,26 @@ export class ResizeService {
     this.innerWidth = window.innerWidth;
     this.innerHeight= window.innerHeight;
 
-    this.actualizeLogo();
+    this.actualizePictures();
   }
 
   /**
-   * Get the actual logo for the screen size
+   * Get the actual pictures for the screen size
    */
-  actualizeLogo(): void{
+  actualizePictures(): void{
     if(innerWidth < MEDIA_BREAKPOINTS.small) {
       this.logo =  LOGO_SMALL;
+      this.banner = BANNER_SMALL;
       this.isMobile = true;
     }
     else if(innerWidth < MEDIA_BREAKPOINTS.medium) {
       this.logo =  LOGO_MEDIUM;
+      this.banner = BANNER;
       this.isMobile = false;
     }
     else {
       this.logo =  LOGO;
+      this.banner = BANNER;
       this.isMobile = false;
     }
   }

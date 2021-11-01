@@ -9,12 +9,11 @@ import {MEDIA_BREAKPOINTS} from "../../../../environments/constants";
 })
 export class WelcomePageComponent implements OnInit {
 
-  medium: number;
+  breakPoints = MEDIA_BREAKPOINTS;
 
   constructor(public resizeService: ResizeService) {
   }
 
   ngOnInit(): void {
-    this.medium = MEDIA_BREAKPOINTS.medium;
   }
 }

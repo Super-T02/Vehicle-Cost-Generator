@@ -8,7 +8,7 @@
     <div class="banner">
       <img
         class="mainBanner"
-        src="assets/mainBanner.svg"
+        src="assets/{{this.resizeService.banner.name}}.svg"
         alt="banner"
       >
     </div>
@@ -25,7 +25,7 @@
       <div id="free">For Free!</div>
     </div>
 
-    <div class="pic">
+    <div *ngIf="this.resizeService.innerWidth > this.breakPoints.small" class="pic">
       <img
         src="assets/stacks.svg"
         alt="Dashboard picture"
@@ -43,7 +43,7 @@
         Haven't signup yet?
         Signup now!
       </h1>
-      <div *ngIf="this.resizeService.innerWidth > this.medium" class="horizontal-divider"></div>
+      <div *ngIf="this.resizeService.innerWidth > this.breakPoints.medium" class="horizontal-divider"></div>
       <app-singup></app-singup>
 
     </div>
