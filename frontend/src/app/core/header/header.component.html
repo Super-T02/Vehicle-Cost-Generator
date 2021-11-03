@@ -9,18 +9,45 @@
 
   <ul nz-menu nzMode="horizontal">
 
-    <li nz-menu-item routerLink="">
-      <i nz-icon [nzType]="'home'" [nzTheme]="'outline'"></i>
+    <li nz-menu-item
+        routerLink=""
+        nz-tooltip
+        [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
+        nzTooltipTitle="Home"
+        nzTooltipPlacement="bottom"
+    >
+      <i nz-icon
+         [nzType]="'home'"
+         [nzTheme]="'outline'"
+      ></i>
       <span *ngIf="!this.resizeService.isMobile">HOME</span>
     </li>
 
-    <li nz-menu-item routerLink="/overview">
-      <i nz-icon [nzType]="'fund-view'" [nzTheme]="'outline'"></i>
+    <li nz-menu-item
+        routerLink="/overview"
+        nz-tooltip
+        [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
+        nzTooltipTitle="Overview"
+        nzTooltipPlacement="bottom"
+    >
+      <i nz-icon
+         [nzType]="'fund-view'"
+         [nzTheme]="'outline'"
+      ></i>
       <span *ngIf="!this.resizeService.isMobile">OVERVIEW</span>
     </li>
 
-    <li nz-menu-item routerLink="/user">
-      <i nz-icon [nzType]="'user'" [nzTheme]="'outline'"></i>
+    <li nz-menu-item
+        routerLink="/user"
+        nz-tooltip
+        [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
+        nzTooltipTitle="User"
+        nzTooltipPlacement="bottom"
+    >
+      <i nz-icon
+         [nzType]="'user'"
+         [nzTheme]="'outline'"
+      ></i>
       <span *ngIf="!this.resizeService.isMobile">USER</span>
     </li>
   </ul>

@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Svg} from "../../models/svg.model";
-import {LOGO, LOGO_MEDIUM, LOGO_SMALL,} from "./logos";
 import {ResizeService} from "../services/resize.service";
 import {MEDIA_BREAKPOINTS} from "../../../environments/constants";
 
