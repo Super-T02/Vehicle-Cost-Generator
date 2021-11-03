@@ -18,6 +18,7 @@ import {NzLayoutModule} from "ng-zorro-antd/layout";
 import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
 import {NzMenuModule} from "ng-zorro-antd/menu";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzButtonModule} from "ng-zorro-antd/button";
 
 registerLocaleData(de);
 
@@ -28,19 +29,20 @@ registerLocaleData(de);
     FooterComponent,
     PageNotFoundComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    NzDividerModule,
-    NzLayoutModule,
-    NzBreadCrumbModule,
-    NzMenuModule,
-    NzIconModule,
-  ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        NzDividerModule,
+        NzLayoutModule,
+        NzBreadCrumbModule,
+        NzMenuModule,
+        NzIconModule,
+        NzButtonModule,
+    ],
   providers: [{ provide: NZ_I18N, useValue: de_DE }],
   bootstrap: [AppComponent]
 })
