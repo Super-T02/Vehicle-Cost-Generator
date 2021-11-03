@@ -26,7 +26,7 @@ export class SignupComponent implements OnInit {
   /**
    * Defines what happens after the submit of the Form
    */
-  onSubmit() {
+  onSubmit(): void {
     console.log("submitted!");
     console.log(this.signup);
 

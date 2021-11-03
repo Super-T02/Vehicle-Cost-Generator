@@ -6,11 +6,13 @@ import {NzFormModule} from "ng-zorro-antd/form";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {NzButtonModule} from "ng-zorro-antd/button";
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
   declarations: [
-    SignupComponent
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -21,11 +23,12 @@ import {NzButtonModule} from "ng-zorro-antd/button";
     NzCheckboxModule,
     NzButtonModule
   ],
-  exports: [
-    CommonModule,
-    FormsModule,
-    SignupComponent
-  ]
+    exports: [
+        CommonModule,
+        FormsModule,
+        SignupComponent,
+        LoginComponent
+    ]
 })
 export class SharedModule {
 }

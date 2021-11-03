@@ -20,6 +20,7 @@ import {NzMenuModule} from "ng-zorro-antd/menu";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
+import {SharedModule} from "./shared/shared.module";
 
 registerLocaleData(de);
 
@@ -44,6 +45,7 @@ registerLocaleData(de);
         NzIconModule,
         NzButtonModule,
         NzToolTipModule,
+        SharedModule,
     ],
   providers: [{ provide: NZ_I18N, useValue: de_DE }],
   bootstrap: [AppComponent]

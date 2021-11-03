@@ -1,0 +1,33 @@
+<form [formGroup]="login" (ngSubmit)="onSubmit()" nz-form>
+  <nz-form-item>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Username should not be empty!">
+      <input
+        nz-input
+        id="username"
+        type="text"
+        formControlName="nickname"
+        placeholder="Username"
+        required
+      >
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Password should not be empty!">
+      <input
+        nz-input
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="Password"
+        required
+      >
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button [nzType]="'primary'" [disabled]="!login.valid">Login</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
