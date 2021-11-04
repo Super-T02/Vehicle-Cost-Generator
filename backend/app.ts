@@ -1,8 +1,8 @@
 import express from 'express';
 import path from 'path';
 import { apiRouter } from './api'
+import dotenv from 'dotenv';
 
-const dotenv = require('dotenv');
 dotenv.config({ path: './config/app.env' });
 
 const app = express();
