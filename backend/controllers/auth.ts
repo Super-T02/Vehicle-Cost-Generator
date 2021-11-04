@@ -1,6 +1,5 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 
 const router = express.Router();
 
@@ -17,7 +16,6 @@ const users = [
         role: 'member'
     }
 ];
-
 
 router.post('/', (req, res) => {
 
