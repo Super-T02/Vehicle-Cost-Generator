@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post('/', (req: express.Request, res: express.Response) => {
 
-    // TODO: outsourcing login
+    // TODO: outsourcing login as middleware
     const {username, password} = req.body;
     let actualUser: UserToken;
 
