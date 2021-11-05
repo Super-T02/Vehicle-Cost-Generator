@@ -1,6 +1,6 @@
 import express from "express";
 import jwt, {Jwt, Secret} from "jsonwebtoken";
-import User from "./User";
+import User from "../models/User";
 import {UserToken} from "./interfaces/UserToken";
 
 export default class AuthUtil {

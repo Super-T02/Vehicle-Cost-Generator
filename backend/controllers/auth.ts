@@ -1,26 +1,10 @@
 import express from "express";
 import jwt, {Jwt, JwtPayload, Secret, VerifyErrors} from "jsonwebtoken";
-import User from "../util/User";
+import User from "../models/User";
 import AuthUtil from "../util/AuthUtil";
 import {UserToken} from "../util/interfaces/UserToken";
 
 const router = express.Router();
-
-// TODO: should be replaced with the database
-const users: User[] = [
-    {
-        id: '1',
-        username: 'tom',
-        password: 'password123admin',
-        role: 'admin'
-    },
-    {
-        id: '2',
-        username: 'shirin',
-        password: 'password123member',
-        role: 'member'
-    }
-];
 
 router.post('/', (req: express.Request, res: express.Response) => {
 
