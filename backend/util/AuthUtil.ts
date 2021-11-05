@@ -63,7 +63,7 @@ export default class AuthUtil {
         }
 
         const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET as string);
-        this.refreshTokens.push(refreshToken);
+        AuthUtil.refreshTokens.push(refreshToken);
 
         return refreshToken;
     }

@@ -3,6 +3,7 @@ import jwt, {Jwt, JwtPayload, Secret, VerifyErrors} from "jsonwebtoken";
 import User from "../models/User";
 import AuthUtil from "../util/AuthUtil";
 import {UserToken} from "../util/interfaces/UserToken";
+import UserUtil from "../util/UserUtil";
 
 const router = express.Router();
 
@@ -10,26 +11,35 @@ router.post('/', (req: express.Request, res: express.Response) => {
 
     // TODO: outsourcing login
     const {username, password} = req.body;
+    let actualUser: UserToken;
 
-    const actualUser: UserToken = users.find(user => {
-       return user.username === username
-           && user.password === password;
+
+    UserUtil.login({username: username, password: password}, (err, user) => {
+        if (err) {
+            res.sendStatus(500);
+        }
+        else
+        {
+            actualUser = {
+                username: user.username,
+                role: user.role
+            };
+
+            if (!actualUser) {
+                res.status(404).json({
+                    err: 'Password or Username doesn\'t match',
+                })
+
+            }
+            else {
+                // Send JWT
+                res.status(200).json({
+                    accessToken: AuthUtil.generateAccessToken(actualUser),
+                    refreshToken: AuthUtil.generateRefreshToken(actualUser)
+                });
+            }
+        }
     });
-
-    if (!actualUser) {
-        res.status(404).json({
-            err: 'Password or Username doesn\'t match',
-        })
-
-    }
-    else {
-        // Send JWT
-        res.status(200).json({
-            accessToken: AuthUtil.generateAccessToken(actualUser),
-            refreshToken: AuthUtil.generateRefreshToken(actualUser)
-        });
-    }
-
 });
 
 router.post('/token', (req: express.Request, res: express.Response) => {

@@ -23,11 +23,9 @@ export default class User implements UserToken{
      * @param callback
      */
     public addToDB(callback: (err: Error, user: any) => any): void{
-        const doc = { user: this };
+        console.log(this);
 
-        console.log(doc);
-
-        db.user.insert(doc, (err: Error, newDoc: {user: any}) => {
+        db.user.insert(this as any, (err: Error, newDoc: {user: any}) => {
             if (err) {
                 callback(err, null);
             }
