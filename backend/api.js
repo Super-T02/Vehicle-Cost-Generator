@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const echoController = require('./controllers/echo');
 const authController = require('./controllers/auth');
 const userController = require('./controllers/user');
 const logger = require('./util/logger');
@@ -11,7 +10,6 @@ router.use(cors());
 router.use(express.json());
 router.use(logger.logToConsole);
 
-router.use('/echo', echoController);
 router.use('/auth', authController);
 router.use('/user', userController);
 

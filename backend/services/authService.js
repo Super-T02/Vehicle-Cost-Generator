@@ -38,6 +38,45 @@ exports.generateRefreshToken = (user, callback) => {
 };
 
 /**
+ * Removes a refresh token
+ * @param token
+ * @param callback
+ */
+exports.removeRefreshToken = (token, callback) => {
+	tokenModel.removeRefreshToken(token, (err) => {
+		if (err) {
+			callback(err);
+		} else {
+			callback(null);
+		}
+	});
+};
+
+/**
+ * Middleware for checking if there is a valid refresh token
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.checkRefreshToken = (req, res, next) => {
+	const { token } = req.body;
+
+	if (!token) {
+		res.sendStatus(401);
+	} else {
+		tokenModel.checkRefreshToken(token, (err, data) => {
+			if (err) {
+				res.sendStatus(500);
+			} else if (data.length === 0) {
+				res.sendStatus(403);
+			} else {
+				next();
+			}
+		});
+	}
+};
+
+/**
  * Middleware for authenticate a user.
  * After successful authentication the user data in the jwt payload will be
  * saved in the Request body in the variable 'user' ==> (req.body.user).

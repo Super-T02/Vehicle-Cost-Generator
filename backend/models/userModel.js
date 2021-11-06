@@ -1,6 +1,5 @@
 const db = require('./db.js');
 const uuid = require('uuid');
-const {use} = require('express/lib/router');
 
 /**
  * Adds the given User to the database
@@ -15,8 +14,6 @@ exports.createUser = (userData, callback) => {
 		password: userData.password,
 		role: userData.role
 	};
-
-	console.log(user); // TODO: needs to be removed
 
 	db.user.insert(user, (err, newUser) => {
 		if (err) {
@@ -34,10 +31,7 @@ exports.createUser = (userData, callback) => {
  */
 exports.checkLogin = (loginData, callback) => {
 
-	const user = db.user.find(u => {
-		return u.username === loginData.username && u.password === loginData.password;
-	}, (err, data) => {
-
+	db.user.find({username: loginData.username, password: loginData.password}, (err, data) => {
 		if (err) {
 			callback(err, null);
 		} else {

@@ -1,12 +1,12 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
-const tokenModel = require('../models/tokenModel');
-const { generateAccessToken, generateRefreshToken } = require('../services/authService');
+const authService = require('../services/authService');
+const userService = require('../services/userService');
 
 const router = express.Router();
 
-router.post('/login', (req, res) => {
+router.post('/login', userService.checkLoginData, (req, res) => {
 	const { username, password } = req.body;
 	let actualUser;
 
@@ -19,14 +19,14 @@ router.post('/login', (req, res) => {
 				role: user.role
 			};
 
-			if (!actualUser) {
+			if (user.length === 0) {
 				res.status(404).json({
 					err: 'Password or Username doesn\'t match'
 				});
 			} else {
-				const accessToken = generateAccessToken(actualUser);
+				const accessToken = authService.generateAccessToken(actualUser);
 
-				generateRefreshToken(actualUser, (err, refreshToken) => {
+				authService.generateRefreshToken(actualUser, (err, refreshToken) => {
 					if (err) {
 						res.sendStatus(500);
 					} else {
@@ -41,43 +41,36 @@ router.post('/login', (req, res) => {
 	});
 });
 
-router.post('/token', (req, res) => {
+router.post('/token', authService.checkRefreshToken, (req, res) => {
 	const { token } = req.body;
 
-	if (!token) {
-		res.sendStatus(401);
-	} else {
-		tokenModel.checkRefreshToken(token, (err, data) => {
-			if (err) {
-				res.sendStatus(500);
-			} else if (!data) {
-				res.sendStatus(403);
-			} else {
-				jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-					if (err) {
-						res.sendStatus(403);
-					} else {
-						const actualUser = {
-							username: user.username,
-							role: user.role
-						};
+	jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+		if (err) {
+			res.sendStatus(403);
+		} else {
+			const actualUser = {
+				username: user.username,
+				role: user.role
+			};
 
-						res.json({
-							accessToken: generateAccessToken(actualUser)
-						});
-					}
-				});
-			}
-		});
-	}
+			res.json({
+				accessToken: authService.generateAccessToken(actualUser)
+			});
+		}
+	});
 });
 
-router.post('/logout', (req, res) => {
-	const { token } = req.body;
-	// TODO: function for removing refreshtoken from db
+router.post('/logout', authService.checkRefreshToken, (req, res) => {
+	const {token} = req.body;
 
-	res.status(200).json({
-		message: 'Logout successful'
+	authService.removeRefreshToken(token, (err) => {
+		if (err) {
+			res.sendStatus(500);
+		} else {
+			res.status(200).json({
+				message: 'Logout successful'
+			});
+		}
 	});
 });
 

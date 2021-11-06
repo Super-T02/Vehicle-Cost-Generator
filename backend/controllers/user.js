@@ -5,7 +5,7 @@ const router = express.Router();
 router.post('/', (req, res) => {
 	// TODO: prove body
 
-	userService.addUser(req, res, (err, data) => {
+	userService.addUser(req, (err, data) => {
 		if (err) {
 			res.sendStatus(500);
 		} else {
