@@ -6,21 +6,21 @@ const db = require('./db');
  * @param callback
  */
 exports.saveRefreshToken = (refreshToken, callback) => {
-    db.token.insert({refreshToken: refreshToken}, (err, token) => {
-        if (err) {
-            callback(err, null);
-        } else {
-            callback(null, token.refreshToken);
-        }
-    });
+	db.token.insert({refreshToken: refreshToken}, (err, token) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, token.refreshToken);
+		}
+	});
 };
 
 exports.checkRefreshToken = (refreshToken, callback) => {
-    db.token.find(t => t.refreshToken === refreshToken, (err, data) => {
-        if (err) {
-            callback(err, null);
-        } else {
-            callback(null, data);
-        }
-    });
+	db.token.find(t => t.refreshToken === refreshToken, (err, data) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, data);
+		}
+	});
 };

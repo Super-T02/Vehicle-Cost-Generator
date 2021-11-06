@@ -5,7 +5,7 @@ import {CreateEchoInput, Echo} from '../../models/echo.model';
 import {catchError} from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class ApiService {
 
@@ -15,37 +15,37 @@ export class ApiService {
   }
 
   createEcho(echo: CreateEchoInput): Observable<Echo> {
-    return this.http.post<Echo>(
-      `${this.baseUrl}/echo`,
-      echo
-    ).pipe(
-      catchError((err) => {
-        console.log('In Service:', err);
-        return throwError(err);
-      })
-    );
+  	return this.http.post<Echo>(
+  		`${this.baseUrl}/echo`,
+  		echo
+  	).pipe(
+  		catchError((err) => {
+  			console.log('In Service:', err);
+  			return throwError(err);
+  		})
+  	);
   }
 
   doError(): Observable<Echo> {
-    return this.http.post<Echo>(
-      `${this.baseUrl}/echo`,
-      {}
-    ).pipe(
-      catchError((err) => {
-        console.log('In Service:', err);
-        return throwError(err);
-      })
-    );
+  	return this.http.post<Echo>(
+  		`${this.baseUrl}/echo`,
+  		{}
+  	).pipe(
+  		catchError((err) => {
+  			console.log('In Service:', err);
+  			return throwError(err);
+  		})
+  	);
   }
 
   getEchos(contains?: string): Observable<Echo[]> {
-    return this.http.get<Echo[]>(
-      `${this.baseUrl}/echo`,
-      {
-        params: contains ? {
-          contains
-        } : undefined
-      }
-    );
+  	return this.http.get<Echo[]>(
+  		`${this.baseUrl}/echo`,
+  		{
+  			params: contains ? {
+  				contains
+  			} : undefined
+  		}
+  	);
   }
 }

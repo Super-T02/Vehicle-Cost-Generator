@@ -20,6 +20,7 @@
   },
   "type": "commonjs",
   "devDependencies": {
+    "eslint": "^7.32.0",
     "nodemon": "^2.0.14"
   }
 }
