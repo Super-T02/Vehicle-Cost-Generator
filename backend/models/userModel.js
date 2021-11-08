@@ -7,15 +7,9 @@ const uuid = require('uuid');
  * @param callback
  */
 exports.createUser = (userData, callback) => {
-	const user = {
-		id: uuid.v1(),
-		username: userData.username,
-		email: userData.email,
-		password: userData.password,
-		role: userData.role
-	};
+	userData.id = uuid.v1();
 
-	db.user.insert(user, (err, newUser) => {
+	db.user.insert(userData, (err, newUser) => {
 		if (err) {
 			callback(err, null);
 		} else {
@@ -39,3 +33,4 @@ exports.checkLogin = (loginData, callback) => {
 		}
 	});
 };
+

@@ -2,10 +2,9 @@ const express = require('express');
 const userService = require('../services/userService');
 const router = express.Router();
 
-router.post('/', (req, res) => {
-	// TODO: prove body
+router.post('/', userService.checkNewUser, (req, res) => {
 
-	userService.addUser(req, (err, data) => {
+	userService.addUser(req.body.newUser, (err, data) => {
 		if (err) {
 			res.sendStatus(500);
 		} else {
