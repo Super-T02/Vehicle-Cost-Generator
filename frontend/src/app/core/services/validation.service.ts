@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import {FormControl} from "@angular/forms";
+import {FormControl} from '@angular/forms';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class ValidationService {
 
-  constructor() { }
+	constructor() { }
 
-  // TODO: Service for checking existing userNames
-  isNameUsed(name: string): boolean{
-    return false;
-  }
+	// TODO: Service for checking existing userNames
+	isNameUsed(name: string): boolean{
+		return false;
+	}
 }

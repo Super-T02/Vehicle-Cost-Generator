@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ResizeService} from "../services/resize.service";
-import {MEDIA_BREAKPOINTS} from "../../../environments/constants";
+import {ResizeService} from '../services/resize.service';
+import {MEDIA_BREAKPOINTS} from '../../../environments/constants';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.less']
+	selector: 'app-header',
+	templateUrl: './header.component.html',
+	styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
 
