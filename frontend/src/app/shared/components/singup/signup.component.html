@@ -1,4 +1,8 @@
-<form [formGroup]="signup" (ngSubmit)="onSubmit()" nz-form >
+<form
+  *ngIf="!success"
+  [formGroup]="signup"
+  (ngSubmit)="onSubmit()"
+  nz-form >
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="'name'" nzRequired>Username</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The name is already used!">
@@ -6,7 +10,7 @@
         nz-input
         id="name"
         type="text"
-        formControlName="nickname"
+        formControlName="username"
         placeholder="Username"
         required
       >
@@ -74,4 +78,15 @@
 
 
 </form>
+
+<nz-result
+  *ngIf="success"
+  nzStatus="success"
+  nzTitle="Successfully Signed in!"
+  nzSubTitle="Welcome to the Vehicle Cost Generator"
+>
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="/login">Login Now</button>
+  </div>
+</nz-result>
 

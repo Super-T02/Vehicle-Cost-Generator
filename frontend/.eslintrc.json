@@ -35,10 +35,6 @@
             "style": "kebab-case"
           }
         ],
-        "indent": [
-          "error",
-          "tab"
-        ],
         "linebreak-style": [
           "error",
           "windows"

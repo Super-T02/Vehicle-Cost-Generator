@@ -8,7 +8,9 @@ router.post('/', userService.checkNewUser, (req, res) => {
 		if (err) {
 			res.sendStatus(500);
 		} else {
-			res.status(200).json(data);
+			res.status(200).json({
+				message: 'User created successfully'
+			});
 		}
 	});
 });

@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {CreateEchoInput, Echo} from '../../models/echo.model';
+import {Echo} from '../../models/echo.model';
 import {catchError} from 'rxjs/operators';
+import {CreateUserOutput, CreateUserInput} from '../../models/user.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -14,10 +15,14 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
-  createEcho(echo: CreateEchoInput): Observable<Echo> {
-  	return this.http.post<Echo>(
-  		`${this.baseUrl}/echo`,
-  		echo
+  /**
+   * Creates a new User
+   * @param user
+   */
+  createUser(user: CreateUserInput): Observable<CreateUserOutput> {
+  	return this.http.post<CreateUserOutput>(
+  		`${this.baseUrl}/user`,
+  		user
   	).pipe(
   		catchError((err) => {
   			console.log('In Service:', err);

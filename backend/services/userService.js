@@ -36,7 +36,7 @@ exports.checkNewUser = (req, res, next) => {
 		res.status(404).json({
 			message: 'password should be a String'
 		});
-	} else if (!role || role !== 'admin' || role !== 'member') {
+	} else if (!role || (role !== 'admin' && role !== 'member')) {
 		res.status(404).json({
 			message: 'role should be "admin" or "member"'
 		});
