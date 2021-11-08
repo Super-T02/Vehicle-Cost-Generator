@@ -1,42 +1,38 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const userModel = require('../models/userModel');
 const authService = require('../services/authService');
-const userService = require('../services/userService');
 
 const router = express.Router();
 
-router.post('/login', userService.checkLoginData, (req, res) => {
+router.post('/login', authService.checkLoginData, (req, res) => {
 	const { username, password } = req.body;
-	let actualUser;
 
-	userModel.checkLogin({ username: username, password: password }, (err, user) => {
+	authService.login({ username: username, password: password }, (err, user) => {
 		if (err) {
 			res.sendStatus(500);
+		} else if (!user) {
+			res.status(404).json({
+				err: 'Password or Username doesn\'t match'
+			});
 		} else {
-			actualUser = {
+			// Generate the actual user data
+			let actualUser = {
 				username: user.username,
 				role: user.role
 			};
 
-			if (user.length === 0) {
-				res.status(404).json({
-					err: 'Password or Username doesn\'t match'
-				});
-			} else {
-				const accessToken = authService.generateAccessToken(actualUser);
-
-				authService.generateRefreshToken(actualUser, (err, refreshToken) => {
-					if (err) {
-						res.sendStatus(500);
-					} else {
-						res.status(200).json({
-							accessToken: accessToken,
-							refreshToken: refreshToken
-						});
-					}
-				});
-			}
+			// Generate the tokens
+			const accessToken = authService.generateAccessToken(actualUser);
+			authService.generateRefreshToken(actualUser, (err, refreshToken) => {
+				if (err) {
+					res.sendStatus(500);
+				} else {
+					res.status(200).json({
+						accessToken: accessToken,
+						refreshToken: refreshToken
+					});
+				}
+			});
 		}
 	});
 });

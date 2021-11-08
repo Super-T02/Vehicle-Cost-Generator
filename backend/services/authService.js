@@ -1,5 +1,23 @@
 const jwt = require('jsonwebtoken');
 const tokenModel = require('../models/tokenModel');
+const userModel = require('../models/userModel');
+
+/**
+ * Handles the login for a user
+ * @param loginData
+ * @param callback
+ */
+exports.login = (loginData, callback) =>{
+	userModel.checkLogin(loginData, (err, user) => {
+		if (err || user.length > 1) {
+			callback(err, null);
+		} else if (user.length === 0) {
+			callback(null, null);
+		} else {
+			callback(null, user[0]);
+		}
+	});
+};
 
 /**
  * Generates a access token for the given User
@@ -50,6 +68,37 @@ exports.removeRefreshToken = (token, callback) => {
 			callback(null);
 		}
 	});
+};
+
+
+/**
+ * Middleware for checking the body of a login request
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.checkLoginData = (req, res, next) => {
+	const {username, password} = req.body;
+
+	if (!username) {
+		res.status(400).json({
+			message: 'username is empty'
+		});
+	} else if (typeof username != 'string') {
+		res.status(400).json({
+			message: 'username should be a string'
+		});
+	} else if (!password) {
+		res.status(400).json({
+			message: 'password is empty'
+		});
+	} else if (typeof password != 'string') {
+		res.status(400).json({
+			message: 'password should be a string'
+		});
+	} else {
+		next();
+	}
 };
 
 /**
