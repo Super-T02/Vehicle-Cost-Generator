@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -21,6 +21,7 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {SharedModule} from './shared/shared.module';
+import {NzAlertModule} from "ng-zorro-antd/alert";
 
 registerLocaleData(de);
 
@@ -31,23 +32,24 @@ registerLocaleData(de);
 		FooterComponent,
 		PageNotFoundComponent
 	],
-	imports: [
-		CommonModule,
-		BrowserModule,
-		AppRoutingModule,
-		HttpClientModule,
-		FormsModule,
-		BrowserAnimationsModule,
-		NzDividerModule,
-		NzLayoutModule,
-		NzBreadCrumbModule,
-		NzMenuModule,
-		NzIconModule,
-		NzButtonModule,
-		NzToolTipModule,
-		SharedModule,
-	],
-	providers: [{ provide: NZ_I18N, useValue: de_DE }],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        NzDividerModule,
+        NzLayoutModule,
+        NzBreadCrumbModule,
+        NzMenuModule,
+        NzIconModule,
+        NzButtonModule,
+        NzToolTipModule,
+        SharedModule,
+        NzAlertModule,
+    ],
+	providers: [{ provide: NZ_I18N, useValue: de_DE }, {provide: ErrorHandler, useClass: AppComponent}],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

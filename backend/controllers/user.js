@@ -6,9 +6,11 @@ router.post('/', userService.checkNewUser, (req, res) => {
 
 	userService.addUser(req.body.newUser, (err, data) => {
 		if (err) {
-			res.sendStatus(500);
+			res.status(500).json({
+				message: err.message
+			});
 		} else {
-			res.status(200).json({
+			res.status(400).json({
 				message: 'User created successfully'
 			});
 		}

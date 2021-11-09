@@ -1,3 +1,5 @@
+import {ApiError} from './api.model';
+
 export interface CreateUserInput {
   username: string,
   email: string,
@@ -7,5 +9,5 @@ export interface CreateUserInput {
 }
 
 export interface CreateUserOutput {
-  message: string
+  data: string
 }

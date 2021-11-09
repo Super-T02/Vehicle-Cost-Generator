@@ -4,6 +4,9 @@ import {ValidationService} from '../../../core/services/validation.service';
 import {ApiService} from '../../../core/services/api.service';
 import {CreateUserInput, CreateUserOutput} from '../../../models/user.model';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {catchError} from 'rxjs/operators';
+import {Observable, of, throwError} from 'rxjs';
+import {ApiError} from '../../../models/api.model';
 
 @Component({
 	selector: 'app-singup',
@@ -14,6 +17,8 @@ export class SignupComponent implements OnInit {
 
   signup: FormGroup;
   success: boolean;
+  error: ApiError;
+
 
   constructor(private fb: FormBuilder,
               private validateService: ValidationService,
@@ -51,14 +56,16 @@ export class SignupComponent implements OnInit {
   		role: 'member'
   	};
 
-  	this.apiService.createUser(data).subscribe((data: CreateUserOutput) => {
-  		if (data.message) {
-  			this.message.create('success', 'Successfully signed Up !');
+    this.apiService.createUser(data)
+      .subscribe((output: CreateUserOutput) => {
+        console.log(output);
+        this.message.create('success', 'Successfully signed Up!');
         this.signup.reset();
         this.success = true;
         setTimeout(() => this.success = false, 20000);
-  		}
-  	});
+      }, (err) => {
+        this.error = err;
+      });
   }
 
   /**

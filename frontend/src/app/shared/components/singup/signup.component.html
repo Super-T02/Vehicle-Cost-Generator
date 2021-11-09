@@ -1,5 +1,5 @@
 <form
-  *ngIf="!success"
+  *ngIf="!success && !error"
   [formGroup]="signup"
   (ngSubmit)="onSubmit()"
   nz-form >
@@ -88,5 +88,31 @@
   <div nz-result-extra>
     <button nz-button nzType="primary" routerLink="/login">Login Now</button>
   </div>
+
 </nz-result>
 
+<nz-result
+  *ngIf="error"
+  nzTitle="{{error.title}}"
+  nzStatus="error"
+  nzSubTitle="{{error.message}}"
+>
+  <div nz-result-content>
+    <div class="desc">
+      <h4 nz-title>The content you submitted has the following error:</h4>
+      <p nz-paragraph>
+        <i nz-icon nzType="close-circle"></i>
+        Your account has been frozen
+        <a>Thaw immediately &gt;</a>
+      </p>
+      <p nz-paragraph>
+        <i nz-icon nzType="close-circle"></i>
+        Your account is not yet eligible to apply
+        <a>Apply immediately &gt;</a>
+      </p>
+    </div>
+  </div>
+  <div nz-result-extra>
+    <button nz-button nzType="primary" (click)="error = null">Back</button>
+  </div>
+</nz-result>
