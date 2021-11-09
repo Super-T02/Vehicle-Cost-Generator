@@ -40,6 +40,7 @@ export class SignupComponent implements OnInit {
    * Defines what happens after the submit of the Form
    */
   onSubmit(): void {
+    // Validate Form
   	for (const i in this.signup.controls) {
   		if (this.signup.controls.hasOwnProperty(i)) {
   			this.signup.controls[i].markAsDirty();
@@ -56,6 +57,8 @@ export class SignupComponent implements OnInit {
   		role: 'member'
   	};
 
+
+    // Send Request
     this.apiService.createUser(data)
       .subscribe((output: CreateUserOutput) => {
         console.log(output);
