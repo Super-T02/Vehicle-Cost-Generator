@@ -10,7 +10,7 @@ router.post('/', userService.checkNewUser, (req, res) => {
 				message: err.message
 			});
 		} else {
-			res.status(400).json({
+			res.status(201).json({
 				message: 'User created successfully'
 			});
 		}

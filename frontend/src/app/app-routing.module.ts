@@ -11,6 +11,7 @@ const routes: Routes = [
 		path: '404',
 		component: PageNotFoundComponent
 	},
+	{ path: 'signup', loadChildren: () => import('./pages/signup-page/signup-page.module').then(m => m.SignupPageModule) },
 	{
 		path: '**',
 		redirectTo: '404'

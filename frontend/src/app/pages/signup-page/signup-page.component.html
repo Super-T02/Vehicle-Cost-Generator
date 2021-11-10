@@ -1,0 +1,17 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
+  <nz-breadcrumb-item routerLink="/signup">Signup</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="inner-content column-center">
+  <div class="text">
+    <h1>Sign Up Now</h1>
+    Your vehicles are waiting to be tracked!
+  </div>
+  <div class="inner-flex">
+    <img id="signup-pic" src="assets/signup.svg" alt="Sign Up Picture">
+    <div *ngIf="this.resize.innerWidth > this.breakPoints.medium" class="horizontal-divider"></div>
+    <app-signup></app-signup>
+  </div>
+
+</div>

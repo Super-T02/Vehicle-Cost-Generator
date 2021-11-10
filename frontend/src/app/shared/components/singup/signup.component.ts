@@ -1,31 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validator, Validators} from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../../core/services/validation.service';
 import {ApiService} from '../../../core/services/api.service';
 import {CreateUserInput, CreateUserOutput} from '../../../models/user.model';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {catchError} from 'rxjs/operators';
-import {Observable, of, throwError} from 'rxjs';
 import {ApiError} from '../../../models/api.model';
+import {Router} from '@angular/router';
 
 @Component({
-	selector: 'app-singup',
+	selector: 'app-signup',
 	templateUrl: './signup.component.html',
 	styleUrls: ['./signup.component.less']
 })
 export class SignupComponent implements OnInit {
 
+  @Input() description: boolean;
+
+  collNormal: number;
+  collSmall: number;
+  offsetButton: number;
+
   signup: FormGroup;
   success: boolean;
   error: ApiError;
 
-
   constructor(private fb: FormBuilder,
               private validateService: ValidationService,
               private apiService: ApiService,
-              private message: NzMessageService) { }
+              private message: NzMessageService,
+              private router: Router) { }
 
   ngOnInit(): void {
+    // Generate Layout for the from
+    if (this.description == undefined) {
+      this.description = false;
+    } else if (this.description) {
+      this.offsetButton = 6;
+      this.collNormal = 14;
+      this.collSmall = 24;
+    }
+
+    // Define form
   	this.signup = this.fb.group({
   		username: [null, [Validators.required, this.checkUser]],
   		email: [null, [Validators.email, Validators.required]],
@@ -33,6 +48,7 @@ export class SignupComponent implements OnInit {
   		passwordCheck: [null, [Validators.required, this.confirmationValidator]]
   	});
 
+    // Setting defaults
     this.success = false;
   }
 
@@ -65,7 +81,9 @@ export class SignupComponent implements OnInit {
         this.message.create('success', 'Successfully signed Up!');
         this.signup.reset();
         this.success = true;
-        setTimeout(() => this.success = false, 20000);
+
+        // Redirect to Login after 5 seconds
+        setTimeout(() => this.router.navigate(['/login']).then(), 5000);
       }, (err) => {
         this.error = err;
       });
@@ -98,5 +116,6 @@ export class SignupComponent implements OnInit {
   	}
   	return {};
   }
+
 }
 
