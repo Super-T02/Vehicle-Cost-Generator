@@ -31,11 +31,13 @@
 
       </nz-form-control>
     </nz-form-item>
-
     <nz-form-item>
       <nz-form-control>
         <button id="login-btn" nz-button [nzType]="'primary'" [disabled]="!login.valid">Login</button>
       </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      No account yet? - <a routerLink="/signup" style="padding-left: 5px">Signup Now!</a>
     </nz-form-item>
   </form>
 </div>

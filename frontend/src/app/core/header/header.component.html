@@ -37,7 +37,7 @@
       <span *ngIf="!this.resizeService.isMobile">OVERVIEW</span>
     </li>
 
-    <li nz-menu-item
+    <li *ngIf="this.auth.authenticated" nz-menu-item
         routerLink="/user"
         nz-tooltip
         [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
@@ -48,7 +48,21 @@
          [nzType]="'user'"
          [nzTheme]="'outline'"
       ></i>
-      <span *ngIf="!this.resizeService.isMobile">USER</span>
+      <span *ngIf="!this.resizeService.isMobile">{{this.auth.username.toUpperCase()}}</span>
+    </li>
+
+    <li *ngIf="!this.auth.authenticated" nz-menu-item
+        routerLink="/login"
+        nz-tooltip
+        [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
+        nzTooltipTitle="Login"
+        nzTooltipPlacement="bottom"
+    >
+      <i nz-icon
+         [nzType]="'user'"
+         [nzTheme]="'outline'"
+      ></i>
+      <span *ngIf="!this.resizeService.isMobile">LOGIN</span>
     </li>
   </ul>
 

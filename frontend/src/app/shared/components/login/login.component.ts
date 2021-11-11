@@ -4,6 +4,7 @@ import {ValidationService} from '../../../core/services/validation.service';
 import {ApiService} from '../../../core/services/api.service';
 import {Router} from '@angular/router';
 import {LastRouteService} from '../../../core/services/last-route.service';
+import {AuthService} from '../../../core/services/auth.service';
 
 @Component({
 	selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
               private validateService: ValidationService,
               private api: ApiService,
               private router: Router,
-              private lastRoute: LastRouteService) { }
+              private lastRoute: LastRouteService,
+              private auth: AuthService) { }
 
   ngOnInit(): void {
   	this.login = this.fb.group({
@@ -43,6 +45,7 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem('accessToken', output.data.accessToken);
         localStorage.setItem('refreshToken', output.data.refreshToken);
+        this.auth.actualizeName();
 
         // Redirect to last visited page or default dashboard
         this.router.navigate([this.lastRoute.route]).then();

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ApiService} from './api.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -9,9 +8,25 @@ import {Observable} from 'rxjs';
 })
 export class AuthService {
 
+  authenticated: boolean = false;
+  username: string = 'user';
+
   constructor(public jwtHelper: JwtHelperService,
-              private api: ApiService,
-              private message: NzMessageService) { }
+              private api: ApiService) { }
+
+  /**
+   * Gets the actual username from the JWT token and save it into this.username as string
+   */
+  actualizeName(): void {
+    if(localStorage.getItem('accessToken')) {
+      const accessToken = localStorage.getItem('accessToken');
+      const decoded = this.jwtHelper.decodeToken(accessToken);
+
+      decoded.username? this.username = decoded.username: this.username = 'user';
+    } else {
+      this.username = 'user';
+    }
+  }
 
   /**
    * Check whether the access token is expired or not
@@ -22,27 +37,33 @@ export class AuthService {
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (!accessToken || !refreshToken) {
+        this.authenticated = false;
         observer.next(false);
       } else if (this.jwtHelper.isTokenExpired(accessToken)) {
         this.api.getNewToken(refreshToken)
           .subscribe((output) => {
               if (output.data.accessToken) {
-                localStorage.setItem('accessToken', output.data.accessToken);
+                const {accessToken} = output.data;
+
+                localStorage.setItem('accessToken', accessToken);
+                this.actualizeName();
+                this.authenticated = true;
                 observer.next(true);
               } else {
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
-                this.message.error('Something went wrong! Please login again.', {nzDuration: 10000});
+                this.authenticated = false;
                 observer.next(false);
               }
             },
             (err) => {
               localStorage.removeItem('accessToken');
               localStorage.removeItem('refreshToken');
-              this.message.error('Something went wrong! Please login again.', {nzDuration: 10000});
+              this.authenticated = false;
               observer.next(false);
             });
       } else {
+        this.authenticated = true;
         observer.next(true);
       }
     });
