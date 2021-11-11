@@ -5,6 +5,9 @@ import {Echo} from '../../models/echo.model';
 import {catchError, map} from 'rxjs/operators';
 import {CreateUserInput} from '../../models/user.model';
 import {ApiError, ApiOutput, LoginInput} from '../../models/api.model';
+import {Router} from '@angular/router';
+import {LastRouteService} from './last-route.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Injectable({
 	providedIn: 'root'
@@ -15,7 +18,10 @@ export class ApiService {
   private readonly accessToken = localStorage.getItem('accessToken');
   private readonly refreshToken = localStorage.getItem('refreshToken');
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private lastRoute: LastRouteService,
+              private message: NzMessageService) {
   }
 
   /**
@@ -45,8 +51,8 @@ export class ApiService {
           newError.message = 'Please try again later. The source is not ready!';
           break;
         case 403:
-          newError.title = 'Forbidden';
-          newError.message = 'You have not the permission to do this';
+          this.message.error('Please login in first!', {nzDuration: 7000});
+          this.router.navigate(['/login']).then();
           break;
         case 500:
           newError.title = 'Internal Server error';
@@ -104,5 +110,26 @@ export class ApiService {
       }),
   		catchError(this.handleError)
   	);
+  }
+
+  /**
+   * gets a new access token
+   * @param refreshToken
+   */
+  getNewToken(refreshToken: String): Observable<ApiOutput> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/auth/token`,
+      {token: refreshToken},
+      {observe: 'response'}
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
   }
 }

@@ -30,7 +30,7 @@ exports.generateAccessToken = (user) => {
 		role: user.role
 	};
 
-	return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+	return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10s'});
 };
 
 /**

@@ -3,6 +3,7 @@ import {AuthService} from '../services/auth.service';
 import {ActivatedRouteSnapshot, CanActivate, Router, UrlTree} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {LastRouteService} from '../services/last-route.service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +15,24 @@ export class AuthGuardService implements CanActivate{
               private message: NzMessageService,
               private lastRoute: LastRouteService) { }
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-    if (!this.auth.isAuthenticated()) {
-      // Get the actual URL
-      this.lastRoute.newUrl(route.url);
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      this.auth.isAuthenticated()
+        .subscribe((isAuthenticated) => {
+          if(!isAuthenticated){
+            // Get the actual URL
+            this.lastRoute.newUrl(route.url);
 
-      this.router.navigate(['/login']).then();
-      this.message.error('Please login first', {nzDuration: 7000});
+            this.router.navigate(['/login']).then();
+            this.message.error('Please login first', {nzDuration: 7000});
 
-      return false;
-    } else {
-      return true;
-    }
+            observer.next(false);
+          } else {
+            observer.next(true);
+          }
+        });
+    });
+
+
   }
 }
