@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem('accessToken', output.data.accessToken);
         localStorage.setItem('refreshToken', output.data.refreshToken);
+        this.auth.authenticated = true;
         this.auth.actualizeName();
 
         // Redirect to last visited page or default dashboard

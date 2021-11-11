@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
+import {ApiOutput} from '../../models/api.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,7 @@ export class AuthService {
         observer.next(false);
       } else if (this.jwtHelper.isTokenExpired(accessToken)) {
         this.api.getNewToken(refreshToken)
-          .subscribe((output) => {
+          .subscribe((output: ApiOutput) => {
               if (output.data.accessToken) {
                 const {accessToken} = output.data;
 
@@ -56,7 +57,7 @@ export class AuthService {
                 observer.next(false);
               }
             },
-            (err) => {
+            () => {
               localStorage.removeItem('accessToken');
               localStorage.removeItem('refreshToken');
               this.authenticated = false;
