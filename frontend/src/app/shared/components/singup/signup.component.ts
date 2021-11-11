@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../../core/services/validation.service';
 import {ApiService} from '../../../core/services/api.service';
-import {CreateUserInput, CreateUserOutput} from '../../../models/user.model';
+import {CreateUserInput} from '../../../models/user.model';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ApiError} from '../../../models/api.model';
 import {Router} from '@angular/router';
@@ -78,7 +78,7 @@ export class SignupComponent implements OnInit {
 
     // Send Request
     this.apiService.createUser(data)
-      .subscribe((output: CreateUserOutput) => {
+      .subscribe((output) => {
         console.log(output);
         this.message.create('success', 'Successfully signed Up!');
         this.signup.reset();

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidationService} from '../../../core/services/validation.service';
+import {ApiService} from '../../../core/services/api.service';
+import {Router} from '@angular/router';
+import {LastRouteService} from '../../../core/services/last-route.service';
 
 @Component({
 	selector: 'app-login',
@@ -12,25 +15,38 @@ export class LoginComponent implements OnInit {
   login: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private validateService: ValidationService) { }
+              private validateService: ValidationService,
+              private api: ApiService,
+              private router: Router,
+              private lastRoute: LastRouteService) { }
 
   ngOnInit(): void {
   	this.login = this.fb.group({
-  		nickname: [null, Validators.required], // TODO: Service for validating data
+  		username: [null, Validators.required], // TODO: Service for validating data
   		password: [null, Validators.required]
   	});
   }
 
   onSubmit(): void {
-  	console.log('login!');
-  	console.log(this.login);
+    // Validate Form
+    for (const i in this.login.controls) {
+      if (this.login.controls.hasOwnProperty(i)) {
+        this.login.controls[i].markAsDirty();
+        this.login.controls[i].updateValueAndValidity();
+      }
+    }
 
-  	for (const i in this.login.controls) {
-  		if (this.login.controls.hasOwnProperty(i)) {
-  			this.login.controls[i].markAsDirty();
-  			this.login.controls[i].updateValueAndValidity();
-  		}
-  	}
+    // Send data to api
+    this.api.login(this.login.value)
+      .subscribe((output) => {
+        this.login.reset();
+
+        localStorage.setItem('accessToken', output.data.accessToken);
+        localStorage.setItem('refreshToken', output.data.refreshToken);
+
+        // Redirect to last visited page or default dashboard
+        this.router.navigate([this.lastRoute.route]).then();
+      });
+
   }
-
 }

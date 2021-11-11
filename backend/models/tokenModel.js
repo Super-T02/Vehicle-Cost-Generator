@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const db = require('./db');
 
 /**
@@ -6,11 +7,19 @@ const db = require('./db');
  * @param callback
  */
 exports.saveRefreshToken = (refreshToken, callback) => {
-	db.token.insert({refreshToken: refreshToken}, (err, token) => {
+	const decoded = jwt.decode(refreshToken);
+	console.log(decoded);
+	db.token.remove(t => t.username === decoded.username, (err) => {
 		if (err) {
 			callback(err, null);
 		} else {
-			callback(null, token.refreshToken);
+			db.token.insert({username: decoded.username, refreshToken: refreshToken}, (err, token) => {
+				if (err) {
+					callback(err, null);
+				} else {
+					callback(null, token.refreshToken);
+				}
+			});
 		}
 	});
 };

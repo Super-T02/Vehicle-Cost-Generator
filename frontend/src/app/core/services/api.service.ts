@@ -3,8 +3,8 @@ import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http'
 import {Observable, throwError} from 'rxjs';
 import {Echo} from '../../models/echo.model';
 import {catchError, map} from 'rxjs/operators';
-import {CreateUserInput, CreateUserOutput} from '../../models/user.model';
-import {ApiError} from '../../models/api.model';
+import {CreateUserInput} from '../../models/user.model';
+import {ApiError, ApiOutput, LoginInput} from '../../models/api.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -12,6 +12,8 @@ import {ApiError} from '../../models/api.model';
 export class ApiService {
 
   private readonly baseUrl = 'http://localhost:3000/api';
+  private readonly accessToken = localStorage.getItem('accessToken');
+  private readonly refreshToken = localStorage.getItem('refreshToken');
 
   constructor(private http: HttpClient) {
   }
@@ -66,16 +68,13 @@ export class ApiService {
    * Creates a new User
    * @param user
    */
-  createUser(user: CreateUserInput): Observable<CreateUserOutput> {
+  createUser(user: CreateUserInput): Observable<ApiOutput> {
     return this.http.post<HttpResponse<any>>(
       `${this.baseUrl}/user`,
       user,
       {observe: 'response'}
     ).pipe(
       map((res) => {
-        console.log('here');
-        console.log(res);
-
         if (!res.body) {
           return {data: null};
         } else {
@@ -86,26 +85,24 @@ export class ApiService {
     );
   }
 
-  doError(): Observable<Echo> {
-  	return this.http.post<Echo>(
-  		`${this.baseUrl}/echo`,
-  		{}
+  /**
+   * Authenticates the user and collecting the tokens
+   * @param loginData
+   */
+  login(loginData: LoginInput): Observable<ApiOutput> {
+  	return this.http.post<HttpResponse<any>>(
+  		`${this.baseUrl}/auth/login`,
+  		loginData,
+      {observe: 'response'}
   	).pipe(
-  		catchError((err) => {
-  			console.log('In Service:', err);
-  			return throwError(err);
-  		})
-  	);
-  }
-
-  getEchos(contains?: string): Observable<Echo[]> {
-  	return this.http.get<Echo[]>(
-  		`${this.baseUrl}/echo`,
-  		{
-  			params: contains ? {
-  				contains
-  			} : undefined
-  		}
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+  		catchError(this.handleError)
   	);
   }
 }

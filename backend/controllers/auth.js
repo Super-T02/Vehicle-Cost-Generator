@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post('/login', authService.checkLoginData, (req, res) => {
 	const { username, password } = req.body;
-
 	authService.login({ username: username, password: password }, (err, user) => {
 		if (err) {
 			res.status(500).json({
@@ -16,6 +15,7 @@ router.post('/login', authService.checkLoginData, (req, res) => {
 				err: 'Password or Username doesn\'t match'
 			});
 		} else {
+
 			// Generate the actual user data
 			let actualUser = {
 				username: user.username,
