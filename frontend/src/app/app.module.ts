@@ -21,7 +21,8 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {SharedModule} from './shared/shared.module';
-import {NzAlertModule} from "ng-zorro-antd/alert";
+import {NzAlertModule} from 'ng-zorro-antd/alert';
+import {JwtHelperService, JwtModule} from '@auth0/angular-jwt';
 
 registerLocaleData(de);
 
@@ -32,24 +33,25 @@ registerLocaleData(de);
 		FooterComponent,
 		PageNotFoundComponent
 	],
-    imports: [
-        CommonModule,
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        NzDividerModule,
-        NzLayoutModule,
-        NzBreadCrumbModule,
-        NzMenuModule,
-        NzIconModule,
-        NzButtonModule,
-        NzToolTipModule,
-        SharedModule,
-        NzAlertModule,
-    ],
-	providers: [{ provide: NZ_I18N, useValue: de_DE }, {provide: ErrorHandler, useClass: AppComponent}],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    NzDividerModule,
+    NzLayoutModule,
+    NzBreadCrumbModule,
+    NzMenuModule,
+    NzIconModule,
+    NzButtonModule,
+    NzToolTipModule,
+    SharedModule,
+    NzAlertModule,
+    JwtModule.forRoot({})
+  ],
+	providers: [{ provide: NZ_I18N, useValue: de_DE }, {provide: ErrorHandler, useClass: AppComponent}, {provide: JwtHelperService}],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

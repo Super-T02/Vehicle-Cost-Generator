@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
+import {AuthGuardService} from './core/guards/auth-guard.service';
 
 const routes: Routes = [
 	{
@@ -11,7 +12,8 @@ const routes: Routes = [
 		path: '404',
 		component: PageNotFoundComponent
 	},
-	{ path: 'signup', loadChildren: () => import('./pages/signup-page/signup-page.module').then(m => m.SignupPageModule) },
+	{ path: 'signup', loadChildren: () => import('./pages/signup-page/signup-page.module').then(m => m.SignupPageModule), canActivate: [AuthGuardService]  },
+	{ path: 'login', loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule)},
 	{
 		path: '**',
 		redirectTo: '404'
