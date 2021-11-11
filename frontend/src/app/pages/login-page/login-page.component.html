@@ -1,1 +1,20 @@
-<p>login-page works!</p>
+<nz-breadcrumb>
+  <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
+  <nz-breadcrumb-item routerLink="/signup">Signup</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="inner-content inner-flex">
+    <div *ngIf="this.resize.innerWidth < breakPoints.smallMax" class="text">
+      <h1 class="primary-color">Log-in</h1>
+    </div>
+
+    <img class="pic" src="assets/login.svg" alt="Log-in Picture">
+    <div *ngIf="this.resize.innerWidth > this.breakPoints.medium" class="horizontal-divider"></div>
+
+    <div class="right-column">
+      <div *ngIf="this.resize.innerWidth > breakPoints.smallMax" class="text">
+        <h1 class="primary-color">Log-in</h1>
+      </div>
+      <app-login class="form"></app-login>
+    </div>
+</div>

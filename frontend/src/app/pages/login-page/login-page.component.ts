@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MEDIA_BREAKPOINTS} from '../../../environments/constants';
+import {ResizeService} from '../../core/services/resize.service';
 
 @Component({
   selector: 'app-login-page',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  breakPoints = MEDIA_BREAKPOINTS;
+
+  constructor(public resize: ResizeService) { }
 
   ngOnInit(): void {
   }

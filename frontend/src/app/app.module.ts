@@ -49,7 +49,13 @@ registerLocaleData(de);
     NzToolTipModule,
     SharedModule,
     NzAlertModule,
-    JwtModule.forRoot({})
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('accessToken');
+        }
+      }
+    })
   ],
 	providers: [{ provide: NZ_I18N, useValue: de_DE }, {provide: ErrorHandler, useClass: AppComponent}, {provide: JwtHelperService}],
 	bootstrap: [AppComponent]

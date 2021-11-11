@@ -4,7 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {Echo} from '../../models/echo.model';
 import {catchError, map} from 'rxjs/operators';
 import {CreateUserInput, CreateUserOutput} from '../../models/user.model';
-import {ApiError} from "../../models/api.model";
+import {ApiError} from '../../models/api.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -56,7 +56,7 @@ export class ApiService {
           break;
       }
 
-      return throwError(newError);
+      return throwError(err);
     }
 
 

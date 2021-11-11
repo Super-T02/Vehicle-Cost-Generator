@@ -12,7 +12,7 @@ const routes: Routes = [
 		path: '404',
 		component: PageNotFoundComponent
 	},
-	{ path: 'signup', loadChildren: () => import('./pages/signup-page/signup-page.module').then(m => m.SignupPageModule), canActivate: [AuthGuardService]  },
+	{ path: 'signup', loadChildren: () => import('./pages/signup-page/signup-page.module').then(m => m.SignupPageModule), /*canActivate: [AuthGuardService] */ },
 	{ path: 'login', loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule)},
 	{
 		path: '**',

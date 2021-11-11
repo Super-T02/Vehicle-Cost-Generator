@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { LoginPageRoutingModule } from './login-page-routing.module';
 import { LoginPageComponent } from './login-page.component';
+import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { LoginPageComponent } from './login-page.component';
   ],
   imports: [
     CommonModule,
-    LoginPageRoutingModule
+    LoginPageRoutingModule,
+    NzBreadCrumbModule,
+    SharedModule
   ]
 })
 export class LoginPageModule { }

@@ -23,6 +23,7 @@ export class SignupComponent implements OnInit {
   signup: FormGroup;
   success: boolean;
   error: ApiError;
+  classList: String[];
 
   constructor(private fb: FormBuilder,
               private validateService: ValidationService,
@@ -34,6 +35,7 @@ export class SignupComponent implements OnInit {
     // Generate Layout for the from
     if (this.description == undefined) {
       this.description = false;
+      this.classList = ['no-description'];
     } else if (this.description) {
       this.offsetButton = 6;
       this.collNormal = 14;
