@@ -3,6 +3,53 @@
 </nz-breadcrumb>
 
 <div class="inner-content">
-  <h1>Wilkommen auf der Startseite</h1>
+  <div class="grid">
+
+    <div class="banner">
+      <img
+        class="mainBanner"
+        src="assets/{{this.resizeService.banner.name}}.svg"
+        alt="banner"
+      >
+    </div>
+
+    <div id="advantages" class="background">
+      <i id="track-icon" nz-icon nzType="dashboard" nzTheme="outline"></i>
+      <i id="design-icon" nz-icon nzType="picture" nzTheme="outline"></i>
+      <i id="charts-icon" nz-icon nzType="area-chart" nzTheme="outline"></i>
+      <i id="free-icon" nz-icon nzType="euro" nzTheme="outline"></i>
+
+      <div id="track">Track your costs every where</div>
+      <div id="design">Modern Design</div>
+      <div id="charts">User friendly charts and tables</div>
+      <div id="free">For Free!</div>
+    </div>
+
+    <div *ngIf="this.resizeService.innerWidth > this.breakPoints.small" class="pic">
+      <img
+        src="assets/stacks.svg"
+        alt="Dashboard picture"
+      >
+    </div>
+
+    <div class="text">
+      <h1>
+        Add all your vehicles and track all together in your dashboard!
+      </h1>
+    </div>
+
+    <div class="background signup">
+      <h1>
+        Haven't signup yet?
+        Signup now!
+      </h1>
+      <div *ngIf="this.resizeService.innerWidth > this.breakPoints.medium" class="horizontal-divider"></div>
+      <app-signup [description]="true"></app-signup>
+
+    </div>
+
+  </div>
+
 </div>
+
 

@@ -1,0 +1,22 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
+  <nz-breadcrumb-item routerLink="/signup">Signup</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="inner-content inner-flex">
+  <div *ngIf="this.resize.innerWidth < breakPoints.smallMax" class="text">
+    <h1>Sign Up Now</h1>
+    Your vehicles are waiting to be tracked!
+  </div>
+
+  <img class="pic" src="assets/signup.svg" alt="Sign Up Picture">
+  <div *ngIf="this.resize.innerWidth > this.breakPoints.medium" class="horizontal-divider"></div>
+
+  <div class="right-column">
+    <div *ngIf="this.resize.innerWidth > breakPoints.smallMax" class="text">
+      <h1>Sign Up Now</h1>
+      Your <span class="primary-color">vehicles</span> are waiting to be <span class="primary-color">tracked</span>!
+    </div>
+    <app-signup class="form"></app-signup>
+  </div>
+</div>

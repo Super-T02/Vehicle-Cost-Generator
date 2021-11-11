@@ -1,27 +1,68 @@
-<nz-header (window:resize)="onResize()">
+<nz-header>
 
-  <img class="logo"
-       src="assets/{{this.logo.name}}.svg"
+  <img *ngIf="this.resizeService.innerWidth > breakPoints.extraSmall" class="logo"
+       src="assets/{{this.resizeService.logo.name}}.svg"
        alt="Vehicle Cost Calculator Logo"
-       width="{{this.logo.width}}"
+       width="{{this.resizeService.logo.width}}"
        routerLink=""
   />
 
   <ul nz-menu nzMode="horizontal">
 
-    <li nz-menu-item routerLink="">
-      <i nz-icon [nzType]="'home'" [nzTheme]="'outline'"></i>
-      <span *ngIf="!isMobile">HOME</span>
+    <li nz-menu-item
+        routerLink=""
+        nz-tooltip
+        [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
+        nzTooltipTitle="Home"
+        nzTooltipPlacement="bottom"
+    >
+      <i nz-icon
+         [nzType]="'home'"
+         [nzTheme]="'outline'"
+      ></i>
+      <span *ngIf="!this.resizeService.isMobile">HOME</span>
     </li>
 
-    <li nz-menu-item routerLink="/overview">
-      <i nz-icon [nzType]="'fund-view'" [nzTheme]="'outline'"></i>
-      <span *ngIf="!isMobile">OVERVIEW</span>
+    <li nz-menu-item
+        routerLink="/overview"
+        nz-tooltip
+        [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
+        nzTooltipTitle="Overview"
+        nzTooltipPlacement="bottom"
+    >
+      <i nz-icon
+         [nzType]="'fund-view'"
+         [nzTheme]="'outline'"
+      ></i>
+      <span *ngIf="!this.resizeService.isMobile">OVERVIEW</span>
     </li>
 
-    <li nz-menu-item routerLink="/user">
-      <i nz-icon [nzType]="'user'" [nzTheme]="'outline'"></i>
-      <span *ngIf="!isMobile">USER</span>
+    <li *ngIf="this.auth.authenticated" nz-menu-item
+        routerLink="/user"
+        nz-tooltip
+        [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
+        nzTooltipTitle="User"
+        nzTooltipPlacement="bottom"
+    >
+      <i nz-icon
+         [nzType]="'user'"
+         [nzTheme]="'outline'"
+      ></i>
+      <span *ngIf="!this.resizeService.isMobile">{{this.auth.username.toUpperCase()}}</span>
+    </li>
+
+    <li *ngIf="!this.auth.authenticated" nz-menu-item
+        routerLink="/login"
+        nz-tooltip
+        [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
+        nzTooltipTitle="Login"
+        nzTooltipPlacement="bottom"
+    >
+      <i nz-icon
+         [nzType]="'user'"
+         [nzTheme]="'outline'"
+      ></i>
+      <span *ngIf="!this.resizeService.isMobile">LOGIN</span>
     </li>
   </ul>
 

@@ -1,41 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {Svg} from "../../models/svg.model";
-import {LOGO, LOGO_MEDIUM, LOGO_SMALL,} from "./logos";
+import {Component} from '@angular/core';
+import {ResizeService} from '../services/resize.service';
+import {MEDIA_BREAKPOINTS} from '../../../environments/constants';
+import {AuthService} from '../services/auth.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.less']
+	selector: 'app-header',
+	templateUrl: './header.component.html',
+	styleUrls: ['./header.component.less']
 })
-export class HeaderComponent implements OnInit {
-  logo: Svg;
-  isMobile: boolean;
+export class HeaderComponent  {
 
-  constructor() {
-  }
+  breakPoints = MEDIA_BREAKPOINTS;
 
-  ngOnInit(): void {
-    this.onResize();
-  }
-
-  /**
-   * Handles the logo size
-   */
-  onResize(): void {
-    const innerWidth = window.innerWidth;
-
-    if(innerWidth < 520) {
-      this.logo = LOGO_SMALL;
-      this.isMobile = true
-    }
-    else if(innerWidth < 1024) {
-      this.logo = LOGO_MEDIUM;
-      this.isMobile = false;
-    }
-    else {
-      this.logo = LOGO;
-      this.isMobile = false;
-    }
+  constructor(public resizeService: ResizeService,
+              public auth: AuthService) {
   }
 
 }
