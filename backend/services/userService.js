@@ -25,19 +25,19 @@ exports.checkNewUser = (req, res, next) => {
 	const {username, email, password, role} = req.body;
 
 	if (!username || typeof username !== 'string') {
-		res.status(404).json({
+		res.status(400).json({
 			message: 'username should be a String'
 		});
 	} else if (!email || typeof email !== 'string') {
-		res.status(404).json({
+		res.status(400).json({
 			message: 'email should be a String'
 		});
 	} else if (!password || typeof password !== 'string') { // TODO: Proving of the password
-		res.status(404).json({
+		res.status(400).json({
 			message: 'password should be a String'
 		});
 	} else if (!role || (role !== 'admin' && role !== 'member')) {
-		res.status(404).json({
+		res.status(400).json({
 			message: 'role should be "admin" or "member"'
 		});
 	} else {

@@ -12,7 +12,7 @@ router.post('/login', authService.checkLoginData, (req, res) => {
 				message: err.message
 			});		} else if (!user) {
 			res.status(404).json({
-				err: 'Password or Username doesn\'t match'
+				message: 'Password or Username doesn\'t match'
 			});
 		} else {
 

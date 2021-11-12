@@ -70,7 +70,6 @@ exports.removeRefreshToken = (token, callback) => {
 	});
 };
 
-
 /**
  * Middleware for checking the body of a login request
  * @param req
@@ -112,7 +111,7 @@ exports.checkRefreshToken = (req, res, next) => {
 
 	if (!token) {
 		res.status(401).json({
-			message: 'Wrong authentication'
+			message: 'False authentication'
 		});
 	} else {
 		tokenModel.checkRefreshToken(token, (err, data) => {
