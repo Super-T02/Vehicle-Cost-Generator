@@ -111,13 +111,19 @@ exports.checkRefreshToken = (req, res, next) => {
 	const { token } = req.body;
 
 	if (!token) {
-		res.sendStatus(401);
+		res.status(401).json({
+			message: 'Wrong authentication'
+		});
 	} else {
 		tokenModel.checkRefreshToken(token, (err, data) => {
 			if (err) {
-				res.sendStatus(500);
+				res.status(500).json({
+					message: 'Internal Server Error'
+				});
 			} else if (data.length === 0) {
-				res.sendStatus(403);
+				res.status(403).json({
+					message: 'Forbidden!'
+				});
 			} else {
 				next();
 			}

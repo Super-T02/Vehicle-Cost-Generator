@@ -54,7 +54,7 @@ router.post('/token', authService.checkRefreshToken, (req, res) => {
 				role: user.role
 			};
 
-			res.json({
+			res.status(200).json({
 				accessToken: authService.generateAccessToken(actualUser)
 			});
 		}

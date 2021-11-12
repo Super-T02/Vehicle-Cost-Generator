@@ -1,13 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {Echo} from '../../models/echo.model';
 import {catchError, map} from 'rxjs/operators';
 import {CreateUserInput} from '../../models/user.model';
 import {ApiError, ApiOutput, LoginInput} from '../../models/api.model';
-import {Router} from '@angular/router';
-import {LastRouteService} from './last-route.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Injectable({
 	providedIn: 'root'
@@ -18,10 +14,7 @@ export class ApiService {
   private readonly accessToken = localStorage.getItem('accessToken');
   private readonly refreshToken = localStorage.getItem('refreshToken');
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private lastRoute: LastRouteService,
-              private message: NzMessageService) {
+  constructor(private http: HttpClient) {
   }
 
   /**
@@ -51,8 +44,8 @@ export class ApiService {
           newError.message = 'Please try again later. The source is not ready!';
           break;
         case 403:
-          this.message.error('Please login in first!', {nzDuration: 7000});
-          this.router.navigate(['/login']).then();
+          newError.title = 'Forbidden';
+          newError.message = 'You have not the permission to do that!';
           break;
         case 500:
           newError.title = 'Internal Server error';
@@ -64,7 +57,7 @@ export class ApiService {
           break;
       }
 
-      return throwError(err);
+      return throwError(newError);
     }
 
 
