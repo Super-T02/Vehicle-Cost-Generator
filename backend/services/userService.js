@@ -1,4 +1,5 @@
 const userModel = require('../models/userModel');
+const {validationResult, check} = require('express-validator');
 
 /**
  * adds a user to the database
@@ -21,26 +22,75 @@ exports.addUser = (data, callback) => {
  * @param res
  * @param next
  */
-exports.checkNewUser = (req, res, next) => {
-	const {username, email, password, role} = req.body;
+exports.checkNewUser = async (req, res, next) => {
+	await check('username')
+		.exists()
+		.bail()
+		.isString()
+		.trim(' ')
+		.toLowerCase()
+		.custom(value => {
+			return new Promise( (resolve, reject) => {
+				userModel.existsUser(value, (err, exists) => {
+					if (err || exists) {
+						reject('Username already exists');
+					} else {
+						resolve();
+					}
+				});
+			});
+		})
+		.run(req);
 
-	if (!username || typeof username !== 'string') {
-		res.status(400).json({
-			message: 'username should be a String'
-		});
-	} else if (!email || typeof email !== 'string') {
-		res.status(400).json({
-			message: 'email should be a String'
-		});
-	} else if (!password || typeof password !== 'string') { // TODO: Proving of the password
-		res.status(400).json({
-			message: 'password should be a String'
-		});
-	} else if (!role || (role !== 'admin' && role !== 'member')) {
-		res.status(400).json({
-			message: 'role should be "admin" or "member"'
-		});
+	await check('password')
+		.exists()
+		.bail()
+		.custom(value => {
+			// eslint-disable-next-line no-useless-escape
+			if (!/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}\[ \]:;<>,?\/~_+-=|\\]).{8,32}/.exec(value)) {
+				return Promise.reject('Password does not match the pattern!');
+			} else {
+				return Promise.resolve();
+			}
+		})
+		.run(req);
+
+	await check('email')
+		.exists()
+		.bail()
+		.isEmail()
+		.custom(value => {
+			return new Promise( (resolve, reject) => {
+				userModel.existsEmail(value, (err, exists) => {
+					if (err || exists) {
+						reject('Email already used');
+					} else {
+						resolve();
+					}
+				});
+			});
+		})
+		.run(req);
+
+	await check('role')
+		.exists()
+		.bail()
+		.custom(value => {
+			if (value !== 'member' && value !== 'admin') {
+				return Promise.reject('Role is not admin or member');
+			} else {
+				return Promise.resolve();
+			}
+		})
+		.run(req);
+
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({errors: errors.array()});
 	} else {
+		const {username, email, role, password} = req.body;
+
 		req.body.newUser = {
 			id: '',
 			username: username,

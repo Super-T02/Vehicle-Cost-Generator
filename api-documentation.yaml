@@ -64,31 +64,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: username should be a string
+                $ref: '#/components/schemas/Error'
         '404':
           description: Username and Password doesn't match
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Username and Password doesn't match
+                $ref: '#/components/schemas/Error'
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal Server Error
+                $ref: '#/components/schemas/Error'
 
   /auth/token:
     post:
@@ -124,36 +112,20 @@ paths:
                     type: string
                     format: jwt
                     example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRvbSIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE2MzY3NDYwMTcsImV4cCI6MTYzNjc0NjAyN30.CnCV8jVZ5enrhJ5A0ITPoim0z3dDRD2Y64-uUwvNhBk
-        '401':
-          description: False authentication, no token sended
+        '400':
+          description: No token sended
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: False authentication
+                $ref: '#/components/schemas/Error'
         '403':
           description: Not authorized, refresh token is invalid or expired
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Forbidden
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal Server Error
+                $ref: '#/components/schemas/Error'
 
   /auth/logout:
     post:
@@ -188,36 +160,20 @@ paths:
                   message:
                     type: string
                     example: Logout successful
-        '401':
-          description: False authentication, no token sended
+        '400':
+          description: No token sended
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: False authentication
+                $ref: '#/components/schemas/Error'
         '403':
           description: Not authorized, refresh token is invalid or expired
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Forbidden
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal Server Error
+                $ref: '#/components/schemas/Error'
 
 
   /users:
@@ -235,34 +191,18 @@ paths:
         responses:
           '201':
             description: User created successfully
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: User created successfully
           '400':
             description: Request has not the wantet format
             content:
               application/json:
                 schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: username should be a string
+                  $ref: '#/components/schemas/Error'
           '500':
             description: Internal Server Error
             content:
               application/json:
                 schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: Internal Server Error
+                  $ref: '#/components/schemas/Error'
 
 
 
@@ -594,7 +534,32 @@ components:
           example: "liability insurance"
           description: closer description for the cost item (optional)
 
-        
+    Error:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            required:
+              - msg
+              - location
+            properties:
+              value:
+                type: string
+                example: TestValue
+              msg:
+                type: string
+                example: Invalid Value
+              param:
+                type: string
+                example: Password
+              location:
+                type: string
+                example: body
+
           
         
         

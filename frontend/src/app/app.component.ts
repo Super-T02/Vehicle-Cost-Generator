@@ -11,7 +11,7 @@ export class AppComponent implements ErrorHandler{
 
   handleError(error: any): void {
     console.log(error);
-    this.message.create('error', error, {nzDuration: 10000});
+    this.message.create('error', error.message, {nzDuration: 10000});
   }
 
 	constructor(public resizeService: ResizeService,

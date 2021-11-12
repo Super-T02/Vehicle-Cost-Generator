@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const tokenModel = require('../models/tokenModel');
 const userModel = require('../models/userModel');
+const {check, validationResult} = require('express-validator');
+const {generateErrorMessage} = require('../util/error');
 
 /**
  * Handles the login for a user
@@ -76,25 +78,23 @@ exports.removeRefreshToken = (token, callback) => {
  * @param res
  * @param next
  */
-exports.checkLoginData = (req, res, next) => {
-	const {username, password} = req.body;
+exports.checkLoginData = async (req, res, next) => {
+	await check('username')
+		.exists()
+		.bail()
+		.isString()
+		.run(req);
 
-	if (!username) {
-		res.status(400).json({
-			message: 'username is empty'
-		});
-	} else if (typeof username != 'string') {
-		res.status(400).json({
-			message: 'username should be a string'
-		});
-	} else if (!password) {
-		res.status(400).json({
-			message: 'password is empty'
-		});
-	} else if (typeof password != 'string') {
-		res.status(400).json({
-			message: 'password should be a string'
-		});
+	await check('password')
+		.exists()
+		.bail()
+		.isString()
+		.run(req);
+
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({errors: errors.array()});
 	} else {
 		next();
 	}
@@ -106,23 +106,21 @@ exports.checkLoginData = (req, res, next) => {
  * @param res
  * @param next
  */
-exports.checkRefreshToken = (req, res, next) => {
-	const { token } = req.body;
+exports.checkRefreshToken = async (req, res, next) => {
+	await check('token')
+		.exists()
+		.run(req);
 
-	if (!token) {
-		res.status(401).json({
-			message: 'False authentication'
-		});
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({errors: errors.array()});
 	} else {
-		tokenModel.checkRefreshToken(token, (err, data) => {
+		tokenModel.checkRefreshToken(req.body.token, (err, data) => {
 			if (err) {
-				res.status(500).json({
-					message: 'Internal Server Error'
-				});
+				res.status(500).json(generateErrorMessage('Internal Server Error','server'));
 			} else if (data.length === 0) {
-				res.status(403).json({
-					message: 'Forbidden!'
-				});
+				res.status(403).json({});
 			} else {
 				next();
 			}
@@ -142,13 +140,13 @@ exports.authenticateJWT = (req, res, next) => {
 	const authHeader = req.headers.authorization;
 
 	if (!authHeader) {
-		res.sendStatus(401);
+		res.status(401).json({});
 	} else {
 		const token = authHeader.split(' ')[1];
 
 		jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
 			if (err) {
-				return res.sendStatus(403);
+				return res.status(403).json({});
 			}
 
 			req.body.user = user;
