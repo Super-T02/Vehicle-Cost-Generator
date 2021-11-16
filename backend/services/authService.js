@@ -123,7 +123,7 @@ exports.checkRefreshToken = async (req, res, next) => {
 			if (err) {
 				res.status(500).json(generateErrorMessage('Internal Server Error','server'));
 			} else if (data.length === 0) {
-				res.status(403).json({});
+				res.status(403).json(generateErrorMessage('Not the needed Permission', 'header'));
 			} else {
 				next();
 			}

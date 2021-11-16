@@ -2,6 +2,7 @@ const express = require('express');
 const userService = require('../services/userService');
 const {generateErrorMessage} = require('../util/error');
 const authService = require('../services/authService');
+const vehicle = require('./vehicle');
 const router = express.Router();
 
 router.post('/', userService.checkNewUser, (req, res) => {
@@ -15,10 +16,14 @@ router.post('/', userService.checkNewUser, (req, res) => {
 	});
 });
 
-router.use(authService.authenticateJWT);
+router.use('/:username',
+	authService.authenticateJWT,
+	userService.checkUser,
+	userService.isUserPermitted
+);
 // Only paths needing a verified token !
 
-router.get('/:username', userService.checkUser, userService.isUserPermitted,  (req, res) => {
+router.get('/:username',  (req, res) => {
 	const { username } = req.params;
 
 	userService.getUser(username, (err, data) => {
@@ -32,10 +37,6 @@ router.get('/:username', userService.checkUser, userService.isUserPermitted,  (r
 	});
 });
 
-router.use(
-	userService.checkUser,
-	userService.isUserPermitted
-);
-// Only paths having :username as parameter after this line !
+router.use('/:username/vehicles', vehicle);
 
 module.exports = router;

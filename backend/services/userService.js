@@ -24,7 +24,6 @@ exports.addUser = (data, callback) => {
  */
 exports.getUser = (username, callback) => {
 	userModel.getUserData(username, (err, data) => {
-		console.log(data);
 		if (err) {
 			callback(err, null);
 		} else if (data.length !== 1) {
@@ -119,7 +118,6 @@ exports.checkUser = async (req, res, next) => {
 		.toLowerCase()
 		.custom(value => existsUser(value))
 		.run(req);
-
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {

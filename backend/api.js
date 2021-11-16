@@ -11,7 +11,7 @@ router.use(express.json());
 router.use(logger.logToConsole);
 
 router.use('/auth', authController);
-router.use('/user', userController);
+router.use('/users', userController);
 
 router.use((req, res) => {
 	res.status(404);
