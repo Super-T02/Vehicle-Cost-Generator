@@ -1,5 +1,4 @@
 const db = require('./db.js');
-const uuid = require('uuid');
 
 /**
  * Adds the given User to the database
@@ -7,8 +6,6 @@ const uuid = require('uuid');
  * @param callback
  */
 exports.createUser = (userData, callback) => {
-	userData.id = uuid.v1();
-
 	db.user.insert(userData, (err, newUser) => {
 		if (err) {
 			callback(err, null);
