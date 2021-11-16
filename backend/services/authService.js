@@ -32,7 +32,7 @@ exports.generateAccessToken = (user) => {
 		role: user.role
 	};
 
-	return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10s'});
+	return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '600s'});
 };
 
 /**
@@ -83,6 +83,9 @@ exports.checkLoginData = async (req, res, next) => {
 		.exists()
 		.bail()
 		.isString()
+		.bail()
+		.trim(' ')
+		.toLowerCase()
 		.run(req);
 
 	await check('password')
@@ -146,7 +149,7 @@ exports.authenticateJWT = (req, res, next) => {
 
 		jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
 			if (err) {
-				return res.status(403).json({});
+				return res.status(403).json(generateErrorMessage('Not verified', 'Header'));
 			}
 
 			req.body.user = user;

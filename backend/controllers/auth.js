@@ -61,6 +61,7 @@ router.post('/logout', authService.checkRefreshToken, (req, res) => {
 	authService.removeRefreshToken(token, (err) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'server'));
+		} else {
 			res.status(200).json({
 				message: 'Logout successful'
 			});

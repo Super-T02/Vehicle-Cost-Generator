@@ -1,6 +1,7 @@
 const express = require('express');
 const userService = require('../services/userService');
 const {generateErrorMessage} = require('../util/error');
+const authService = require('../services/authService');
 const router = express.Router();
 
 router.post('/', userService.checkNewUser, (req, res) => {
@@ -13,5 +14,28 @@ router.post('/', userService.checkNewUser, (req, res) => {
 		}
 	});
 });
+
+router.use(authService.authenticateJWT);
+// Only paths needing a verified token !
+
+router.get('/:username', userService.checkUser, userService.isUserPermitted,  (req, res) => {
+	const { username } = req.params;
+
+	userService.getUser(username, (err, data) => {
+		if (err) {
+			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+		} else if (!data) {
+			res.status(404).json(generateErrorMessage('Not able to find user', 'params'));
+		} else {
+			res.status(200).json(data);
+		}
+	});
+});
+
+router.use(
+	userService.checkUser,
+	userService.isUserPermitted
+);
+// Only paths having :username as parameter after this line !
 
 module.exports = router;

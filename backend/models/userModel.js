@@ -19,31 +19,31 @@ exports.createUser = (userData, callback) => {
 };
 
 /**
- * Checks whether the given username is used or not
+ * Gets the data of the given user
  * @param username
  * @param callback
  */
-exports.existsUser = (username, callback) => {
+exports.getUserData = (username, callback) => {
 	db.user.find({username: username}, (err, data) => {
 		if (err) {
 			callback(err, null);
 		} else {
-			callback(null, data.length > 0);
+			callback(null, data);
 		}
 	});
 };
 
 /**
- * Checks whether the given email is used or not
+ * Gets all users with the given email
  * @param email
  * @param callback
  */
-exports.existsEmail = (email, callback) => {
+exports.getUserWithEmail = (email, callback) => {
 	db.user.find({email: email}, (err, data) => {
 		if (err) {
 			callback(err, null);
 		} else {
-			callback(null, data.length > 0);
+			callback(null, data);
 		}
 	});
 };
@@ -54,7 +54,6 @@ exports.existsEmail = (email, callback) => {
  * @param callback
  */
 exports.checkLogin = (loginData, callback) => {
-
 	db.user.find({username: loginData.username, password: loginData.password}, (err, data) => {
 		if (err) {
 			callback(err, null);
