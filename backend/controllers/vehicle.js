@@ -3,7 +3,7 @@ const vehicleService = require('../services/vehicleService');
 const {generateErrorMessage} = require('../util/error');
 const router = express.Router();
 
-router.get('/', ((req, res) => {
+router.get('/', (req, res) => {
 	vehicleService.getAlLVehicles(req, (err, vehicles) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
@@ -11,6 +11,10 @@ router.get('/', ((req, res) => {
 			res.status(200).json(vehicles);
 		}
 	});
-}));
+});
+
+router.post('/', (req, res) => {
+
+});
 
 module.exports = router;

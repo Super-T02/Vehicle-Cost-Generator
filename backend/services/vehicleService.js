@@ -1,4 +1,6 @@
 const vehicleModel = require('../models/vehicleModel');
+const {validationResult, check} = require('express-validator');
+const {generateErrorMessage} = require('../util/error');
 
 /**
  * Get a list of all vehicles
@@ -15,4 +17,33 @@ exports.getAlLVehicles = (req, callback) => {
 			callback(null, vehicles);
 		}
 	});
+};
+
+/**
+ * Add a new vehicle
+ * @param req
+ * @param callback
+ */
+exports.addNewVehicle = (req, callback) => {
+	const {vehicle} = req.body;
+
+	vehicleModel.addVehicle(vehicle, (err, data) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, err);
+		}
+	});
+};
+
+exports.checkVehicle = async (req, res, next) => {
+	await check('vin')
+		.exists()
+		.bail()
+		.isString()
+		.bail()
+		.trim(' ')
+		.toUpperCase()
+		.custom() // TODO: exists?
+		.run(req);
 };

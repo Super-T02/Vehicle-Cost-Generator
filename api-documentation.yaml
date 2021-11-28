@@ -260,9 +260,9 @@ paths:
     get:
       tags:
         - Vehicles
-      summary: Get the data of the User
+      summary: Get the vehicles of the user
       description: |
-        Delivers all data of the User with the given username
+        Delivers all vehicles of the given username
       parameters:
         - in: path
           name: username

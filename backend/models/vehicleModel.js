@@ -14,3 +14,18 @@ exports.getAllVehicles = (username, callback) => {
 		}
 	});
 };
+
+/**
+ * Inserts a new vehicle to the database
+ * @param vehicle
+ * @param callback
+ */
+exports.addVehicle = (vehicle, callback) => {
+	db.vehicle.insert(vehicle, (err, data) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, data);
+		}
+	});
+};
