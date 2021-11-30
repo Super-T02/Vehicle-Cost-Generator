@@ -35,4 +35,16 @@ router.delete('/:vin', vehicleService.checkVinParam, (req, res) => {
 	});
 });
 
+router.put('/:vin', vehicleService.checkVinParam, vehicleService.checkVehicle, (req, res) => {
+	vehicleService.updateVehicle(req, (err, data) => {
+		if (err) {
+			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+		} else if (!data) {
+			res.status(400).json(generateErrorMessage('No data updated', 'Params'));
+		} else {
+			res.status(201).json({});
+		}
+	});
+});
+
 module.exports = router;

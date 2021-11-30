@@ -59,3 +59,19 @@ exports.deleteVehicle = (vin, callback) => {
 		}
 	});
 };
+
+/**
+ * Updates a given vehicle
+ * @param vin
+ * @param updatedSet
+ * @param callback
+ */
+exports.modifyVehicle = (vin, updatedSet, callback) => {
+	db.vehicle.update({ vin: vin }, {$set: updatedSet}, {}, (err, numReplaced) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, numReplaced);
+		}
+	});
+};

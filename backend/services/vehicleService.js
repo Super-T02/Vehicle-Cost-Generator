@@ -1,7 +1,6 @@
 const vehicleModel = require('../models/vehicleModel');
 const {validationResult, check, body} = require('express-validator');
 const {generateErrorMessage} = require('../util/error');
-const {run} = require('nodemon/lib/monitor');
 
 /**
  * Get a list of all vehicles
@@ -38,6 +37,25 @@ exports.addNewVehicle = (req, callback) => {
 };
 
 /**
+ * Updates a vehicle with given vin und full Set
+ * @param req
+ * @param callback
+ */
+exports.updateVehicle = (req, callback) => {
+	const { vehicle, vin } = req.body;
+
+	vehicleModel.modifyVehicle(vin, vehicle, (err, numReplaced) => {
+		if (err) {
+			callback(err, null);
+		} else if (numReplaced === 0) {
+			callback(null, null);
+		} else {
+			callback(null, numReplaced);
+		}
+	});
+};
+
+/**
  * Delete a vehicle via vin
  * @param req
  * @param callback
@@ -63,13 +81,14 @@ exports.deleteVehicle = (req, callback) => {
  */
 exports.checkVehicle = async (req, res, next) => {
 	await check('vin')
+		.if(() => req.method !== 'PUT')
 		.exists()
 		.bail()
 		.isString()
 		.bail()
 		.trim(' ')
 		.toUpperCase()
-		.custom(value => existsVin(value)) // TODO: exists?
+		.custom(value => existsVin(value))
 		.run(req);
 
 	await check('year')
@@ -168,6 +187,7 @@ exports.checkVehicle = async (req, res, next) => {
 			dimensions: dimensions ? dimensions : null,
 			license: license ? license : null
 		};
+
 		next();
 	}
 };
@@ -235,7 +255,6 @@ const existsVinOnExist = async (vin) => {
 			} else {
 				resolve();
 			}
-
 		});
 	});
 };
