@@ -29,3 +29,18 @@ exports.addVehicle = (vehicle, callback) => {
 		}
 	});
 };
+
+/**
+ * Delivers all vehicles with the given VIN
+ * @param vin
+ * @param callback
+ */
+exports.findVin = (vin, callback) => {
+	db.vehicle.find({vin: vin}, (err, result) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, result);
+		}
+	});
+};
