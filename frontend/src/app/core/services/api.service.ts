@@ -37,11 +37,15 @@ export class ApiService {
       switch (err.status) {
         case 400:
           newError.title = 'Request Body false';
-          newError.message = 'Pleas fill the from right!';
+          (err.error.errors && err.error.errors.length > 0)?
+            newError.message = err.error.errors[0].msg:
+            newError.message = 'Pleas fill the from right!';
           break;
         case 404:
           newError.title = 'Not Found';
-          newError.message = 'Please try again later. The source is not ready!';
+          (err.error.errors && err.error.errors.length > 0)?
+            newError.message = err.error.errors[0].msg:
+            newError.message = 'Please try again later. The source is not ready!';
           break;
         case 403:
           newError.title = 'Forbidden';

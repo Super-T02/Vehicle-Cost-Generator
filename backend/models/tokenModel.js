@@ -9,7 +9,7 @@ const db = require('./db');
 exports.saveRefreshToken = (refreshToken, callback) => {
 	const decoded = jwt.decode(refreshToken);
 	console.log(decoded);
-	db.token.remove(t => t.username === decoded.username, (err) => {
+	db.token.remove({username: decoded.username, refreshToken: refreshToken}, (err) => {
 		if (err) {
 			callback(err, null);
 		} else {
@@ -30,7 +30,7 @@ exports.saveRefreshToken = (refreshToken, callback) => {
  * @param callback
  */
 exports.checkRefreshToken = (refreshToken, callback) => {
-	db.token.find(t => t.refreshToken === refreshToken, (err, data) => {
+	db.token.find({refreshToken: refreshToken}, (err, data) => {
 		if (err) {
 			callback(err, null);
 		} else {
@@ -45,7 +45,7 @@ exports.checkRefreshToken = (refreshToken, callback) => {
  * @param callback
  */
 exports.removeRefreshToken = (token, callback) => {
-	db.token.remove(t => t.refreshToken === token, (err) => {
+	db.token.remove({refreshToken: token}, (err) => {
 		if (err) {
 			callback(err);
 		} else {

@@ -1,0 +1,765 @@
+# Important: Add state 403 for every request if the current User isnot the auth user
+# The route /users/{id} is optional and can may be replaced by the jwt system
+openapi: 3.0.0
+info:
+  description: This is the API for the Vehicle Cost Calculator
+  version: "0.0.1"
+  title: Vehicle Cost Calculator API
+tags:
+  - name: Authentication
+    description: Authetication based Requests
+  - name: Users
+    description: User based Requests
+  - name: Vehicles
+    description: Vehicle based Requests
+  - name: Repeating Costs
+    description: Repeating Cost based Requests
+  - name: Single Costs
+    description: Single Cost based Requests
+  - name: Fuel Costs
+    description: Fuel based Requests
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Authenticates a User
+      description: |
+        Authenticates a User and send him a JWT access and refresh token
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  example: User123
+                password:
+                  type: string
+                  example: Test-123
+      responses:
+        '200':
+          description: Authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    format: jwt
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRvbSIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE2MzY3NDYwMTcsImV4cCI6MTYzNjc0NjAyN30.CnCV8jVZ5enrhJ5A0ITPoim0z3dDRD2Y64-uUwvNhBk
+                  refreshToken:
+                    type: string
+                    format: jwt
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRvbSIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE2MzY3NDYwMTcsImV4cCI6MTYzNjc0NjAyN30.CnCV8jVZ5enrhJ5A0ITPoim0z3dDRD2Y64-uUwvNhBk
+        '400':
+          description: Request has not the wantet format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Username and Password doesn't match
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/token:
+    post:
+      tags:
+        - Authentication
+      summary: Provides a new refresh token
+      description: |
+        Authenticates a User and send him a JWT access and refresh token
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - token
+              properties:
+                token:
+                  type: string
+                  format: jwt
+                  description: refresh token of the user
+                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRvbSIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE2MzY3NDYwMTcsImV4cCI6MTYzNjc0NjAyN30.CnCV8jVZ5enrhJ5A0ITPoim0z3dDRD2Y64-uUwvNhBk
+
+      responses:
+        '200':
+          description: Send new access token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    format: jwt
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRvbSIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE2MzY3NDYwMTcsImV4cCI6MTYzNjc0NjAyN30.CnCV8jVZ5enrhJ5A0ITPoim0z3dDRD2Y64-uUwvNhBk
+        '400':
+          description: No token sended
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not authorized, refresh token is invalid or expired
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: Logout the User
+      description: |
+        Removes the given refresh token from the db
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - token
+              properties:
+                token:
+                  type: string
+                  format: jwt
+                  description: refresh token of the user
+                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRvbSIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE2MzY3NDYwMTcsImV4cCI6MTYzNjc0NjAyN30.CnCV8jVZ5enrhJ5A0ITPoim0z3dDRD2Y64-uUwvNhBk
+
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Logout successful
+        '400':
+          description: No token sended
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not authorized, refresh token is invalid or expired
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+  /users:
+      post:
+        tags:
+          - Users
+        summary: Add a new User
+        description: |
+          Adds a new User to the system
+        requestBody:
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        responses:
+          '201':
+            description: User created successfully
+          '400':
+            description: Request has not the wantet format
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+  /users/{username}:
+    get:
+      tags:
+        - Users
+      summary: Get the data of the User
+      description: |
+        Delivers all data of the User with the given username
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+      responses:
+        '200':
+          description: User data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /users/{username}/vehicles:
+    post:
+      tags:
+        - Vehicles
+      summary: Add a new Vehicle to the user
+      description: |
+        Inserts a new Vehicle for the given User into the database
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '201':
+          description: Vehicle created succesfully
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - Vehicles
+      summary: Get the vehicles of the user
+      description: |
+        Delivers all vehicles of the given username
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+      responses:
+        '200':
+          description: Vehicles of the User
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/{username}/vehicles/{vin}:
+    get:
+      tags:
+        - Vehicles
+      summary: Get a specific vehicle of the user
+      description: |
+        Delivers a specific vehicle of the given username with the given vin
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+      responses:
+        '200':
+          description: Vehicle of the User
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user or vin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - Vehicles
+      summary: Deletes one Vehicle
+      description: |
+        Deletes one Vehicle with the given vin
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+      responses:
+        '204':
+          description: Successfully deleted
+        '400':
+          description: The vin does't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Vehicles
+      summary: Overwrites a Vehicle
+      description: |
+        Overwrites a Vehicle
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+        description: Vehicle to overwrite (vin must match vin in path)
+      responses:
+        '201':
+          description: Vin overwritten
+        '400':
+          description: The vin does't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - username
+        - mail
+        - password
+        - role
+      properties:
+        username:
+          type: string
+          example: "Mustermann25"
+        mail:
+          type: string
+          example: "max.mustermann@host.de"
+        password:
+          type: string
+          example: "Test-123"
+        role:
+          type: string
+          example: admin | member
+
+
+
+    Vehicle:
+      type: object
+      required:
+        - vin
+      properties:
+        vin:
+          type: string
+          example: "1P3EW65F4VV300946"
+        year:
+          type: integer
+          format: int32
+          example: 2001
+        make:
+          type: "string"
+          example: "München"
+        model:
+          type: "string"
+          example: "BMW"
+        type:
+          type: "string"
+          example: "CONVERTIBLE 2-DR"
+        color:
+          type: "string"
+          example: "Blue"
+        weight:
+          type: integer
+          format: int32
+          example: 2862
+        dimensions:
+          $ref: '#/components/schemas/Dimensions'
+        license:
+          type: string
+          example: "Tü-T-7502"
+
+
+    Dimensions:
+      type: object
+      properties:
+        height:
+          type: number
+          example: 1.20
+        width:
+          type: number
+          example: 2.0
+        length:
+          type: number
+          example: 6
+
+    FuelCostItem:
+      type: object
+      required:
+        - id
+        - date
+        - price
+        - volume
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "6c84fb90-12c4-11e1-840d-7b25c5ee775a"
+        km:
+          type: integer
+          format: int32
+          example: 90600
+          description: mileage in km
+        price:
+          type: number
+          description: price in €
+          format: float
+          example: 80.4
+        date:
+          type: integer
+          format: date
+          example: 122234234
+          description: gives the date of the cost item in ms
+        volume:
+          type: number
+          format: float
+          description: fuel volume in l
+          example: 42.5
+        consumption:
+          type: number
+          format: float
+          description: consumption of the cost item
+        type:
+          type: string
+          example: "super"
+          description: type of the fuel. diesel | super | e10 | super plus | gaz
+
+
+
+    SingleCostItem:
+      type: object
+      required:
+        - id
+        - date
+        - price
+        - type
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "6c84fb90-12c4-11e1-840d-7b25c5ee775a"
+        km:
+          type: integer
+          format: int32
+          example: 90600
+          description: mileage in km
+        price:
+          type: number
+          description: price in €
+          format: float
+          example: 80.4
+        date:
+          type: integer
+          format: date
+          example: 122234234
+          description: gives the date of the cost item in ms
+        type:
+          type: string
+          description: type of the cost item. repair | procurement | rest
+          example: "repair"
+        name:
+          type: string
+          description: name of the cost item
+          example: "new weels"
+        description:
+          type: string
+          example: "weels for the winter season"
+          description: closer description for the cost item (optional)
+
+
+
+
+    RepeatingCostItem:
+      type: object
+      required:
+        - id
+        - date
+        - period
+        - price
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "6c84fb90-12c4-11e1-840d-7b25c5ee775a"
+        price:
+          type: number
+          description: price in €
+          format: float
+          example: 80.4
+        date:
+          type: integer
+          format: date
+
+          description: the start date of the cost item in ms
+        period:
+          type: string
+          description: "period for this cost item"
+        name:
+          type: string
+          description: name of the cost item
+          example: "insurance"
+        description:
+          type: string
+          example: "liability insurance"
+          description: closer description for the cost item (optional)
+
+    Error:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            required:
+              - msg
+              - location
+            properties:
+              value:
+                type: string
+                example: TestValue
+              msg:
+                type: string
+                example: Invalid Value
+              param:
+                type: string
+                example: Password
+              location:
+                type: string
+                example: body
+
+          
+        
+        
+            
+    
+          
+
+
+    
+
+    
+    
