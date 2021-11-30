@@ -231,7 +231,7 @@ exports.checkVinParam = async (req, res, next) => {
 		.trim()
 		.escape()
 		.toUpperCase()
-		.custom(value => existsVinOnExist(value))
+		.custom(value => existsVinOnExist(value, req.body.username))
 		.run(req);
 
 	const errors = validationResult(req);
@@ -267,9 +267,10 @@ const existsVin = async (vin) => {
 /**
  * Checks whether the given vin exists or not, resolves if it does exist
  * @param vin
+ * @param username
  * @returns {Promise<unknown>}
  */
-const existsVinOnExist = async (vin) => {
+const existsVinOnExist = async (vin, username) => {
 	return new Promise((resolve, reject) => {
 		vehicleModel.findVin(vin, (err, result) => {
 			if (err) {
@@ -277,7 +278,11 @@ const existsVinOnExist = async (vin) => {
 			} else if (result.length === 0) {
 				reject('VIN doesn\'t exists');
 			} else {
-				resolve();
+				if (result[0].username !== username) {
+					reject('VIN doesn\'t exists');
+				} else {
+					resolve();
+				}
 			}
 		});
 	});
