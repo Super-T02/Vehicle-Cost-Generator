@@ -75,3 +75,18 @@ exports.modifyVehicle = (vin, updatedSet, callback) => {
 		}
 	});
 };
+
+/**
+ * Get a specific vehicle by ID
+ * @param vin
+ * @param callback
+ */
+exports.getVehicle = (vin, callback) => {
+	db.vehicle.find({vin: vin}, (err, data) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, data);
+		}
+	});
+};

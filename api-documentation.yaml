@@ -356,6 +356,65 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
   /users/{username}/vehicles/{vin}:
+    get:
+      tags:
+        - Vehicles
+      summary: Get a specific vehicle of the user
+      description: |
+        Delivers a specific vehicle of the given username with the given vin
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+      responses:
+        '200':
+          description: Vehicle of the User
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user or vin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     delete:
       tags:
         - Vehicles

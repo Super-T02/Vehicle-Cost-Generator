@@ -1,6 +1,5 @@
 const vehicleModel = require('../models/vehicleModel');
 const {validationResult, check, body} = require('express-validator');
-const {generateErrorMessage} = require('../util/error');
 
 /**
  * Get a list of all vehicles
@@ -8,9 +7,9 @@ const {generateErrorMessage} = require('../util/error');
  * @param callback
  */
 exports.getAlLVehicles = (req, callback) => {
-	const {user} = req.body;
+	const {username} = req.body;
 
-	vehicleModel.getAllVehicles(user.username, (err, vehicles) => {
+	vehicleModel.getAllVehicles(username, (err, vehicles) => {
 		if (err) {
 			callback(err, null);
 		} else {
@@ -37,12 +36,32 @@ exports.addNewVehicle = (req, callback) => {
 };
 
 /**
+ * Gets a specific vehicle
+ * @param req
+ * @param callback
+ */
+exports.getVehicle = (req, callback) => {
+	const {vin} = req;
+
+	vehicleModel.getVehicle(vin, (err, data) => {
+		if (err) {
+			callback(err, null);
+		}else if (data.length === 0) {
+			callback(null, null);
+		} else {
+			callback(null, data[0]);
+		}
+	});
+};
+
+/**
  * Updates a vehicle with given vin und full Set
  * @param req
  * @param callback
  */
 exports.updateVehicle = (req, callback) => {
-	const { vehicle, vin } = req.body;
+	const {vehicle} = req.body;
+	const {vin} = req;
 
 	vehicleModel.modifyVehicle(vin, vehicle, (err, numReplaced) => {
 		if (err) {
@@ -61,7 +80,7 @@ exports.updateVehicle = (req, callback) => {
  * @param callback
  */
 exports.deleteVehicle = (req, callback) => {
-	const {vin} = req.body;
+	const {vin} = req;
 
 	vehicleModel.deleteVehicle(vin, (err, data) => {
 		if (err) {
@@ -86,7 +105,9 @@ exports.checkVehicle = async (req, res, next) => {
 		.bail()
 		.isString()
 		.bail()
-		.trim(' ')
+		.trim()
+		.escape()
+
 		.toUpperCase()
 		.custom(value => existsVin(value))
 		.run(req);
@@ -175,9 +196,11 @@ exports.checkVehicle = async (req, res, next) => {
 			license
 		} = req.body;
 
+		const newVin = vin.replace(/\s+/, '_');
+
 		req.body.vehicle = {
 			username: username,
-			vin: vin,
+			vin: newVin,
 			year: year ? year : null,
 			make: make ? make : null,
 			model: model ? model : null,
@@ -205,7 +228,8 @@ exports.checkVinParam = async (req, res, next) => {
 		.bail()
 		.isString()
 		.bail()
-		.trim(' ')
+		.trim()
+		.escape()
 		.toUpperCase()
 		.custom(value => existsVinOnExist(value))
 		.run(req);
@@ -215,7 +239,7 @@ exports.checkVinParam = async (req, res, next) => {
 	if (!errors.isEmpty()) {
 		return res.status(400).json({errors: errors.array()});
 	} else {
-		req.body.vin = req.params.vin;
+		req.vin = req.params.vin.replace(/\s+/, '_');
 		next();
 	}
 };
