@@ -1,5 +1,5 @@
 const vehicleModel = require('../models/vehicleModel');
-const {validationResult, check} = require('express-validator');
+const {validationResult, check, body} = require('express-validator');
 const {generateErrorMessage} = require('../util/error');
 const {run} = require('nodemon/lib/monitor');
 
@@ -73,6 +73,7 @@ exports.checkVehicle = async (req, res, next) => {
 		.run(req);
 
 	await check('year')
+		.if(body('year').exists())
 		.isNumeric()
 		.bail()
 		.custom(value => {
@@ -85,22 +86,27 @@ exports.checkVehicle = async (req, res, next) => {
 		.run(req);
 
 	await check('make')
+		.if(body('make').exists())
 		.isString()
 		.run(req);
 
 	await check('model')
+		.if(body('model').exists())
 		.isString()
 		.run(req);
 
 	await check('type')
+		.if(body('type').exists())
 		.isString()
 		.run(req);
 
 	await check('color')
+		.if(body('color').exists())
 		.isString()
 		.run(req);
 
 	await check('weight')
+		.if(body('weight').exists())
 		.isNumeric()
 		.bail()
 		.custom(value => {
@@ -113,18 +119,22 @@ exports.checkVehicle = async (req, res, next) => {
 		.run(req);
 
 	await check('dimensions.height')
+		.if(body('dimensions.height').exists())
 		.isNumeric()
 		.run(req);
 
 	await check('dimensions.width')
+		.if(body('dimensions.width').exists())
 		.isNumeric()
 		.run(req);
 
 	await check('dimensions.length')
+		.if(body('dimensions.length').exists())
 		.isNumeric()
 		.run(req);
 
 	await check('license')
+		.if(body('license').exists())
 		.isString()
 		.run(req);
 
@@ -133,16 +143,30 @@ exports.checkVehicle = async (req, res, next) => {
 	if (!errors.isEmpty()) {
 		return res.status(400).json({errors: errors.array()});
 	} else {
+		const {
+			username,
+			vin,
+			year,
+			make,
+			model,
+			type,
+			color,
+			weight,
+			dimensions,
+			license
+		} = req.body;
+
 		req.body.vehicle = {
-			vin: req.body.vin,
-			year: req.body.year,
-			make: req.body.make,
-			model: req.body.model,
-			type: req.body.type,
-			color: req.body.color,
-			weight: req.body.weight,
-			dimensions: req.body.dimensions,
-			license: req.body.license
+			username: username,
+			vin: vin,
+			year: year ? year : null,
+			make: make ? make : null,
+			model: model ? model : null,
+			type: type ? type : null,
+			color: color ? color : null,
+			weight: weight ? weight : null,
+			dimensions: dimensions ? dimensions : null,
+			license: license ? license : null
 		};
 		next();
 	}
