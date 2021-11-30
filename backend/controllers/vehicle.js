@@ -15,11 +15,22 @@ router.post('/', vehicleService.checkVehicle, (req, res) => {
 });
 
 router.get('/', (req, res) => {
+
 	vehicleService.getAlLVehicles(req, (err, vehicles) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
 		} else {
 			res.status(200).json(vehicles);
+		}
+	});
+});
+
+router.delete('/:vin', vehicleService.checkVinParam, (req, res) => {
+	vehicleService.deleteVehicle(req, (err, data) => {
+		if (err) {
+			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+		} else {
+			res.status(204).json({});
 		}
 	});
 });

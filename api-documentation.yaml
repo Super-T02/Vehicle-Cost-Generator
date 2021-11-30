@@ -355,6 +355,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - Vehicles
+      summary: Deletes one Vehicle
+      description: |
+        Deletes one Vehicle with the given vin
+      parameters:
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+      responses:
+        '204':
+          description: Successfully deleted
+        '400':
+          description: The vin does't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
 
 

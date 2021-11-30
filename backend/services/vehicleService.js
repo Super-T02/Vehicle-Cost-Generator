@@ -32,7 +32,24 @@ exports.addNewVehicle = (req, callback) => {
 		if (err) {
 			callback(err, null);
 		} else {
-			callback(null, err);
+			callback(null, data);
+		}
+	});
+};
+
+/**
+ * Delete a vehicle via vin
+ * @param req
+ * @param callback
+ */
+exports.deleteVehicle = (req, callback) => {
+	const {vin} = req.body;
+
+	vehicleModel.deleteVehicle(vin, (err, data) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, data);
 		}
 	});
 };
@@ -131,7 +148,33 @@ exports.checkVehicle = async (req, res, next) => {
 	}
 };
 
+/**
+ * Checks the vin in the params
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<*>}
+ */
+exports.checkVinParam = async (req, res, next) => {
+	await check('vin')
+		.exists()
+		.bail()
+		.isString()
+		.bail()
+		.trim(' ')
+		.toUpperCase()
+		.custom(value => existsVinOnExist(value))
+		.run(req);
 
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({errors: errors.array()});
+	} else {
+		req.body.vin = req.params.vin;
+		next();
+	}
+};
 
 /**
  * Checks whether the given vin exists or not, resolves if it doesn't exist
@@ -145,6 +188,26 @@ const existsVin = async (vin) => {
 				reject('Internal Server Error');
 			} else if (result.length !== 0) {
 				reject('VIN already exists');
+			} else {
+				resolve();
+			}
+
+		});
+	});
+};
+
+/**
+ * Checks whether the given vin exists or not, resolves if it does exist
+ * @param vin
+ * @returns {Promise<unknown>}
+ */
+const existsVinOnExist = async (vin) => {
+	return new Promise((resolve, reject) => {
+		vehicleModel.findVin(vin, (err, result) => {
+			if (err) {
+				reject('Internal Server Error');
+			} else if (result.length === 0) {
+				reject('VIN doesn\'t exists');
 			} else {
 				resolve();
 			}

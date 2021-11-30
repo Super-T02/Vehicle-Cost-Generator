@@ -44,3 +44,18 @@ exports.findVin = (vin, callback) => {
 		}
 	});
 };
+
+/**
+ * Deletes a Vehicle via vin (primary key)
+ * @param vin
+ * @param callback
+ */
+exports.deleteVehicle = (vin, callback) => {
+	db.vehicle.remove({vin: vin}, (err, data) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, data);
+		}
+	});
+};
