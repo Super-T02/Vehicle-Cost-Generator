@@ -24,7 +24,7 @@ router.use('/:username',
 // Only paths needing a verified token !
 
 router.get('/:username',  (req, res) => {
-	const { username } = req.params;
+	const {username} = req.params;
 
 	userService.getUser(username, (err, data) => {
 		if (err) {

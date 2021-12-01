@@ -13,7 +13,9 @@ export class AuthService {
   username: string = 'user';
 
   constructor(public jwtHelper: JwtHelperService,
-              private api: ApiService) { }
+              private api: ApiService) {
+    this.actualizeName();
+  }
 
   /**
    * Gets the actual username from the JWT token and save it into this.username as string

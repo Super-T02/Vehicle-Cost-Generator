@@ -1,1 +1,9 @@
-<p>overview works!</p>
+<nz-breadcrumb>
+  <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
+  <nz-breadcrumb-item routerLink="/overview">Overview</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="inner-content">
+  <h1>Overview for {{this.auth.username | uppercase}}</h1>
+  <app-vehicle *ngFor="let vehicle of this.vehicles" [vehicle]="vehicle"></app-vehicle>
+</div>
