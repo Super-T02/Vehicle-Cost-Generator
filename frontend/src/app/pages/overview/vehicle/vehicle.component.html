@@ -1,35 +1,42 @@
-<nz-card class="vehicleCard" nzHoverable [nzCover]="coverTemplate">
+<nz-card
+  class="vehicleCard"
+  nzHoverable
+  [nzCover]="coverTemplate"
+  [nzActions]="[actionDelete, actionEdit]"
+>
   <nz-card-meta
     [nzTitle]="titleTemplate"
     [nzDescription]="descriptionTemplate"
   >
-
   </nz-card-meta>
 </nz-card>
 
 <ng-template #coverTemplate>
-  <img id="carPic" alt="Vehicle" src="assets/car.svg">
+  <img [routerLink]="'/overview/' + vehicle.vin" id="carPic" alt="Vehicle" src="assets/car.svg">
 </ng-template>
 
 <ng-template #descriptionTemplate>
-  <div class="flex">
-    <div>Build:</div>
-    <div>
-      {{vehicle.year? vehicle.year : 'not known'}}
+  <div [routerLink]="'/overview/' + vehicle.vin">
+    <div class="flex">
+      <div>Build:</div>
+      <div>
+        {{vehicle.year? vehicle.year : 'not known'}}
+      </div>
+    </div>
+    <div class="flex">
+      <div>
+        License:
+      </div>
+      <div>
+        {{vehicle.license? vehicle.license : 'not known'}}
+      </div>
     </div>
   </div>
-  <div class="flex">
-    <div>
-      License:
-    </div>
-    <div>
-      {{vehicle.license? vehicle.license : 'not known'}}
-    </div>
-  </div>
+
 </ng-template>
 
 <ng-template #titleTemplate>
-  <div class="flex">
+  <div class="flex" [routerLink]="'/overview/' + vehicle.vin">
     <div>
       {{vehicle.make}} {{vehicle.model}}
     </div>
@@ -37,4 +44,26 @@
       (<i>{{vehicle.name}}</i>)
     </div>
   </div>
+</ng-template>
+
+<ng-template #actionDelete>
+  <i
+    nz-icon
+    nz-tooltip
+    (click)="delete()"
+    nzType="delete"
+    nzTooltipTitle="Delete"
+    nzTooltipPlacement="bottom"
+  ></i>
+</ng-template>
+
+<ng-template #actionEdit>
+  <i
+    nz-icon
+    nz-tooltip
+    (click)="edit()"
+    nzType="edit"
+    nzTooltipTitle="Edit"
+    nzTooltipPlacement="bottom"
+  > </i>
 </ng-template>

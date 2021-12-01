@@ -10,10 +10,66 @@ import {Dimension, Vehicle} from '../../models/vehicle.model';
 export class OverviewComponent implements OnInit {
   vehicles: Vehicle[];
 
+
   constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
-    this.vehicles = [{
+    this.vehicles = [
+      {
+        vin: 'WBAUK31050VM63456',
+        name: 'Mein BMW',
+        year: 2010,
+        make: 'BMW',
+        model: '116i',
+        type: 'Little Car',
+        color: 'Black',
+        license: 'TÜ-T-7502',
+      },{
+        vin: 'WBAUK31050VM63456',
+        name: 'Mein BMW',
+        year: 2010,
+        make: 'BMW',
+        model: '116i',
+        type: 'Little Car',
+        color: 'Black',
+        license: 'TÜ-T-7502',
+      },{
+        vin: 'WBAUK31050VM63456',
+        name: 'Mein BMW',
+        year: 2010,
+        make: 'BMW',
+        model: '116i',
+        type: 'Little Car',
+        color: 'Black',
+        license: 'TÜ-T-7502',
+      },{
+        vin: 'WBAUK31050VM63456',
+        name: 'Mein BMW',
+        year: 2010,
+        make: 'BMW',
+        model: '116i',
+        type: 'Little Car',
+        color: 'Black',
+        license: 'TÜ-T-7502',
+      },{
+        vin: 'WBAUK31050VM63456',
+        name: 'Mein BMW',
+        year: 2010,
+        make: 'BMW',
+        model: '116i',
+        type: 'Little Car',
+        color: 'Black',
+        license: 'TÜ-T-7502',
+      },
+    ];
+  }
+
+  addVehicle() {
+    console.log('add Vehicle');
+  }
+}
+/*
+{
       vin: 'WBAUK31050VM63456',
       name: 'Mein BMW',
       year: 2010,
@@ -22,7 +78,95 @@ export class OverviewComponent implements OnInit {
       type: 'Little Car',
       color: 'Black',
       license: 'TÜ-T-7502',
-    }];
-  }
-
-}
+    },
+    {
+      vin: 'WBAUK31050VM63456',
+      name: 'Mein BMW',
+      year: 2010,
+      make: 'BMW',
+      model: '116i',
+      type: 'Little Car',
+      color: 'Black',
+      license: 'TÜ-T-7502',
+    },
+    {
+      vin: 'WBAUK31050VM63456',
+      name: 'Mein BMW',
+      year: 2010,
+      make: 'BMW',
+      model: '116i',
+      type: 'Little Car',
+      color: 'Black',
+      license: 'TÜ-T-7502',
+    },
+    {
+      vin: 'WBAUK31050VM63456',
+      name: 'Mein BMW',
+      year: 2010,
+      make: 'BMW',
+      model: '116i',
+      type: 'Little Car',
+      color: 'Black',
+      license: 'TÜ-T-7502',
+    },
+    {
+      vin: 'WBAUK31050VM63456',
+      name: 'Mein BMW',
+      year: 2010,
+      make: 'BMW',
+      model: '116i',
+      type: 'Little Car',
+      color: 'Black',
+      license: 'TÜ-T-7502',
+    },
+    {
+      vin: 'WBAUK31050VM63456',
+      name: 'Mein BMW',
+      year: 2010,
+      make: 'BMW',
+      model: '116i',
+      type: 'Little Car',
+      color: 'Black',
+      license: 'TÜ-T-7502',
+    },
+    {
+      vin: 'WBAUK31050VM63456',
+      name: 'Mein BMW',
+      year: 2010,
+      make: 'BMW',
+      model: '116i',
+      type: 'Little Car',
+      color: 'Black',
+      license: 'TÜ-T-7502',
+    },
+    {
+      vin: 'WBAUK31050VM63456',
+      name: 'Mein BMW',
+      year: 2010,
+      make: 'BMW',
+      model: '116i',
+      type: 'Little Car',
+      color: 'Black',
+      license: 'TÜ-T-7502',
+    },
+    {
+      vin: 'WBAUK31050VM63456',
+      name: 'Mein BMW',
+      year: 2010,
+      make: 'BMW',
+      model: '116i',
+      type: 'Little Car',
+      color: 'Black',
+      license: 'TÜ-T-7502',
+    },
+    {
+      vin: 'WBAUK31050VM63456',
+      name: 'Mein BMW',
+      year: 2010,
+      make: 'BMW',
+      model: '116i',
+      type: 'Little Car',
+      color: 'Black',
+      license: 'TÜ-T-7502',
+    }
+* */

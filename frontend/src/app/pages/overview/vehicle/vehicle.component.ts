@@ -15,4 +15,12 @@ export class VehicleComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  delete(): void {
+    console.log('Delete', this.vehicle.vin);
+  }
+
+  edit(): void {
+    console.log('Edit', this.vehicle.vin);
+  }
+
 }

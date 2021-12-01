@@ -1,0 +1,50 @@
+@import "~ng-zorro-antd/ng-zorro-antd.less";
+
+.vehicleFlex{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: var(--inner-grid-padding);
+}
+
+.statsFlex {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  min-width: 250px;
+  max-width: 300px;
+}
+
+.outerFlex{
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--inner-grid-padding);
+}
+
+.titleFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+#vehicles{
+  flex: 1 1 auto;
+}
+
+@media screen and (max-width: @screen-sm-max)
+{
+  .outerFlex{
+    flex-direction: column-reverse;
+  }
+
+  .statsFlex{
+    flex-direction: row;
+    min-width: unset;
+    max-width: unset;
+    flex-wrap: wrap;
+  }
+}
+
