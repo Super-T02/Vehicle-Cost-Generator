@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {LastRouteService} from './last-route.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {UtilService} from './util.service';
+import {concatMap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -110,15 +111,25 @@ export class AuthService {
    */
   logout(success: boolean = true, message: string = 'You are successfully logged out'): void {
     if (this.authenticated) {
-      this.api.logout(this.util.getRefreshToken()).subscribe();
+      this.api.logout(this.util.getRefreshToken()).subscribe(); // TODO: Logout message on success!
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       this.authenticated = false;
-      success ? this.message.success(message, {
-        nzDuration: 5000
-      }) : this.message.error(message, {
-        nzDuration: 5000
-      });
+      this.message.loading('Logout', {nzDuration: 500});
+      if (success) {
+        setTimeout(() => {
+          this.message.success(message, {
+            nzDuration: 5000
+          });
+        }, 500);
+      } else {
+        setTimeout(() => {
+          this.message.error(message, {
+            nzDuration: 5000
+          });
+        }, 500);
+      }
+
     }
   }
 }
