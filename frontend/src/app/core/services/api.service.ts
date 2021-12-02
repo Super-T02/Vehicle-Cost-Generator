@@ -72,7 +72,7 @@ export class ApiService {
           newError.message = 'Please inform the developers!';
           break;
       }
-
+      console.log(newError);
       return throwError(newError);
     }
 
@@ -121,6 +121,7 @@ export class ApiService {
   	);
   }
 
+
   /**
    * gets a new access token
    * @param refreshToken
@@ -128,6 +129,27 @@ export class ApiService {
   getNewToken(refreshToken: String): Observable<ApiOutput> {
     return this.http.post<HttpResponse<any>>(
       `${this.baseUrl}/auth/token`,
+      {token: refreshToken},
+      {observe: 'response'}
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Remove refreshtoken from db
+   * @param refreshToken
+   */
+  logout(refreshToken: String): Observable<ApiOutput> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/auth/logout`,
       {token: refreshToken},
       {observe: 'response'}
     ).pipe(

@@ -5,7 +5,7 @@ import {ResizeService} from '../../core/services/resize.service';
 import {MEDIA_BREAKPOINTS} from '../../../environments/constants';
 import {ApiService} from '../../core/services/api.service';
 import {AuthService} from '../../core/services/auth.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -19,6 +19,7 @@ export class AddVehicleComponent implements OnInit {
   breakPoints = MEDIA_BREAKPOINTS;
   currentStep = 0;
   countdown = 0;
+  retries = 0; //num of retries
   buffer: VehicleInput; // Buffers the data of the first form
 
   constructor(
@@ -27,7 +28,9 @@ export class AddVehicleComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private router: Router
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
 
@@ -92,15 +95,30 @@ export class AddVehicleComponent implements OnInit {
 
     this.addVehicle.disabled;
 
-    this.api.createVehicle(result, this.auth.username).subscribe(result => {
+    this.api.createVehicle(result, this.auth.username).subscribe(
+    result => {
       this.currentStep += 1;
       this.countdown = 5;
+
+      // Interval for the timer
       setInterval(() => {
         this.countdown > 0 ? this.countdown -- : undefined;
       },1000);
+
+      // Auto redirect
       setTimeout(() => {
         this.router.navigate(['overview']).then();
       },5000);
+    },
+    error => {
+      if (error.code === 403) {
+        this.auth.handleAuthError(error);
+      } else if (error.code === 400) {
+        this.currentStep = 0;
+        throw(error);
+      } else {
+        throw(error);
+      }
     });
   }
 

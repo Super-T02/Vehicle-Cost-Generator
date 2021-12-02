@@ -10,9 +10,12 @@ export class VehicleComponent implements OnInit {
 
   @Input() vehicle: Vehicle;
 
+  year: number;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.vehicle.year? this.year = new Date(this.vehicle.year).getFullYear(): this.year = 0;
   }
 
   delete(): void {

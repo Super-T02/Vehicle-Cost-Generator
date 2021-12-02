@@ -14,7 +14,7 @@ export interface Vehicle {
   username: string,
   vin: string,
   name: string,
-  year?: Date,
+  year?: string,
   make: string,
   model?: string,
   type?: string,

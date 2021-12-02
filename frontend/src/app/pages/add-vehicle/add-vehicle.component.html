@@ -179,14 +179,6 @@
             <nz-form-control>
               <div class="button-flex">
                 <button
-                  nz-button
-                  nzType="default"
-                  nzShape="round"
-                  (click)="pre()"
-                >
-                  Previous
-                </button>
-                <button
                   *ngIf="currentStep === 1"
                   id="add-btn"
                   nz-button
@@ -195,6 +187,14 @@
                   [disabled]="!addVehicle.valid"
                 >
                   Add Vehicle <i nz-icon nzType="plus"></i>
+                </button>
+                <button
+                  nz-button
+                  nzType="default"
+                  nzShape="round"
+                  (click)="pre()"
+                >
+                  Previous
                 </button>
               </div>
 
