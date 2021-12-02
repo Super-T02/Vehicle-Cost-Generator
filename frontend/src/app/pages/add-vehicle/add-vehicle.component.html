@@ -207,7 +207,11 @@
 <!--    Third Step-->
     <div *ngIf="currentStep === 2">
       <img class="pic" src="assets/login.svg" alt="Log-in Picture">
-      Vehicle Created
+      <h1>Vehicle Created successfully!</h1>
+      You will be redirected to overview in {{countdown | number}} seconds ...
+      <div *ngIf="countdown === 0" routerLink="overview">
+        If you won't be redirected click <a routerLink="overview">here</a>!
+      </div>
     </div>
   </div>
 </div>

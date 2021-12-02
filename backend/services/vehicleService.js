@@ -121,15 +121,8 @@ exports.checkVehicle = async (req, res, next) => {
 
 	await check('year')
 		.if(body('year').exists())
-		.isNumeric()
-		.bail()
-		.custom(value => {
-			if (value < 1000 || value > 3000) {
-				return Promise.reject('No valid year!');
-			} else {
-				return Promise.resolve();
-			}
-		})
+		.if(() => req.body.year)
+		.isString()
 		.run(req);
 
 	await check('make')
@@ -140,21 +133,25 @@ exports.checkVehicle = async (req, res, next) => {
 
 	await check('model')
 		.if(body('model').exists())
+		.if(() => req.body.model)
 		.isString()
 		.run(req);
 
 	await check('type')
 		.if(body('type').exists())
+		.if(() => req.body.type)
 		.isString()
 		.run(req);
 
 	await check('color')
 		.if(body('color').exists())
+		.if(() => req.body.color)
 		.isString()
 		.run(req);
 
 	await check('weight')
 		.if(body('weight').exists())
+		.if(() => req.body.weight)
 		.isNumeric()
 		.bail()
 		.custom(value => {
@@ -166,19 +163,9 @@ exports.checkVehicle = async (req, res, next) => {
 		})
 		.run(req);
 
-	await check('dimensions.height')
-		.if(body('dimensions.height').exists())
-		.isNumeric()
-		.run(req);
-
-	await check('dimensions.width')
-		.if(body('dimensions.width').exists())
-		.isNumeric()
-		.run(req);
-
-
 	await check('license')
 		.if(body('license').exists())
+		.if(() => req.body.license)
 		.isString()
 		.run(req);
 

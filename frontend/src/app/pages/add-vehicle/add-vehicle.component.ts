@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {VehicleInput} from '../../models/vehicle.model';
 import {ResizeService} from '../../core/services/resize.service';
 import {MEDIA_BREAKPOINTS} from '../../../environments/constants';
+import {ApiService} from '../../core/services/api.service';
+import {AuthService} from '../../core/services/auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-vehicle',
@@ -13,16 +16,21 @@ export class AddVehicleComponent implements OnInit {
 
   addVehicle: FormGroup;
   addVehicleRequire: FormGroup;
-  currentStep = 0;
-  buffer: VehicleInput;
   breakPoints = MEDIA_BREAKPOINTS;
+  currentStep = 0;
+  countdown = 0;
+  buffer: VehicleInput; // Buffers the data of the first form
 
   constructor(
     private fb: FormBuilder,
-    public resize: ResizeService
+    public resize: ResizeService,
+    private api: ApiService,
+    private auth: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+
     this.addVehicleRequire = this.fb.group({
       vin: [null, Validators.required],
       name: [null, Validators.required],
@@ -40,6 +48,9 @@ export class AddVehicleComponent implements OnInit {
 
   }
 
+  /**
+   * Submit of the required data
+   */
   onSubmitFirst(): void {
     // Validate Form
     for (const i in this.addVehicleRequire.controls) {
@@ -50,10 +61,12 @@ export class AddVehicleComponent implements OnInit {
     }
 
     this.buffer = this.addVehicleRequire.value;
-    console.log(this.addVehicleRequire.value);
     this.currentStep += 1;
   }
 
+  /**
+   * Submit for adding the car
+   */
   onSubmitSecond(): void {
     // Validate Form
     for (const i in this.addVehicle.controls) {
@@ -64,6 +77,7 @@ export class AddVehicleComponent implements OnInit {
     }
     const {value} = this.addVehicle;
 
+    // Build the result
     const result: VehicleInput = {
       vin: this.buffer.vin,
       name: this.buffer.name,
@@ -76,16 +90,37 @@ export class AddVehicleComponent implements OnInit {
       weight: value.weight
     };
 
-    this.currentStep += 1;
-    console.log(this.addVehicle.value);
-    console.log(result);
+    this.addVehicle.disabled;
+
+    this.api.createVehicle(result, this.auth.username).subscribe(result => {
+      this.currentStep += 1;
+      this.countdown = 5;
+      setInterval(() => {
+        this.countdown > 0 ? this.countdown -- : undefined;
+      },1000);
+      setTimeout(() => {
+        this.router.navigate(['overview']).then();
+      },5000);
+    });
   }
 
+  /**
+   * Go back
+   */
   pre(): void {
     this.currentStep -= 1;
   }
 
+  /**
+   * Format to kg
+   * @param value
+   */
   formatterKG = (value: number): string => `${value} kg`;
+
+  /**
+   * Parse kg in number
+   * @param value
+   */
   parserKG = (value: string): string => value.replace(' kg', '');
 
 }
