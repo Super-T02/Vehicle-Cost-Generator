@@ -26,6 +26,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/overview/overview.module').then(m => m.OverviewModule)
   },
 	{
+    path: 'addVehicle',
+    canActivate: [AuthGuardService],
+    loadChildren: () => import('./pages/add-vehicle/add-vehicle.module').then(m => m.AddVehicleModule)
+  },
+	{
 		path: '**',
 		redirectTo: '404'
 	}

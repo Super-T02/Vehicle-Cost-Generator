@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ApiService} from './api.service';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ApiError, ApiOutput} from '../../models/api.model';
 
 @Injectable({
@@ -75,8 +75,6 @@ export class AuthService {
         observer.next(true);
       }
     });
-
-
   }
 
 }

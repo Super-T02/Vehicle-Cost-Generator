@@ -1,18 +1,24 @@
-export interface Vehicle {
+export interface VehicleInput {
   vin: string,
   name: string,
-  year?: number,
+  year?: Date,
   make: string,
   model?: string,
   type?: string,
   color?: string,
   weight?: number,
-  dimensions?: Dimension,
   license?: string
 }
 
-export interface Dimension {
-  height: number,
-  width: number,
-  length: number
+export interface Vehicle {
+  username: string,
+  vin: string,
+  name: string,
+  year?: Date,
+  make: string,
+  model?: string,
+  type?: string,
+  color?: string,
+  weight?: number,
+  license?: string
 }

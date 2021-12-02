@@ -107,9 +107,16 @@ exports.checkVehicle = async (req, res, next) => {
 		.bail()
 		.trim()
 		.escape()
-
 		.toUpperCase()
 		.custom(value => existsVin(value))
+		.run(req);
+
+	await check('name')
+		.exists()
+		.bail()
+		.isString()
+		.bail()
+		.trim()
 		.run(req);
 
 	await check('year')
@@ -126,7 +133,8 @@ exports.checkVehicle = async (req, res, next) => {
 		.run(req);
 
 	await check('make')
-		.if(body('make').exists())
+		.exists()
+		.bail()
 		.isString()
 		.run(req);
 
@@ -168,10 +176,6 @@ exports.checkVehicle = async (req, res, next) => {
 		.isNumeric()
 		.run(req);
 
-	await check('dimensions.length')
-		.if(body('dimensions.length').exists())
-		.isNumeric()
-		.run(req);
 
 	await check('license')
 		.if(body('license').exists())
@@ -186,13 +190,13 @@ exports.checkVehicle = async (req, res, next) => {
 		const {
 			username,
 			vin,
+			name,
 			year,
 			make,
 			model,
 			type,
 			color,
 			weight,
-			dimensions,
 			license
 		} = req.body;
 
@@ -201,13 +205,13 @@ exports.checkVehicle = async (req, res, next) => {
 		req.body.vehicle = {
 			username: username,
 			vin: newVin,
+			name: name,
 			year: year ? year : null,
 			make: make ? make : null,
 			model: model ? model : null,
 			type: type ? type : null,
 			color: color ? color : null,
 			weight: weight ? weight : null,
-			dimensions: dimensions ? dimensions : null,
 			license: license ? license : null
 		};
 
