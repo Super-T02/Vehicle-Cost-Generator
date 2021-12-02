@@ -6,11 +6,14 @@
 
 <div class="inner-content">
 
-  <nz-steps [nzCurrent]="currentStep">
-    <nz-step nzTitle="Important Data"></nz-step>
-    <nz-step nzTitle="Optional Data"></nz-step>
-    <nz-step nzTitle="Finished"></nz-step>
-  </nz-steps>
+  <div class="steps-wrapper">
+    <nz-steps [nzCurrent]="currentStep" >
+      <nz-step nzTitle="Important Data"></nz-step>
+      <nz-step nzTitle="Optional Data"></nz-step>
+      <nz-step nzTitle="Finished"></nz-step>
+    </nz-steps>
+  </div>
+
 
   <div class="steps-content">
 
@@ -64,9 +67,6 @@
                 >
               </nz-input-group>
             </nz-form-control>
-          </nz-form-item>
-
-          <nz-form-item>
             <nz-form-control>
               <nz-input-group>
                 <input
@@ -119,20 +119,6 @@
 
         <form class="form"  [formGroup]="addVehicle" (ngSubmit)="onSubmitSecond()" nz-form>
           <nz-form-item>
-            <nz-form-control nzErrorTip="Year should be bigger than 1000 and under 3000!">
-              <nz-input-group>
-                <nz-date-picker
-                  nzMode="year"
-                  formControlName="year"
-                  id="year"
-                  nzPlaceHolder="Year of Build"
-                >
-                </nz-date-picker>
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-
-          <nz-form-item>
             <nz-form-control>
               <nz-input-group>
                 <input
@@ -144,6 +130,19 @@
                 >
               </nz-input-group>
             </nz-form-control>
+            <nz-form-control nzErrorTip="Year should be bigger than 1000 and under 3000!">
+              <nz-input-group>
+                <nz-date-picker
+                  nzMode="year"
+                  formControlName="year"
+                  id="year"
+                  nzPlaceHolder="Year of Build"
+                  style="width: 100%"
+                >
+                </nz-date-picker>
+              </nz-input-group>
+            </nz-form-control>
+
           </nz-form-item>
 
           <nz-form-item>
@@ -178,24 +177,27 @@
 
           <nz-form-item>
             <nz-form-control>
-              <button
-                nz-button
-                nzType="default"
-                nzShape="round"
-                (click)="pre()"
-              >
-                Previous
-              </button>
-              <button
-                *ngIf="currentStep === 1"
-                id="add-btn"
-                nz-button
-                [nzType]="'primary'"
-                nzShape="round"
-                [disabled]="!addVehicle.valid"
-              >
-                Add Vehicle <i nz-icon nzType="plus"></i>
-              </button>
+              <div class="button-flex">
+                <button
+                  nz-button
+                  nzType="default"
+                  nzShape="round"
+                  (click)="pre()"
+                >
+                  Previous
+                </button>
+                <button
+                  *ngIf="currentStep === 1"
+                  id="add-btn"
+                  nz-button
+                  [nzType]="'primary'"
+                  nzShape="round"
+                  [disabled]="!addVehicle.valid"
+                >
+                  Add Vehicle <i nz-icon nzType="plus"></i>
+                </button>
+              </div>
+
             </nz-form-control>
           </nz-form-item>
         </form>

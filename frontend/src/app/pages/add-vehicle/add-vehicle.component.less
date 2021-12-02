@@ -1,9 +1,22 @@
 @import "~ng-zorro-antd/ng-zorro-antd.less";
 
 .steps-content{
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.inner-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.steps-wrapper{
+  width: 100%;
+  max-width: 1500px;
+  flex: 1 1 auto;
 }
 
 .inner-flex{
@@ -21,9 +34,10 @@
   justify-content: center;
   align-items: center;
   flex-grow: 2;
-  max-width: 1500px;
+  max-width: 1000px;
 
   form {
+    width: 100%;
     nz-form-item{
       width: 80%;
       min-width: 300px;
@@ -35,4 +49,10 @@
   flex-grow: 1;
   max-width: 400px;
   min-width: 150px;
+}
+
+.button-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
