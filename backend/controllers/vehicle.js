@@ -2,6 +2,7 @@ const express = require('express');
 const vehicleService = require('../services/vehicleService');
 const {generateErrorMessage} = require('../util/error');
 const router = express.Router();
+const singleCosts = require('./singleCost');
 
 router.post('/', vehicleService.checkVehicle, (req, res) => {
 
@@ -63,5 +64,7 @@ router.put('/:vin', vehicleService.checkVehicle, (req, res) => {
 		}
 	});
 });
+
+router.use('/:vin/singleCosts', singleCosts);
 
 module.exports = router;
