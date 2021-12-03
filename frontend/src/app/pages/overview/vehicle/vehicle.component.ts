@@ -21,7 +21,7 @@ export class VehicleComponent implements OnInit {
     private modal: NzModalService,
     private api: ApiService,
     private auth: AuthService,
-    private message: NzMessageService
+    private message: NzMessageService,
               ) { }
 
   ngOnInit(): void {
@@ -46,9 +46,4 @@ export class VehicleComponent implements OnInit {
       }
     });
   }
-
-  edit(): void {
-    console.log('Edit', this.vehicle.vin);
-  }
-
 }

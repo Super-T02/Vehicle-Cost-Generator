@@ -121,7 +121,6 @@ export class ApiService {
   	);
   }
 
-
   /**
    * gets a new access token
    * @param refreshToken
@@ -212,9 +211,64 @@ export class ApiService {
     );
   }
 
+  /**
+   * Get one specific vehicles of the given user
+   * @param username
+   * @param vin
+   */
+  getVehicle(username: string, vin: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Deletes a vehicle from the db
+   * @param vin
+   * @param username
+   */
   deleteVehicle(vin: string, username: string): Observable<ApiOutput> {
     return this.http.delete<HttpResponse<any>>(
       `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Updates a vehicle in the db
+   * @param vin
+   * @param username
+   * @param vehicle
+   */
+  updateVehicle(vin: string, username: string, vehicle: Vehicle): Observable<ApiOutput> {
+    return this.http.put<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      vehicle,
       {
         headers: this.generateHeader(),
         observe: 'response'

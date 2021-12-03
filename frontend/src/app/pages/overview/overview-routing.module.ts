@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: ':vin',
     component: VehicleViewComponent
+  },
+  {
+    path: 'updateVehicle/:vin',
+    loadChildren: () => import('../update-vehicle/update-vehicle.module').then(m => m.UpdateVehicleModule)
   }
 ];
 

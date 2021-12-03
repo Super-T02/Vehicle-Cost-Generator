@@ -61,7 +61,7 @@
   <i
     nz-icon
     nz-tooltip
-    (click)="edit()"
+    [routerLink]="'/overview/updateVehicle/' + vehicle.vin"
     nzType="edit"
     nzTooltipTitle="Edit"
     nzTooltipPlacement="bottom"

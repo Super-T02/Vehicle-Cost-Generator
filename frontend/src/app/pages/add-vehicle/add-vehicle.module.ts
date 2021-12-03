@@ -12,24 +12,26 @@ import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzInputNumberModule} from "ng-zorro-antd/input-number";
 import {NzStepsModule} from "ng-zorro-antd/steps";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
   declarations: [
     AddVehicleComponent
   ],
-  imports: [
-    CommonModule,
-    AddVehicleRoutingModule,
-    NzBreadCrumbModule,
-    NzFormModule,
-    ReactiveFormsModule,
-    NzInputModule,
-    NzButtonModule,
-    NzIconModule,
-    NzDatePickerModule,
-    NzInputNumberModule,
-    NzStepsModule
-  ]
+    imports: [
+        CommonModule,
+        AddVehicleRoutingModule,
+        NzBreadCrumbModule,
+        NzFormModule,
+        ReactiveFormsModule,
+        NzInputModule,
+        NzButtonModule,
+        NzIconModule,
+        NzDatePickerModule,
+        NzInputNumberModule,
+        NzStepsModule,
+        SharedModule
+    ]
 })
 export class AddVehicleModule { }
