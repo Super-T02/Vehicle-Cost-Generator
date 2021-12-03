@@ -1,4 +1,5 @@
 const singleCostModel = require('../models/singleCostModel');
+const fuelCostModel = require('../models/fuelCostModel');
 
 /**
  * Deletes all costs for this vin
@@ -16,6 +17,31 @@ exports.deleteAllCosts = async (vin) => {
 				for (const costItem of costItems) {
 					await new Promise((resolve1) => {
 						singleCostModel.deleteCostItem(costItem.id, (err, data) => {
+							if (err) {
+								// TODO: logg err
+								reject('DB Error');
+							} else  {
+								resolve1();
+							}
+						});
+					});
+				}
+
+				resolve();
+			}
+		});
+	});
+
+	await new Promise((resolve, reject) => {
+		fuelCostModel.getAllCostItems({vin: vin}, async (err, costItems) => {
+			if (err) {
+				// TODO: logg err
+				reject('DB Error');
+			} else {
+
+				for (const costItem of costItems) {
+					await new Promise((resolve1) => {
+						fuelCostModel.deleteCostItem(costItem.id, (err, data) => {
 							if (err) {
 								// TODO: logg err
 								reject('DB Error');
