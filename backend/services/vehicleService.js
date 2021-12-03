@@ -107,46 +107,51 @@ exports.checkVehicle = async (req, res, next) => {
 		.bail()
 		.trim()
 		.escape()
-
 		.toUpperCase()
 		.custom(value => existsVin(value))
 		.run(req);
 
+	await check('name')
+		.exists()
+		.bail()
+		.isString()
+		.bail()
+		.trim()
+		.run(req);
+
 	await check('year')
 		.if(body('year').exists())
-		.isNumeric()
-		.bail()
-		.custom(value => {
-			if (value < 1000 || value > 3000) {
-				return Promise.reject('No valid year!');
-			} else {
-				return Promise.resolve();
-			}
-		})
+		.if(() => req.body.year)
+		.isString()
 		.run(req);
 
 	await check('make')
-		.if(body('make').exists())
+		.exists()
+		.bail()
 		.isString()
 		.run(req);
 
 	await check('model')
 		.if(body('model').exists())
+		.if(() => req.body.model)
 		.isString()
 		.run(req);
 
 	await check('type')
 		.if(body('type').exists())
+		.if(() => req.body.type)
 		.isString()
 		.run(req);
 
 	await check('color')
 		.if(body('color').exists())
+		.if(() => req.body.color)
 		.isString()
 		.run(req);
 
 	await check('weight')
 		.if(body('weight').exists())
+		.if(() => req.body.weight)
 		.isNumeric()
 		.bail()
 		.custom(value => {
@@ -158,23 +163,9 @@ exports.checkVehicle = async (req, res, next) => {
 		})
 		.run(req);
 
-	await check('dimensions.height')
-		.if(body('dimensions.height').exists())
-		.isNumeric()
-		.run(req);
-
-	await check('dimensions.width')
-		.if(body('dimensions.width').exists())
-		.isNumeric()
-		.run(req);
-
-	await check('dimensions.length')
-		.if(body('dimensions.length').exists())
-		.isNumeric()
-		.run(req);
-
 	await check('license')
 		.if(body('license').exists())
+		.if(() => req.body.license)
 		.isString()
 		.run(req);
 
@@ -186,13 +177,13 @@ exports.checkVehicle = async (req, res, next) => {
 		const {
 			username,
 			vin,
+			name,
 			year,
 			make,
 			model,
 			type,
 			color,
 			weight,
-			dimensions,
 			license
 		} = req.body;
 
@@ -201,13 +192,13 @@ exports.checkVehicle = async (req, res, next) => {
 		req.body.vehicle = {
 			username: username,
 			vin: newVin,
+			name: name,
 			year: year ? year : null,
 			make: make ? make : null,
 			model: model ? model : null,
 			type: type ? type : null,
 			color: color ? color : null,
 			weight: weight ? weight : null,
-			dimensions: dimensions ? dimensions : null,
 			license: license ? license : null
 		};
 
@@ -231,7 +222,7 @@ exports.checkVinParam = async (req, res, next) => {
 		.trim()
 		.escape()
 		.toUpperCase()
-		.custom(value => existsVinOnExist(value))
+		.custom(value => existsVinOnExist(value, req.body.username))
 		.run(req);
 
 	const errors = validationResult(req);
@@ -267,9 +258,10 @@ const existsVin = async (vin) => {
 /**
  * Checks whether the given vin exists or not, resolves if it does exist
  * @param vin
+ * @param username
  * @returns {Promise<unknown>}
  */
-const existsVinOnExist = async (vin) => {
+const existsVinOnExist = async (vin, username) => {
 	return new Promise((resolve, reject) => {
 		vehicleModel.findVin(vin, (err, result) => {
 			if (err) {
@@ -277,7 +269,11 @@ const existsVinOnExist = async (vin) => {
 			} else if (result.length === 0) {
 				reject('VIN doesn\'t exists');
 			} else {
-				resolve();
+				if (result[0].username !== username) {
+					reject('VIN doesn\'t exists');
+				} else {
+					resolve();
+				}
 			}
 		});
 	});

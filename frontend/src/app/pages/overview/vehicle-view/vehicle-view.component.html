@@ -1,0 +1,9 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
+  <nz-breadcrumb-item routerLink="/overview">Overview</nz-breadcrumb-item>
+  <nz-breadcrumb-item [routerLink]="'/overview/' + vin">{{vin}}</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="inner-content">
+  <h1>Vehicle with vin: {{this.vin | uppercase}}</h1>
+</div>

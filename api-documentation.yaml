@@ -569,13 +569,13 @@ components:
           example: 2001
         make:
           type: "string"
-          example: "München"
+          example: "BMW"
         model:
           type: "string"
-          example: "BMW"
+          example: "116i"
         type:
           type: "string"
-          example: "CONVERTIBLE 2-DR"
+          example: "Small car"
         color:
           type: "string"
           example: "Blue"

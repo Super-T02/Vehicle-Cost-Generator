@@ -8,7 +8,9 @@
   />
 
   <ul nz-menu nzMode="horizontal">
-
+    <li nz-menu-item nzDisabled class="noHover">
+      <button (click)="this.auth.logout()" routerLink="login" nz-button nzType="primary" [disabled]="!auth.authenticated" nzShape="round">Logout</button>
+    </li>
     <li nz-menu-item
         routerLink=""
         nz-tooltip

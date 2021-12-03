@@ -21,4 +21,12 @@ export class LastRouteService {
     }
     this.route = url;
   }
+
+  /**
+   * New Url as String
+   * @param url
+   */
+  newUrlString(url: string): void {
+    this.route = url;
+  }
 }

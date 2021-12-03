@@ -10,12 +10,17 @@ import { LoginComponent } from './components/login/login.component';
 import {NzMessageModule} from 'ng-zorro-antd/message';
 import {NzResultModule} from "ng-zorro-antd/result";
 import {RouterModule} from "@angular/router";
+import { VehicleStepsComponent } from './components/vehicle-steps/vehicle-steps.component';
+import {NzStepsModule} from "ng-zorro-antd/steps";
+import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 
 @NgModule({
 	declarations: [
 		SignupComponent,
-		LoginComponent
+		LoginComponent,
+  VehicleStepsComponent
 	],
   imports: [
     CommonModule,
@@ -27,14 +32,18 @@ import {RouterModule} from "@angular/router";
     NzButtonModule,
     NzMessageModule,
     NzResultModule,
-    RouterModule
+    RouterModule,
+    NzStepsModule,
+    NzDatePickerModule,
+    NzIconModule
   ],
-	exports: [
-		CommonModule,
-		FormsModule,
-		SignupComponent,
-		LoginComponent
-	]
+    exports: [
+        CommonModule,
+        FormsModule,
+        SignupComponent,
+        LoginComponent,
+        VehicleStepsComponent
+    ]
 })
 export class SharedModule {
 }

@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ApiService} from './api.service';
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ApiError, ApiOutput} from '../../models/api.model';
+import {Router} from '@angular/router';
+import {LastRouteService} from './last-route.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {UtilService} from './util.service';
+import {concatMap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +18,14 @@ export class AuthService {
   username: string = 'user';
 
   constructor(public jwtHelper: JwtHelperService,
-              private api: ApiService) { }
+              private api: ApiService,
+              private router: Router,
+              private lastRoute: LastRouteService,
+              private message: NzMessageService,
+              private util: UtilService
+  ) {
+    this.actualizeName();
+  }
 
   /**
    * Gets the actual username from the JWT token and save it into this.username as string
@@ -53,18 +65,16 @@ export class AuthService {
                 this.authenticated = true;
                 observer.next(true);
               } else {
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
-                this.authenticated = false;
+                this.authenticated = true;
+                this.logout(false, 'You mus login again');
                 observer.next(false);
               }
             },
             (err: ApiError) => {
               console.log(err);
               if (err.code === 403) {
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
-                this.authenticated = false;
+                this.authenticated = true;
+                this.logout(false, 'You mus login again');
                 observer.next(false);
               }
             });
@@ -73,8 +83,53 @@ export class AuthService {
         observer.next(true);
       }
     });
-
-
   }
 
+  /**
+   * Handles a auth error (code 403)
+   * @param error
+   */
+  handleAuthError(error: ApiError) {
+    if (error.code !== 403) throw(error);
+
+    this.isAuthenticated().subscribe(value => {
+      if (!value) {
+        this.logout(false, 'You mus login again');
+        this.lastRoute.newUrlString(this.router.url);
+        this.router.navigate(['login']).then();
+        error.message = 'Please login first';
+        throw(error);
+      } else {
+        error.message = 'Please try again';
+        throw(error);
+      }
+    });
+  }
+
+  /**
+   * Logs the user out
+   */
+  logout(success: boolean = true, message: string = 'You are successfully logged out'): void {
+    if (this.authenticated) {
+      this.api.logout(this.util.getRefreshToken()).subscribe(); // TODO: Logout message on success!
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      this.authenticated = false;
+      this.message.loading('Logout', {nzDuration: 500});
+      if (success) {
+        setTimeout(() => {
+          this.message.success(message, {
+            nzDuration: 5000
+          });
+        }, 500);
+      } else {
+        setTimeout(() => {
+          this.message.error(message, {
+            nzDuration: 5000
+          });
+        }, 500);
+      }
+
+    }
+  }
 }

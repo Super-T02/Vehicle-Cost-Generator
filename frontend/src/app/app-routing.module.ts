@@ -14,11 +14,21 @@ const routes: Routes = [
 	},
 	{
     path: 'signup',
-    loadChildren: () => import('./pages/signup-page/signup-page.module').then(m => m.SignupPageModule),
-    canActivate: [AuthGuardService]
+    loadChildren: () => import('./pages/signup-page/signup-page.module').then(m => m.SignupPageModule)
   },
-	{ path: 'login',
+	{
+    path: 'login',
     loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule)
+  },
+	{
+    path: 'overview',
+    canActivate: [AuthGuardService],
+    loadChildren: () => import('./pages/overview/overview.module').then(m => m.OverviewModule)
+  },
+	{
+    path: 'addVehicle',
+    canActivate: [AuthGuardService],
+    loadChildren: () => import('./pages/add-vehicle/add-vehicle.module').then(m => m.AddVehicleModule)
   },
 	{
 		path: '**',

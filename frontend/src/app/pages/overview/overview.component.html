@@ -1,0 +1,53 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
+  <nz-breadcrumb-item routerLink="/overview">Overview</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="inner-content">
+  <h1 class="centerText title">Overview for {{this.auth.username | uppercase}}</h1>
+
+  <div class="outerFlex">
+    <nz-card id="vehicles" [nzTitle]="titleTemplate">
+      <div class="vehicleFlex">
+        <app-vehicle *ngFor="let vehicle of this.vehicles" [vehicle]="vehicle" (deleted)="$event? loadVehicles() : undefined"></app-vehicle>
+
+        <h2 class="centerText" *ngIf="vehicles.length === 0">
+          You have no vehicles yet. Create here your first vehicle!
+        </h2>
+      </div>
+    </nz-card>
+
+    <nz-card id="stats" [nzTitle]="statisticTemplate">
+      <div class="statsFlex">
+        <nz-statistic class="centerText" [nzValue]="vehicles.length | number" nzTitle="Num of vehicles"></nz-statistic>
+        <nz-statistic class="centerText" [nzValue]="300 | number" nzTitle="Costs (EUR)"></nz-statistic>
+        <nz-statistic class="centerText" [nzValue]="15000 | number" nzTitle="Distance (KM) "></nz-statistic>
+        <nz-statistic class="centerText" [nzValue]="500 | number" nzTitle="Highest Cost (EUR)"></nz-statistic>
+        <nz-statistic class="centerText" [nzValue]="100 | number" nzTitle="Average Cost (EUR)"></nz-statistic>
+      </div>
+    </nz-card>
+  </div>
+
+
+</div>
+
+<ng-template #titleTemplate>
+  <div class="titleFlex">
+    <h2>Your Vehicles</h2>
+    <button
+      nz-button
+      (click)="addVehicle()"
+      nzType="primary"
+      nzShape="round"
+    >
+      Add Vehicle
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </div>
+
+
+</ng-template>
+
+<ng-template #statisticTemplate>
+  <h2 class="centerText">Personal Stats</h2>
+</ng-template>

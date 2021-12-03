@@ -23,7 +23,7 @@ import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {SharedModule} from './shared/shared.module';
 import {NzAlertModule} from 'ng-zorro-antd/alert';
 import {JwtHelperService, JwtModule} from '@auth0/angular-jwt';
-
+import {NzModalService} from 'ng-zorro-antd/modal';
 registerLocaleData(de);
 
 @NgModule({
@@ -57,7 +57,7 @@ registerLocaleData(de);
       }
     })
   ],
-	providers: [{ provide: NZ_I18N, useValue: de_DE }, {provide: ErrorHandler, useClass: AppComponent}, {provide: JwtHelperService}],
+	providers: [{ provide: NZ_I18N, useValue: de_DE }, {provide: ErrorHandler, useClass: AppComponent}, {provide: JwtHelperService}, {provide: NzModalService}],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

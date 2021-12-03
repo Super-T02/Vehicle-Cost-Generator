@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {CreateUserInput} from '../../models/user.model';
 import {ApiError, ApiOutput, LoginInput} from '../../models/api.model';
+import {Vehicle, VehicleInput} from '../../models/vehicle.model';
+import {UtilService} from './util.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -14,7 +16,17 @@ export class ApiService {
   private readonly accessToken = localStorage.getItem('accessToken');
   private readonly refreshToken = localStorage.getItem('refreshToken');
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private util: UtilService) {
+  }
+
+  /**
+   * Generates a actual header
+   */
+  generateHeader(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.util.getAccessToken()}`
+    });
   }
 
   /**
@@ -60,7 +72,7 @@ export class ApiService {
           newError.message = 'Please inform the developers!';
           break;
       }
-
+      console.log(newError);
       return throwError(newError);
     }
 
@@ -73,7 +85,7 @@ export class ApiService {
    */
   createUser(user: CreateUserInput): Observable<ApiOutput> {
     return this.http.post<HttpResponse<any>>(
-      `${this.baseUrl}/user`,
+      `${this.baseUrl}/users`,
       user,
       {observe: 'response'}
     ).pipe(
@@ -129,4 +141,150 @@ export class ApiService {
       catchError(this.handleError)
     );
   }
+
+  /**
+   * Remove refreshtoken from db
+   * @param refreshToken
+   */
+  logout(refreshToken: String): Observable<ApiOutput> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/auth/logout`,
+      {token: refreshToken},
+      {observe: 'response'}
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Create a new vehicle
+   * @param vehicle
+   * @param username
+   */
+  createVehicle(vehicle: VehicleInput, username: string): Observable<any> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles`,
+      vehicle,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Get all vehicles of the given user
+   * @param username
+   */
+  getVehicles(username: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Get one specific vehicles of the given user
+   * @param username
+   * @param vin
+   */
+  getVehicle(username: string, vin: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Deletes a vehicle from the db
+   * @param vin
+   * @param username
+   */
+  deleteVehicle(vin: string, username: string): Observable<ApiOutput> {
+    return this.http.delete<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Updates a vehicle in the db
+   * @param vin
+   * @param username
+   * @param vehicle
+   */
+  updateVehicle(vin: string, username: string, vehicle: Vehicle): Observable<ApiOutput> {
+    return this.http.put<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      vehicle,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+
+
 }
