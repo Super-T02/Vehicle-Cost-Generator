@@ -1146,6 +1146,315 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /users/{username}/vehicles/{vin}/repeatingCosts:
+    post:
+      tags:
+        - Repeating Costs
+      summary: Add a new Repeating cost item to the Vehicle
+      description: |
+        Inserts a new Repeating cost item for the given Vehicle into the database
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          schema:
+            type: string
+          required: true
+          description: VIN of the Vehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RepeatingCostItem'
+      responses:
+        '201':
+          description: Repeating cost item created succesfully
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - Repeating Costs
+      summary: Get the Repeating cost item of the vehicle
+      description: |
+        Delivers all Repeating cost items of the given vehicle
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          schema:
+            type: string
+          required: true
+          description: VIN of the Vehicle
+      responses:
+        '200':
+          description: Repeating cost items of the vehicle
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RepeatingCostItemComplete'
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /users/{username}/vehicles/{vin}/repeatingCosts/{id}:
+    get:
+      tags:
+        - Repeating Costs
+      summary: Get a specific Repeating cost item of the vehicle
+      description: |
+        Delivers a specific Repeating cost item of the given id with the givenvin and username
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: '56b31f28-6bb2-48dc-b93d-2b6ef0377410'
+          required: true
+          description: ID of the searched Cost Item
+      responses:
+        '200':
+          description: Repeating cost item of the vehicle
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RepeatingCostItemComplete'
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user or vin or id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - Repeating Costs
+      summary: Deletes one Repeating cost item
+      description: |
+        Deletes one cost item with the given vin
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: '56b31f28-6bb2-48dc-b93d-2b6ef0377410'
+          required: true
+          description: ID of the searche Cost Item
+      responses:
+        '204':
+          description: Successfully deleted
+        '400':
+          description: The id does't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user or vin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Repeating Costs
+      summary: Overwrites a Repeating cost item
+      description: |
+        Overwrites a Repeating cost item
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: '56b31f28-6bb2-48dc-b93d-2b6ef0377410'
+          required: true
+          description: ID of the searche Cost Item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingleCostItem'
+        description: Repeating cost item to overwrite (vin must match vin in path)
+      responses:
+        '201':
+          description: ID overwritten
+        '400':
+          description: The Id does't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user or vin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     User:
@@ -1415,7 +1724,39 @@ components:
     RepeatingCostItem:
       type: object
       required:
+        - date
+        - period
+        - price
+        - name
+      properties:
+        price:
+          type: number
+          description: price in €
+          format: float
+          example: 80.4
+        date:
+          type: integer
+          format: date
+
+          description: the start date of the cost item in ms
+        period:
+          type: string
+          description: "period for this cost item"
+        name:
+          type: string
+          description: name of the cost item
+          example: "insurance"
+        description:
+          type: string
+          example: "liability insurance"
+          description: closer description for the cost item (optional)
+
+    RepeatingCostItemComplete:
+      type: object
+      required:
         - id
+        - vin
+        - username
         - date
         - period
         - price
@@ -1425,6 +1766,12 @@ components:
           type: string
           format: uuid
           example: "6c84fb90-12c4-11e1-840d-7b25c5ee775a"
+        vin:
+          type: string
+          example: "1P3EW65F4VV300946"
+        username:
+          type: string
+          example: "Mustermann25"
         price:
           type: number
           description: price in €

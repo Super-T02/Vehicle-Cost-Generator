@@ -2,14 +2,11 @@ const db = require('./db.js');
 
 /**
  * Gets all sets for the single Costs of the specified vin or query (opt)
- * @param vin
  * @param query
  * @param callback
  */
-exports.getAllCostItems = (vin, query, callback) => {
-	query? query.vin = vin : undefined;
-
-	db.repeatingCost.find(query? query: {vin: vin}, (err, costs) => {
+exports.getAllCostItems = (query, callback) => {
+	db.repeatingCost.find(query, (err, costs) => {
 		if (err) {
 			callback(err, null);
 		} else {
