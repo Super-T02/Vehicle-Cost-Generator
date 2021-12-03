@@ -20,7 +20,7 @@
 <!--    First Step-->
     <div class="inner-flex" *ngIf="currentStep === 0">
 
-      <img class="pic" src="assets/login.svg" alt="Log-in Picture">
+      <img class="pic" src="assets/steps.svg" alt="Log-in Picture">
       <div class="right-column">
         <h1>Important Data</h1>
         <form class="right-column" [formGroup]="addVehicleRequire" (ngSubmit)="onSubmitFirst()" nz-form>
@@ -113,7 +113,7 @@
 
 <!--    Second step-->
     <div class="inner-flex" *ngIf="currentStep === 1">
-      <img class="pic" src="assets/login.svg" alt="Log-in Picture">
+      <img class="pic" src="assets/steps.svg" alt="Log-in Picture">
       <div class="right-column">
         <h1>Optional Data</h1>
 
@@ -205,13 +205,16 @@
     </div>
 
 <!--    Third Step-->
-    <div *ngIf="currentStep === 2">
-      <img class="pic" src="assets/login.svg" alt="Log-in Picture">
-      <h1>Vehicle Created successfully!</h1>
-      You will be redirected to overview in {{countdown | number}} seconds ...
-      <div *ngIf="countdown === 0" routerLink="overview">
-        If you won't be redirected click <a routerLink="overview">here</a>!
+    <div class="horizontal-flex" *ngIf="currentStep === 2">
+      <img class="pic" src="assets/done.svg" alt="Log-in Picture">
+      <div class="centerText">
+        <h1>Vehicle Created <span class="primary-color">successfully</span>!</h1>
+        You will be redirected to overview in {{countdown | number}} seconds ...
+        <div *ngIf="countdown === 0" routerLink="overview">
+          If you won't be redirected click <a routerLink="overview">here</a>!
+        </div>
       </div>
+
     </div>
   </div>
 </div>
