@@ -9,7 +9,7 @@
   <div class="outerFlex">
     <nz-card id="vehicles" [nzTitle]="titleTemplate">
       <div class="vehicleFlex">
-        <app-vehicle *ngFor="let vehicle of this.vehicles" [vehicle]="vehicle"></app-vehicle>
+        <app-vehicle *ngFor="let vehicle of this.vehicles" [vehicle]="vehicle" (deleted)="$event? loadVehicles() : undefined"></app-vehicle>
 
         <h2 class="centerText" *ngIf="vehicles.length === 0">
           You have no vehicles yet. Create here your first vehicle!

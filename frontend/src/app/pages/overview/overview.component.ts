@@ -23,6 +23,13 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.vehicles = [];
+    this.loadVehicles();
+  }
+
+  /**
+   * Loads the vehicles from the api
+   */
+  loadVehicles(): void {
     this.api.getVehicles(this.auth.username).subscribe(result => {
         this.vehicles = result.data;
       },

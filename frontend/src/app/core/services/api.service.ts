@@ -194,12 +194,31 @@ export class ApiService {
    * @param username
    */
   getVehicles(username: string): Observable<ApiOutput> {
-    return this.http.get(
+    return this.http.get<HttpResponse<any>>(
       `${this.baseUrl}/users/${username.toLowerCase()}/vehicles`,
       {
         headers: this.generateHeader(),
         observe: 'response'
       },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  deleteVehicle(vin: string, username: string): Observable<ApiOutput> {
+    return this.http.delete<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
     ).pipe(
       map((res) => {
         if (!res.body) {
