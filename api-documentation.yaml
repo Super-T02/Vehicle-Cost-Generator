@@ -324,7 +324,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Vehicle'
+                  $ref: '#/components/schemas/VehicleComplete'
         '400':
           description: Request has not the needed format
           content:
@@ -384,7 +384,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Vehicle'
+                  $ref: '#/components/schemas/VehicleComplete'
         '400':
           description: Request has not the needed format
           content:
@@ -528,6 +528,315 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /users/{username}/vehicles/{vin}/singleCosts:
+    post:
+      tags:
+        - Single Costs
+      summary: Add a new single cost item to the Vehicle
+      description: |
+        Inserts a new single cost item for the given Vehicle into the database
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          schema:
+            type: string
+          required: true
+          description: VIN of the Vehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingleCostItem'
+      responses:
+        '201':
+          description: Single cost item created succesfully
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - Single Costs
+      summary: Get the single cost item of the vehicle
+      description: |
+        Delivers all single cost items of the given vehicle
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          schema:
+            type: string
+          required: true
+          description: VIN of the Vehicle
+      responses:
+        '200':
+          description: Single cost items of the vehicle
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SingleCostItemComplete'
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /users/{username}/vehicles/{vin}/singleCosts/{id}:
+    get:
+      tags:
+        - Single Costs
+      summary: Get a specific single cost item of the vehicle
+      description: |
+        Delivers a specific single cost item of the given id with the givenvin and username
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: '56b31f28-6bb2-48dc-b93d-2b6ef0377410'
+          required: true
+          description: ID of the searche Cost Item
+      responses:
+        '200':
+          description: Single cost item of the vehicle
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SingleCostItemComplete'
+        '400':
+          description: Request has not the needed format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user or vin or id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - Single Costs
+      summary: Deletes one Vehicle
+      description: |
+        Deletes one Vehicle with the given vin
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: '56b31f28-6bb2-48dc-b93d-2b6ef0377410'
+          required: true
+          description: ID of the searche Cost Item
+      responses:
+        '204':
+          description: Successfully deleted
+        '400':
+          description: The id does't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user or vin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Single Costs
+      summary: Overwrites a single cost item
+      description: |
+        Overwrites a single cost item
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+        - in: path
+          name: vin
+          required: true
+          description: Vin of one specific vehicle
+          schema:
+            type: string
+            example: "1P3EW65F4VV300946"
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: '56b31f28-6bb2-48dc-b93d-2b6ef0377410'
+          required: true
+          description: ID of the searche Cost Item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingleCostItem'
+        description: Single cost item to overwrite (vin must match vin in path)
+      responses:
+        '201':
+          description: ID overwritten
+        '400':
+          description: The Id does't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user or vin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 
 
 components:
@@ -583,25 +892,45 @@ components:
           type: integer
           format: int32
           example: 2862
-        dimensions:
-          $ref: '#/components/schemas/Dimensions'
         license:
           type: string
           example: "Tü-T-7502"
 
-
-    Dimensions:
+    VehicleComplete:
       type: object
+      required:
+        - vin
+        - username
       properties:
-        height:
-          type: number
-          example: 1.20
-        width:
-          type: number
-          example: 2.0
-        length:
-          type: number
-          example: 6
+        vin:
+          type: string
+          example: "1P3EW65F4VV300946"
+        username:
+          type: string
+          example: "Mustermann25"
+        year:
+          type: string
+          format: Date
+          example: "Fri Dec 03 2010 19:26:05 GMT+0100 (Mitteleuropäische Normalzeit)"
+        make:
+          type: "string"
+          example: "BMW"
+        model:
+          type: "string"
+          example: "116i"
+        type:
+          type: "string"
+          example: "Small car"
+        color:
+          type: "string"
+          example: "Blue"
+        weight:
+          type: integer
+          format: int32
+          example: 2862
+        license:
+          type: string
+          example: "Tü-T-7502"
 
     FuelCostItem:
       type: object
@@ -649,7 +978,45 @@ components:
     SingleCostItem:
       type: object
       required:
+        - date
+        - price
+        - type
+        - name
+      properties:
+        km:
+          type: integer
+          format: int32
+          example: 90600
+          description: mileage in km
+        price:
+          type: number
+          description: price in €
+          format: float
+          example: 80.4
+        date:
+          type: integer
+          format: date
+          example: 122234234
+          description: gives the date of the cost item in ms
+        type:
+          type: string
+          description: type of the cost item. repair | procurement | rest
+          example: "repair"
+        name:
+          type: string
+          description: name of the cost item
+          example: "new weels"
+        description:
+          type: string
+          example: "weels for the winter season"
+          description: closer description for the cost item (optional)
+
+    SingleCostItemComplete:
+      type: object
+      required:
         - id
+        - vin
+        - username
         - date
         - price
         - type
@@ -659,6 +1026,12 @@ components:
           type: string
           format: uuid
           example: "6c84fb90-12c4-11e1-840d-7b25c5ee775a"
+        vin:
+          type: string
+          example: "1P3EW65F4VV300946"
+        username:
+          type: string
+          example: "Mustermann25"
         km:
           type: integer
           format: int32
