@@ -1,5 +1,6 @@
 const vehicleModel = require('../models/vehicleModel');
 const {validationResult, check, body} = require('express-validator');
+const deleteCosts = require('../util/deleteCosts');
 
 /**
  * Get a list of all vehicles
@@ -86,7 +87,7 @@ exports.deleteVehicle = (req, callback) => {
 		if (err) {
 			callback(err, null);
 		} else {
-			callback(null, data);
+			deleteCosts.deleteAllCosts(vin).then(callback(null, data));
 		}
 	});
 };
@@ -278,3 +279,5 @@ const existsVinOnExist = async (vin, username) => {
 		});
 	});
 };
+
+

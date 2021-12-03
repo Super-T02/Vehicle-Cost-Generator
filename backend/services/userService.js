@@ -124,6 +124,7 @@ exports.checkUser = async (req, res, next) => {
 		return res.status(400).json({errors: errors.array()});
 	} else {
 		req.body.username = req.params.username;
+		req.username = req.params.username;
 		next();
 	}
 };

@@ -2,6 +2,9 @@ const express = require('express');
 const vehicleService = require('../services/vehicleService');
 const {generateErrorMessage} = require('../util/error');
 const router = express.Router();
+const singleCosts = require('./singleCost');
+const fuelCosts = require('./fuelCost');
+const repeatingCosts = require('./repeatingCost');
 
 router.post('/', vehicleService.checkVehicle, (req, res) => {
 
@@ -63,5 +66,9 @@ router.put('/:vin', vehicleService.checkVehicle, (req, res) => {
 		}
 	});
 });
+
+router.use('/:vin/singleCosts', singleCosts);
+router.use('/:vin/fuelCosts', fuelCosts);
+router.use('/:vin/repeatingCosts', repeatingCosts);
 
 module.exports = router;
