@@ -47,7 +47,7 @@ exports.checkNewUser = async (req, res, next) => {
 		.isString()
 		.trim(' ')
 		.toLowerCase()
-		.custom(value => existsUser(value))
+		.custom(value => inUse(value))
 		.run(req);
 
 	await check('password')
@@ -67,7 +67,7 @@ exports.checkNewUser = async (req, res, next) => {
 		.exists()
 		.bail()
 		.isEmail()
-		.custom(value => existsUserMail(value))
+		.not().custom(value => existsUserMail(value))
 		.run(req);
 
 	await check('role')
@@ -156,6 +156,25 @@ const existsUser = async (username) => {
 				reject('Internal Error');
 			} else if (data.length === 0) {
 				reject('No user found with this username');
+			} else {
+				resolve();
+			}
+		});
+	});
+};
+
+/**
+ * Checks if there exists any user with the given username
+ * @param username
+ * @returns {Promise<unknown>}
+ */
+const inUse = async (username) => {
+	return new Promise( (resolve, reject) => {
+		userModel.getUserData(username, (err, data) => {
+			if (err) {
+				reject('Internal Error');
+			} else if (data.length !== 0) {
+				reject('User all ready in use');
 			} else {
 				resolve();
 			}
