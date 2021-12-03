@@ -67,7 +67,7 @@ exports.createCostItem = (req, callback) => {
  * @param callback
  */
 exports.deleteCostItem = (req, callback) => {
-	singleCostModel.addCostItem(req.id, (err, data) => {
+	singleCostModel.deleteCostItem(req.id, (err, data) => {
 		if (err) {
 			callback(err, null);
 		} else {
@@ -201,6 +201,8 @@ exports.checkID = async (req, res, next) => {
 		.bail()
 		.isString()
 		.bail()
+		.trim()
+		.escape()
 		.custom(value => existsID(value))
 		.run(req);
 

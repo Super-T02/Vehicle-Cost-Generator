@@ -44,6 +44,7 @@ router.get('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
 	singleCostService.deleteCostItem(req, (err, data) => {
 		if (err) {
+			console.log(err);
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
 		} else {
 			res.status(204).json({});
