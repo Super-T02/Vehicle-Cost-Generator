@@ -14,35 +14,46 @@ import { VehicleStepsComponent } from './components/vehicle-steps/vehicle-steps.
 import {NzStepsModule} from "ng-zorro-antd/steps";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import { CostStepsComponent } from './components/cost-steps/cost-steps.component';
+import { SingleCostFormComponent } from './components/single-cost-form/single-cost-form.component';
+import { RepeatingCostFormComponent } from './components/repeating-cost-form/repeating-cost-form.component';
+import { FuelCostFormComponent } from './components/fuel-cost-form/fuel-cost-form.component';
+import {NzSelectModule} from "ng-zorro-antd/select";
 
 
 @NgModule({
 	declarations: [
 		SignupComponent,
 		LoginComponent,
-  VehicleStepsComponent
+  VehicleStepsComponent,
+  CostStepsComponent,
+  SingleCostFormComponent,
+  RepeatingCostFormComponent,
+  FuelCostFormComponent
 	],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NzFormModule,
-    NzInputModule,
-    NzCheckboxModule,
-    NzButtonModule,
-    NzMessageModule,
-    NzResultModule,
-    RouterModule,
-    NzStepsModule,
-    NzDatePickerModule,
-    NzIconModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NzFormModule,
+        NzInputModule,
+        NzCheckboxModule,
+        NzButtonModule,
+        NzMessageModule,
+        NzResultModule,
+        RouterModule,
+        NzStepsModule,
+        NzDatePickerModule,
+        NzIconModule,
+        NzSelectModule
+    ],
     exports: [
         CommonModule,
         FormsModule,
         SignupComponent,
         LoginComponent,
-        VehicleStepsComponent
+        VehicleStepsComponent,
+        CostStepsComponent
     ]
 })
 export class SharedModule {

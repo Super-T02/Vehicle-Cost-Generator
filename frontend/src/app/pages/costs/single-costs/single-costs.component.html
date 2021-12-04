@@ -1,0 +1,14 @@
+<div class="headline">
+  <h1>Single Costs</h1>
+  <button
+    nz-button
+    (click)="addSingleCost()"
+    nzType="primary"
+    nzShape="round"
+  >
+    Add Cost Item
+    <i nz-icon nzType="plus"></i>
+  </button>
+</div>
+<nz-divider></nz-divider>
+<p *ngFor="let item of costService.costs.single">{{item.name}}</p>

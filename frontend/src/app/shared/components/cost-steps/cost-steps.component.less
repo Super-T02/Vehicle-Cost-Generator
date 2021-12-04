@@ -1,0 +1,68 @@
+@import "~ng-zorro-antd/ng-zorro-antd.less";
+
+.steps-content{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px
+}
+
+.steps-wrapper{
+  width: 100%;
+  max-width: 1500px;
+  flex: 1 1 auto;
+}
+
+.inner-flex{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: var(--inner-grid-padding);
+  width: 100%;
+  max-width: 1300px;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 2;
+  width: 60%;
+  max-width: 1000px;
+
+  #costType{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    font-size: larger;
+    nz-select{
+      min-width: 130px;
+      text-align: center;
+    }
+    padding-bottom: 20px;
+  }
+}
+
+.pic{
+  flex-grow: 1;
+  min-height: 338px;
+  max-width: 400px;
+  min-width: 150px;
+}
+
+.horizontal-flex{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--inner-grid-padding);
+
+  .pic {
+    width: 100%;
+    min-width: 500px;
+    max-width: 1500px;
+  }
+}

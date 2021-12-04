@@ -285,6 +285,76 @@ export class ApiService {
     );
   }
 
+  /**
+   * Gets all single cost items
+   * @param username
+   * @param vin
+   */
+  getSingleCosts(username: string, vin: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
 
+  /**
+   * Gets all repeating cost items
+   * @param username
+   * @param vin
+   */
+  getRepeatingCosts(username: string, vin: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Gets all fuel cost items
+   * @param username
+   * @param vin
+   */
+  getFuelCosts(username: string, vin: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
 
 }

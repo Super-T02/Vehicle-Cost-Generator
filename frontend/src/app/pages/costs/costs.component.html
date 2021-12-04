@@ -1,0 +1,19 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
+  <nz-breadcrumb-item routerLink="/overview">Overview</nz-breadcrumb-item>
+  <nz-breadcrumb-item [routerLink]="'/overview/' + vin">{{vin}}</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="inner-content">
+  <nz-tabset nzType="card">
+    <nz-tab [nzTitle]="'Single Costs'">
+      <app-single-costs></app-single-costs>
+    </nz-tab>
+    <nz-tab [nzTitle]="'Repeating Costs'">
+      <h1>Repeating Costs</h1>
+    </nz-tab>
+    <nz-tab [nzTitle]="'Fuel Costs'">
+      <h1>Fuel Costs</h1>
+    </nz-tab>
+  </nz-tabset>
+</div>
