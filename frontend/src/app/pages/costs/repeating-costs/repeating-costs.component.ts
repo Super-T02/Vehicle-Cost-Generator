@@ -1,31 +1,32 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder} from 'ng-zorro-antd/table';
+import {RepeatingCostItem} from '../../../models/cost.model';
 import {CostService} from '../../../core/services/cost.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SingleCostItem} from '../../../models/cost.model';
-import {NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder} from 'ng-zorro-antd/table';
 
 interface ColumnItem {
   name: string;
   sortOrder: NzTableSortOrder | null;
-  sortFn: NzTableSortFn<SingleCostItem> | null;
+  sortFn: NzTableSortFn<RepeatingCostItem> | null;
   listOfFilter: NzTableFilterList;
-  filterFn: NzTableFilterFn<SingleCostItem> | null;
+  filterFn: NzTableFilterFn<RepeatingCostItem> | null;
   filterMultiple: boolean;
   sortDirections: NzTableSortOrder[];
 }
 
+
 @Component({
-  selector: 'app-single-costs',
-  templateUrl: './single-costs.component.html',
-  styleUrls: ['./single-costs.component.less']
+  selector: 'app-repeating-costs',
+  templateUrl: './repeating-costs.component.html',
+  styleUrls: ['./repeating-costs.component.less']
 })
-export class SingleCostsComponent implements OnInit {
+export class RepeatingCostsComponent implements OnInit {
 
   listOfColumns: ColumnItem[] = [
     {
       name: 'Name',
       sortOrder: null,
-      sortFn: (a: SingleCostItem, b: SingleCostItem) => a.name.localeCompare(b.name),
+      sortFn: (a: RepeatingCostItem, b: RepeatingCostItem) => a.name.localeCompare(b.name),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: null,
       listOfFilter: [],
@@ -34,27 +35,18 @@ export class SingleCostsComponent implements OnInit {
     {
       name: 'Price',
       sortOrder: null,
-      sortFn: (a: SingleCostItem, b: SingleCostItem) => a.price - b.price,
+      sortFn: (a: RepeatingCostItem, b: RepeatingCostItem) => a.price - b.price,
       sortDirections: ['ascend', 'descend', null],
       listOfFilter: [],
       filterFn: null,
       filterMultiple: null
     },
     {
-      name: 'Mileage',
+      name: 'Period',
       sortOrder: null,
       sortDirections: ['ascend', 'descend', null],
-      sortFn: (a: SingleCostItem, b: SingleCostItem) => a.km - b.km,
+      sortFn: null, // TODO: sort function
       filterMultiple: null,
-      listOfFilter: [],
-      filterFn: null
-    },
-    {
-      name: 'Type',
-      sortOrder: null,
-      sortFn: (a: SingleCostItem, b: SingleCostItem) => a.type.localeCompare(b.type),
-      sortDirections: ['ascend', 'descend', null],
-      filterMultiple: true,
       listOfFilter: [],
       filterFn: null
     },
@@ -62,13 +54,22 @@ export class SingleCostsComponent implements OnInit {
       name: 'Date',
       sortOrder: 'descend',
       sortDirections: ['ascend', 'descend', null],
-      sortFn: (a: SingleCostItem, b: SingleCostItem) => a.date.getTime() - b.date.getTime(),
+      sortFn: (a: RepeatingCostItem, b: RepeatingCostItem) => a.date.getTime() - b.date.getTime(),
+      filterMultiple: null,
+      listOfFilter: [],
+      filterFn: null
+    },
+    {
+      name: 'Description',
+      sortOrder: null,
+      sortFn: null,
+      sortDirections: [null],
       filterMultiple: null,
       listOfFilter: [],
       filterFn: null
     }
   ];
-  expandSet = new Set<string>();
+
   vin: string;
 
   constructor(
@@ -84,23 +85,10 @@ export class SingleCostsComponent implements OnInit {
   }
 
   /**
-   * Handle expand for table
-   * @param id
-   * @param checked
+   * Redirect to addRepeatingCost
    */
-  onExpandChange(id: string, checked: boolean): void {
-    if (checked) {
-      this.expandSet.add(id);
-    } else {
-      this.expandSet.delete(id);
-    }
-  }
-
-  /**
-   * Redirect to addSingleCost
-   */
-  addSingleCost() {
-    this.costService.updateType = 'single';
+  addRepeatingCost() {
+    this.costService.updateType = 'repeating';
     this.router.navigate(['overview/'+ this.vin +'/addCostItem']).then();
   }
 
@@ -108,7 +96,8 @@ export class SingleCostsComponent implements OnInit {
    * Redirect to updateSingleCost
    */
   updateCost(id: string) {
-    this.costService.updateType = 'single';
+    this.costService.updateType = 'repeating';
     this.router.navigate(['overview/'+ this.vin +'/updateCostItem/' + id]).then();
   }
+
 }

@@ -4,6 +4,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FuelCostItem, RepeatingCostItem, SingleCostItem} from '../../../models/cost.model';
 import {ApiService} from '../../../core/services/api.service';
 import {AuthService} from '../../../core/services/auth.service';
+import {Router} from '@angular/router';
+import {CostService} from '../../../core/services/cost.service';
+import {ApiError} from '../../../models/api.model';
 
 @Component({
   selector: 'app-single-cost-form',
@@ -12,20 +15,28 @@ import {AuthService} from '../../../core/services/auth.service';
 })
 export class SingleCostFormComponent implements OnInit {
 
-  @Input() item: Observable<SingleCostItem | FuelCostItem | RepeatingCostItem>;
+  @Input() item: Observable<SingleCostItem | FuelCostItem | RepeatingCostItem >;
   @Input() deliverData: boolean = false;
   @Input() vin: string;
   @Output() sentData = new EventEmitter<boolean>();
 
   addSingle: FormGroup;
+  costItem: SingleCostItem;
 
   constructor(
     private fb: FormBuilder,
     private api: ApiService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router,
+    private costService: CostService
   ) { }
 
   ngOnInit(): void {
+
+    if(this.deliverData && this.costService.updateType != 'single') {
+      this.router.navigate(['./404']).then();
+    }
+
     this.addSingle = this.fb.group({
       name: [null, Validators.required],
       date: [null, Validators.required],
@@ -34,6 +45,21 @@ export class SingleCostFormComponent implements OnInit {
       km: [null],
       description: [null]
     });
+
+    if (this.deliverData) {
+      this.item.subscribe(data => {
+        data = data as SingleCostItem;
+        this.costItem = data;
+        this.addSingle.setValue({
+          name: data.name,
+          date: data.date,
+          type: data.type,
+          price: data.price,
+          km: data.km,
+          description: data.description
+        });
+      });
+    }
   }
 
   /**
@@ -48,16 +74,43 @@ export class SingleCostFormComponent implements OnInit {
       }
     }
 
-    // Send data to api
-    this.api.createSingleCostItem(this.addSingle.value, this.auth.username, this.vin)
-      .subscribe(
-        () => {
-          this.sentData.emit(true);
-        },
-        err => {
-          this.sentData.emit(false);
-          return throwError(err);
-        }
+    // Update Cost Item
+    if (this.deliverData) {
+      // Build result
+      const result = this.addSingle.value;
+      result.vin = this.costItem.vin;
+      result.id = this.costItem.id;
+      result.username = this.costItem.username;
+
+      // Send data to api
+      this.api.updateSingleCostItem(result.vin, result.username, result.id, result).subscribe(
+        () => this.handleResponse(),
+        err => this.handleError(err),
       );
+
+    } else { // New Cost Item
+      // Send data to api
+      this.api.createSingleCostItem(this.addSingle.value, this.auth.username, this.vin)
+        .subscribe(
+          () => this.handleResponse(),
+          err => this.handleError(err),
+        );
+    }
+  }
+
+  /**
+   * Handle Updates and Creates responses
+   */
+  handleResponse(): void {
+    this.sentData.emit(true);
+  }
+
+  /**
+   * Handles api errors of requests
+   * @param err
+   */
+  handleError(err: ApiError): void {
+    this.sentData.emit(false);
+    throwError(err);
   }
 }

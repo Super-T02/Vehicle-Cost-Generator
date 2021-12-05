@@ -10,7 +10,12 @@ const routes: Routes = [
   {
     path: 'addCostItem',
     loadChildren: () => import('../add-cost-item/add-cost-item.module').then(m => m.AddCostItemModule)
-  }];
+  },
+  {
+    path: 'updateCostItem/:id',
+    loadChildren: () => import('../update-cost-item/update-cost-item.module').then(m => m.UpdateCostItemModule)
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

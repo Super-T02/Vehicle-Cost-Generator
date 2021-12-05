@@ -4,6 +4,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FuelCostItem, RepeatingCostItem, SingleCostItem} from '../../../models/cost.model';
 import {ApiService} from '../../../core/services/api.service';
 import {AuthService} from '../../../core/services/auth.service';
+import {Router} from '@angular/router';
+import {CostService} from '../../../core/services/cost.service';
+import {ApiError} from '../../../models/api.model';
 
 @Component({
   selector: 'app-repeating-cost-form',
@@ -18,14 +21,22 @@ export class RepeatingCostFormComponent implements OnInit {
   @Output() sentData = new EventEmitter<boolean>();
 
   addRepeat: FormGroup;
+  costItem: RepeatingCostItem;
 
   constructor(
     private fb: FormBuilder,
     private api: ApiService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router,
+    private costService: CostService
     ) { }
 
   ngOnInit(): void {
+
+    if(this.deliverData && this.costService.updateType != 'repeating') {
+      this.router.navigate(['./404']).then();
+    }
+
     this.addRepeat = this.fb.group({
       price: [null, Validators.required],
       date: [null, Validators.required],
@@ -33,6 +44,21 @@ export class RepeatingCostFormComponent implements OnInit {
       name: [null, Validators.required],
       description: [null]
     });
+
+    if (this.deliverData) {
+      this.item.subscribe(data => {
+        data = data as RepeatingCostItem;
+        this.costItem = data;
+
+        this.addRepeat.setValue({
+          price: data.price,
+          date: data.date,
+          period: data.period,
+          name: data.name,
+          description: data.description
+        });
+      });
+    }
   }
 
   /**
@@ -47,17 +73,45 @@ export class RepeatingCostFormComponent implements OnInit {
       }
     }
 
-    // Send data to api
-    this.api.createRepeatingCostItem(this.addRepeat.value, this.auth.username, this.vin)
-      .subscribe(
-        () => {
-          this.sentData.emit(true);
-        },
-        err => {
-          this.sentData.emit(false);
-          return throwError(err);
-        }
+    // Update Cost Item
+    if (this.deliverData) {
+      // Build result
+      const result = this.addRepeat.value;
+      result.vin = this.costItem.vin;
+      result.id = this.costItem.id;
+      result.username = this.costItem.username;
+
+      // Send data to api
+      this.api.updateRepeatingCostItem(result.vin, result.username, result.id, result).subscribe(
+        () => this.handleResponse(),
+        err => this.handleError(err),
       );
+
+    } else { // New Cost Item
+      // Send data to api
+      this.api.createRepeatingCostItem(this.addRepeat.value, this.auth.username, this.vin)
+        .subscribe(
+          () => this.handleResponse(),
+          err => this.handleError(err)
+        );
+    }
+
+
   }
 
+  /**
+   * Handle Updates and Creates responses
+   */
+  handleResponse(): void {
+    this.sentData.emit(true);
+  }
+
+  /**
+   * Handles api errors of requests
+   * @param err
+   */
+  handleError(err: ApiError): void {
+    this.sentData.emit(false);
+    throwError(err);
+  }
 }

@@ -1,8 +1,8 @@
 <div class="headline">
-  <h1>Single Costs</h1>
+  <h1>Fuel Costs</h1>
   <button
     nz-button
-    (click)="addSingleCost()"
+    (click)="addFuelCost()"
     nzType="primary"
     nzShape="round"
   >
@@ -14,14 +14,13 @@
 
 <nz-table
   #basicTable
-  [nzData]="costService.costs.single"
+  [nzData]="costService.costs.fuel"
   nzPaginationType="small"
   [nzPageSize]="20"
   [nzScroll]="{ x: '1080px', y: '340px' }"
 >
   <thead>
   <tr>
-    <th nzWidth="60px"></th>
     <th
       *ngFor="let column of listOfColumns"
       [nzSortOrder]="column.sortOrder"
@@ -40,12 +39,12 @@
   <tbody>
   <ng-container *ngFor="let data of basicTable.data">
     <tr>
-      <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
-      <td>{{ data.name }}</td>
       <td>{{ data.price }} €</td>
-      <td>{{ data.km }} <span *ngIf="data.km">km</span> <span *ngIf="!data.km">---</span> </td>
-      <td>{{ data.type }}</td>
+      <td>{{ data.km }} km</td>
+      <td>{{ data.volume }} l</td>
+      <td>{{ data.consumption }}l / 100 km</td>
       <td>{{ data.date | date: 'dd MMM YYYY' }}</td>
+      <td>{{ data.type }}</td>
       <td>
         <a
           (click)="updateCost(data.id)"
@@ -59,10 +58,8 @@
         </a>
       </td>
     </tr>
-    <tr [nzExpand]="expandSet.has(data.id)">
-      Description: {{ data.description }}
-    </tr>
   </ng-container>
 
   </tbody>
 </nz-table>
+

@@ -13,12 +13,12 @@
 
     <img class="pic" src="assets/steps.svg" alt="Configure Vehicle">
     <div class="right-column">
-      <h1>Create new Cost Item</h1>
+      <h1>{{deliverData ?  "Update Cost Item" : "Create new Cost Item"}}</h1>
       <div id="costType">
         <div>
           Type of cost:
         </div>
-        <nz-select [(ngModel)]="type">
+        <nz-select [(ngModel)]="costService.updateType" [nzDisabled]="deliverData">
           <nz-option nzValue="single" nzLabel="Single" [nzDisabled]="deliverData"></nz-option>
           <nz-option nzValue="repeating" nzLabel="Repeating" [nzDisabled]="deliverData"></nz-option>
           <nz-option nzValue="fuel" nzLabel="Fuel" [nzDisabled]="deliverData"></nz-option>
@@ -26,7 +26,7 @@
       </div>
 
       <app-single-cost-form
-        *ngIf="type === 'single'"
+        *ngIf="costService.updateType === 'single'"
         [deliverData]="deliverData"
         [vin]="vin"
         [item]="item"
@@ -35,7 +35,7 @@
       </app-single-cost-form>
 
       <app-repeating-cost-form
-        *ngIf="type === 'repeating'"
+        *ngIf="costService.updateType === 'repeating'"
         [deliverData]="deliverData"
         [vin]="vin"
         [item]="item"
@@ -44,7 +44,7 @@
       </app-repeating-cost-form>
 
       <app-fuel-cost-form
-        *ngIf="type === 'fuel'"
+        *ngIf="costService.updateType === 'fuel'"
         [deliverData]="deliverData"
         [vin]="vin"
         [item]="item"

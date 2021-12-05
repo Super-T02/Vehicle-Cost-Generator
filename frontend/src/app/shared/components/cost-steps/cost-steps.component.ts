@@ -2,7 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {MEDIA_BREAKPOINTS} from '../../../../environments/constants';
 import {FuelCostItem, RepeatingCostItem, SingleCostItem} from '../../../models/cost.model';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {CostService} from '../../../core/services/cost.service';
 
 @Component({
   selector: 'app-cost-steps',
@@ -14,7 +15,6 @@ export class CostStepsComponent implements OnInit {
   @Input() item: Observable<SingleCostItem | FuelCostItem | RepeatingCostItem>;
   @Input() deliverData: boolean = false;
   @Input() vin: string;
-  @Input() type: 'single' | 'repeating' | 'fuel' = 'single';
 
 
 
@@ -24,7 +24,8 @@ export class CostStepsComponent implements OnInit {
   retries = 0;
 
   constructor(
-    private router: Router
+    private router: Router,
+    public costService: CostService
   ) {
 
   }

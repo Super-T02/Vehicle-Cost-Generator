@@ -8,6 +8,7 @@ import {AuthService} from './auth.service';
 })
 export class CostService {
   costs: {single: SingleCostItem[], repeating: RepeatingCostItem[], fuel: FuelCostItem[]};
+  updateType: 'single' | 'repeating' | 'fuel';
 
   constructor(
     private api: ApiService,
@@ -19,62 +20,36 @@ export class CostService {
   loadCosts(vin: string) {
     const username = this.auth.username;
 
-    this.costs.single = [
-      {
-        id: '123',
-        vin: 'WBAUK31050VM63456',
-        username: 'Tom',
-        km: 600,
-        price: 400,
-        date: new Date('Fri Dec 03 2010 19:26:05 GMT+0100 (Mitteleuropäische Normalzeit)'),
-        type: 'Test',
-        name: 'Test Zweck',
-        description: 'For testing this is a description'
-      },
-      {
-        id: '1234',
-        vin: 'WBAUK31050VM63456',
-        username: 'Tom',
-        km: 600,
-        price: 400,
-        date: new Date('Fri Dec 03 2010 19:26:05 GMT+0100 (Mitteleuropäische Normalzeit)'),
-        type: 'Test',
-        name: 'Test Zweck',
-        description: 'For testing this is a description'
-      },
-      {
-        id: '1235',
-        vin: 'WBAUK31050VM63456',
-        username: 'Tom',
-        km: 600,
-        price: 400,
-        date: new Date('Fri Dec 03 2010 19:26:05 GMT+0100 (Mitteleuropäische Normalzeit)'),
-        type: 'Test',
-        name: 'Test Zweck',
-        description: 'For testing this is a description'
-      },
-      {
-        id: '1236',
-        vin: 'WBAUK31050VM63456',
-        username: 'Tom',
-        km: 600,
-        price: 400,
-        date: new Date('Fri Dec 03 2010 19:26:05 GMT+0100 (Mitteleuropäische Normalzeit)'),
-        type: 'Test',
-        name: 'Test Zweck',
-        description: 'For testing this is a description'
-      },
-    ];
+    this.api.getSingleCosts(username, vin).subscribe(
+      value => {
 
-    // this.api.getSingleCosts(username, vin).subscribe(
-    //   value => this.costs.single = value.data
-    // );
-    // this.api.getRepeatingCosts(username, vin).subscribe(
-    //   value => this.costs.repeating = value.data
-    // );
-    // this.api.getFuelCosts(username, vin).subscribe(
-    //   value => this.costs.fuel = value.data
-    // );
+        for (const datum of value.data) {
+          datum.date = new Date(datum.date);
+        }
+
+        this.costs.single = value.data;
+      }
+    );
+    this.api.getRepeatingCosts(username, vin).subscribe(
+      value => {
+
+        for (const datum of value.data) {
+          datum.date = new Date(datum.date);
+        }
+
+        this.costs.repeating = value.data;
+      }
+    );
+    this.api.getFuelCosts(username, vin).subscribe(
+      value => {
+
+        for (const datum of value.data) {
+          datum.date = new Date(datum.date);
+        }
+
+        this.costs.fuel = value.data;
+      }
+    );
   }
 
   /**
