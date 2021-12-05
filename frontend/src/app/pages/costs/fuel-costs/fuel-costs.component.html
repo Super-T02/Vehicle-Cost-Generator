@@ -53,7 +53,10 @@
           <i nz-icon nzType="edit" nzTheme="outline"></i>
         </a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a nz-tooltip="Delete">
+        <a
+          (click)="deleteCost(data.id)"
+          nz-tooltip="Delete"
+        >
           <i nz-icon nzType="delete" nzTheme="outline"></i>
         </a>
       </td>

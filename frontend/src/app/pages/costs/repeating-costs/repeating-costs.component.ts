@@ -3,6 +3,9 @@ import {NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder} fro
 import {RepeatingCostItem} from '../../../models/cost.model';
 import {CostService} from '../../../core/services/cost.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ApiService} from '../../../core/services/api.service';
+import {AuthService} from '../../../core/services/auth.service';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 interface ColumnItem {
   name: string;
@@ -75,7 +78,10 @@ export class RepeatingCostsComponent implements OnInit {
   constructor(
     public costService: CostService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private auth: AuthService,
+    private modal: NzModalService
   ) { }
 
   ngOnInit(): void {
@@ -93,11 +99,33 @@ export class RepeatingCostsComponent implements OnInit {
   }
 
   /**
-   * Redirect to updateSingleCost
+   * Redirect to updateRepeatingCost
    */
   updateCost(id: string) {
     this.costService.updateType = 'repeating';
     this.router.navigate(['overview/'+ this.vin +'/updateCostItem/' + id]).then();
+  }
+
+  /**
+   * Delete CostItem with given id
+   * @param id
+   */
+  deleteCost(id: string) {
+    this.modal.confirm({
+      nzTitle: 'Delete Cost Item?',
+      nzContent: 'Are you sure to delete this Cost Item?',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzCancelText: 'No',
+      nzWidth: 550,
+      nzStyle: {top: '25%'},
+      nzOnOk: () => {
+        this.api.deleteRepeatingCostItem(this.vin, this.auth.username, id).subscribe(
+          () => this.costService.loadCosts(this.vin)
+        );
+      }
+    });
   }
 
 }

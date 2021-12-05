@@ -598,4 +598,79 @@ export class ApiService {
       catchError(this.handleError)
     );
   }
+
+  /**
+   * Deletes a single cost item from the db
+   * @param vin
+   * @param username
+   * @param id
+   */
+  deleteSingleCostItem(vin: string, username: string, id: string): Observable<ApiOutput> {
+    return this.http.delete<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Deletes a repeating cost item from the db
+   * @param vin
+   * @param username
+   * @param id
+   */
+  deleteRepeatingCostItem(vin: string, username: string, id: string): Observable<ApiOutput> {
+    return this.http.delete<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Deletes a fuel cost item from the db
+   * @param vin
+   * @param username
+   * @param id
+   */
+  deleteFuelCostItem(vin: string, username: string, id: string): Observable<ApiOutput> {
+    return this.http.delete<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

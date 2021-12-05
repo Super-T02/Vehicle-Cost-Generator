@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
 		} else if (!data) {
-			res.status(404).json(generateErrorMessage('Not able to find vin or query', 'Request Params'));
+			res.status(200).json([]);
 		} else {
 			res.status(200).json(data);
 		}
