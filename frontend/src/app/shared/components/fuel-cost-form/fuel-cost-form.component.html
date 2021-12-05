@@ -1,1 +1,117 @@
-<p>fuel-cost-form works!</p>
+<form class="form"  [formGroup]="addFuel" (ngSubmit)="onSubmit()" nz-form>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Volume should not be empty!">
+      <nz-input-group nzAddOnAfter="l">
+        <input
+          nz-input
+          id="volume"
+          type="number"
+          min="0"
+          formControlName="volume"
+          placeholder="Volume"
+          required
+        >
+      </nz-input-group>
+    </nz-form-control>
+    <nz-form-control nzErrorTip="Date should not be empty!">
+      <nz-input-group>
+        <nz-date-picker
+          nzMode="date"
+          formControlName="date"
+          id="date"
+          nzPlaceHolder="Date"
+          style="width: 100%"
+          required
+        >
+        </nz-date-picker>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Price should not be empty!">
+      <nz-input-group nzAddOnAfter="€">
+        <input
+          nz-input
+          id="price"
+          type="number"
+          min="0"
+          step="0.1"
+          formControlName="price"
+          placeholder="Price"
+          required
+        >
+      </nz-input-group>
+    </nz-form-control>
+    <nz-form-control>
+      <nz-input-group nzAddOnAfter="km">
+        <input
+          nz-input
+          id="km"
+          type="number"
+          min="0"
+          step="100"
+          formControlName="km"
+          placeholder="Mileage"
+        >
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group nzAddOnAfter="l / 100 km">
+        <input
+          nz-input
+          id="consumption"
+          type="number"
+          formControlName="consumption"
+          placeholder="Consumption"
+        >
+      </nz-input-group>
+    </nz-form-control>
+    <nz-form-control nzErrorTip="Type should not be empty!">
+      <nz-input-group>
+        <input
+          nz-input
+          id="type"
+          type="text"
+          formControlName="type"
+          placeholder="Type of fuel"
+          required
+        >
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+
+
+  <nz-form-item>
+    <nz-form-control>
+      <div class="button-flex">
+        <button
+          *ngIf="!deliverData"
+          id="add-btn"
+          nz-button
+          [nzType]="'primary'"
+          nzShape="round"
+          [disabled]="!addFuel.valid"
+        >
+          Add Cost Item <i nz-icon nzType="plus"></i>
+        </button>
+
+        <button
+          *ngIf="deliverData"
+          id="edit-btn"
+          nz-button
+          [nzType]="'primary'"
+          nzShape="round"
+          [disabled]="!addFuel.valid"
+        >
+          Update Cost Item <i nz-icon nzType="edit"></i>
+        </button>
+      </div>
+
+    </nz-form-control>
+  </nz-form-item>
+</form>

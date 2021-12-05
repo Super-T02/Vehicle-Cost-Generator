@@ -6,6 +6,7 @@ import {CreateUserInput} from '../../models/user.model';
 import {ApiError, ApiOutput, LoginInput} from '../../models/api.model';
 import {Vehicle, VehicleInput} from '../../models/vehicle.model';
 import {UtilService} from './util.service';
+import {FuelCostItemInput, RepeatingCostItemInput, SingleCostItemInput} from "../../models/cost.model";
 
 @Injectable({
 	providedIn: 'root'
@@ -357,4 +358,81 @@ export class ApiService {
     );
   }
 
+  /**
+   * Create a new single cost item
+   * @param item
+   * @param username
+   * @param vin
+   */
+  createSingleCostItem(item: SingleCostItemInput, username: string, vin: string): Observable<any> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin}/singleCosts`,
+      item,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Create a new repeating cost item
+   * @param item
+   * @param username
+   * @param vin
+   */
+  createRepeatingCostItem(item: RepeatingCostItemInput, username: string, vin: string): Observable<any> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin}/repeatingCosts`,
+      item,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Create a new fuel cost item
+   * @param item
+   * @param username
+   * @param vin
+   */
+  createFuelCostItem(item: FuelCostItemInput, username: string, vin: string): Observable<any> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin}/fuelCosts`,
+      item,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

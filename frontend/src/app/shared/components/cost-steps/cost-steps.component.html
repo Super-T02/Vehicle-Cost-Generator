@@ -13,7 +13,7 @@
 
     <img class="pic" src="assets/steps.svg" alt="Configure Vehicle">
     <div class="right-column">
-      <h1>Enter Data</h1>
+      <h1>Create new Cost Item</h1>
       <div id="costType">
         <div>
           Type of cost:
@@ -30,6 +30,7 @@
         [deliverData]="deliverData"
         [vin]="vin"
         [item]="item"
+        (sentData)="dataSent($event)"
       >
       </app-single-cost-form>
 
@@ -38,6 +39,7 @@
         [deliverData]="deliverData"
         [vin]="vin"
         [item]="item"
+        (sentData)="dataSent($event)"
       >
       </app-repeating-cost-form>
 
@@ -46,13 +48,14 @@
         [deliverData]="deliverData"
         [vin]="vin"
         [item]="item"
+        (sentData)="dataSent($event)"
       >
       </app-fuel-cost-form>
     </div>
   </div>
 
   <!--    Second Step-->
-  <div class="horizontal-flex" *ngIf="currentStep === 2">
+  <div class="horizontal-flex" *ngIf="currentStep === 1">
     <img class="pic" src="assets/done.svg" alt="Log-in Picture">
     <div class="centerText">
       <h1>Cost item {{deliverData? 'Updated' : 'Created'}} <span class="primary-color">successfully</span>!</h1>
