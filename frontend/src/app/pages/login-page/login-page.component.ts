@@ -5,7 +5,7 @@ import {ResizeService} from '../../core/services/resize.service';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.less']
+  styleUrls: ['./login-page.component.less', '../../shared/styles/two-columns-two-flex.less']
 })
 export class LoginPageComponent implements OnInit {
 

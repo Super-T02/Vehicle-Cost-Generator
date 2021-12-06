@@ -15,6 +15,7 @@ import {NzInputModule} from "ng-zorro-antd/input";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import { RepeatingCostsComponent } from './repeating-costs/repeating-costs.component';
 import { FuelCostsComponent } from './fuel-costs/fuel-costs.component';
+import { CostsPerMonthChartComponent } from './costs-per-month-chart/costs-per-month-chart.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { FuelCostsComponent } from './fuel-costs/fuel-costs.component';
     CostsComponent,
     SingleCostsComponent,
     RepeatingCostsComponent,
-    FuelCostsComponent
+    FuelCostsComponent,
+    CostsPerMonthChartComponent
   ],
   imports: [
     CommonModule,
