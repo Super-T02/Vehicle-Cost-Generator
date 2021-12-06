@@ -58,3 +58,8 @@ export interface RepeatingCostItem {
   name: string,
   description?: string
 }
+
+export interface CostPerMonth {
+  date: Date,
+  costs: number
+}
