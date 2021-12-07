@@ -26,8 +26,9 @@ export class UpdateVehicleComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.api.getVehicle(this.auth.username, params.vin).subscribe(
         value => {
-          this.vin = value.data[0].vin;
-          this.vehicle.next(value.data[0]);
+          console.log(value);
+          this.vin = params.vin;
+          this.vehicle.next(value.data);
           this.dataLoaded = true;
         }
       );

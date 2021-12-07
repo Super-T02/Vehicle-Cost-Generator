@@ -43,8 +43,9 @@ exports.addNewVehicle = (req, callback) => {
  */
 exports.getVehicle = (req, callback) => {
 	const {vin} = req;
+	const {username} = req.body;
 
-	vehicleModel.getVehicle(vin, (err, data) => {
+	vehicleModel.getVehicle(vin, username, (err, data) => {
 		if (err) {
 			callback(err, null);
 		}else if (data.length === 0) {
