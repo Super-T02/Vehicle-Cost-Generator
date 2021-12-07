@@ -84,7 +84,6 @@ export class CostService {
           found = true;
         }
       }
-      console.log(found);
       if (!found) {
         result.push({date: cost.date, costs: cost.price});
       }

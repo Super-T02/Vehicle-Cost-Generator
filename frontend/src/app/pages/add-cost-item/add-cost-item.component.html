@@ -1,7 +1,7 @@
 <nz-breadcrumb>
   <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
   <nz-breadcrumb-item routerLink="/overview">Overview</nz-breadcrumb-item>
-  <nz-breadcrumb-item [routerLink]="'/overview/'+ vin">{{vin}}</nz-breadcrumb-item>
+  <nz-breadcrumb-item [routerLink]="'/overview/'+ vin" [queryParams]="query">{{vin}}</nz-breadcrumb-item>
   <nz-breadcrumb-item [routerLink]="'/overview/'+ vin +'/addCostItem'">Add Cost Item</nz-breadcrumb-item>
 </nz-breadcrumb>
 

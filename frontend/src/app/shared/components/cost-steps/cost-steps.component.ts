@@ -4,6 +4,7 @@ import {MEDIA_BREAKPOINTS} from '../../../../environments/constants';
 import {FuelCostItem, RepeatingCostItem, SingleCostItem} from '../../../models/cost.model';
 import {Router} from '@angular/router';
 import {CostService} from '../../../core/services/cost.service';
+import {LastRouteService} from '../../../core/services/last-route.service';
 
 @Component({
   selector: 'app-cost-steps',
@@ -25,7 +26,8 @@ export class CostStepsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public costService: CostService
+    public costService: CostService,
+    private lastUrl: LastRouteService,
   ) {
 
   }
@@ -46,7 +48,10 @@ export class CostStepsComponent implements OnInit {
 
       // Auto redirect
       setTimeout(() => {
-        this.router.navigate(['overview/' + this.vin]).then();
+        this.router.navigate(['overview/' + this.vin], {
+          queryParams: this.lastUrl.query,
+          queryParamsHandling: 'merge'
+        }).then();
       },5000);
     }
   }

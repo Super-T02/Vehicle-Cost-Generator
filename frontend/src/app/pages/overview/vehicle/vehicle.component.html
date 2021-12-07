@@ -12,11 +12,11 @@
 </nz-card>
 
 <ng-template #coverTemplate>
-  <img [routerLink]="'/overview/' + vehicle.vin" id="carPic" alt="Vehicle" src="assets/car.svg">
+  <img [routerLink]="[url]" [queryParams]="query" id="carPic" alt="Vehicle" src="assets/car.svg">
 </ng-template>
 
 <ng-template #descriptionTemplate>
-  <div [routerLink]="'/overview/' + vehicle.vin">
+  <div [routerLink]="url">
     <div class="flex">
       <div>Build:</div>
       <div>
@@ -36,7 +36,7 @@
 </ng-template>
 
 <ng-template #titleTemplate>
-  <div class="flex" [routerLink]="'/overview/' + vehicle.vin">
+  <div class="flex" [routerLink]="url">
     <div>
       {{vehicle.make}} {{vehicle.model}}
     </div>
