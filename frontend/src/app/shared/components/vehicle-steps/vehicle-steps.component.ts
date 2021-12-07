@@ -129,7 +129,7 @@ export class VehicleStepsComponent implements OnInit {
         make: result.make,
         model: result.model,
         license: result.license,
-        year: result.year.toString(),
+        year: result.year? result.year.toString() : null,
         type: result.type,
         color: result.color,
         weight: result.weight
