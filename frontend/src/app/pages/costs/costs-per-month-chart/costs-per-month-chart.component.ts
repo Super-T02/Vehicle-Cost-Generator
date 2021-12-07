@@ -45,19 +45,38 @@ export class CostsPerMonthChartComponent implements OnInit {
         }
 
         this.chartOption = {
+          legend: {
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
           xAxis: {
             type: 'category',
             data: months,
+            nameLocation: 'middle',
+            boundaryGap: false,
           },
           yAxis: {
             type: 'value',
+            axisLabel: {
+              formatter: '{value} €'
+            }
           },
           series: [
             {
               data: price,
               type: 'line',
-            },
-          ],
+              smooth: true,
+              symbolSize: 8,
+              lineStyle: {
+                width: 2,
+                shadowColor: '#1890FF',
+                shadowBlur: 8,
+                shadowOffsetY: 8
+              },
+              color: '#1890FF'
+            }
+          ]
         };
       }
     });
