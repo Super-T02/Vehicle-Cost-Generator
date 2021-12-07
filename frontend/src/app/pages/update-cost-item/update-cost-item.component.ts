@@ -5,6 +5,7 @@ import {Observable, Subject} from 'rxjs';
 import {ApiService} from '../../core/services/api.service';
 import {AuthService} from '../../core/services/auth.service';
 import {CostService} from '../../core/services/cost.service';
+import {LastRouteService} from "../../core/services/last-route.service";
 
 @Component({
   selector: 'app-update-cost-item',
@@ -17,15 +18,18 @@ export class UpdateCostItemComponent implements OnInit {
   id: string;
   item: Subject<SingleCostItem | FuelCostItem | RepeatingCostItem>
     = new Subject<SingleCostItem | FuelCostItem | RepeatingCostItem>();
+  query: Object;
 
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
     private auth: AuthService,
-    private costService: CostService
+    private costService: CostService,
+    private lastRoute: LastRouteService
   ) { }
 
   ngOnInit(): void {
+    this.query = this.lastRoute.query;
     this.route.params.subscribe(parms => {
       this.vin = parms.vin.toUpperCase();
       this.id = parms.id;

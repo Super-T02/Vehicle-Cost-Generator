@@ -2,7 +2,7 @@
   <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
   <nz-breadcrumb-item routerLink="/overview">Overview</nz-breadcrumb-item>
   <nz-breadcrumb-item [routerLink]="'/overview/'+ vin">{{vin}}</nz-breadcrumb-item>
-  <nz-breadcrumb-item [routerLink]="'/overview/'+ vin +'/updateCostItem/' + id">Update {{id}}</nz-breadcrumb-item>
+  <nz-breadcrumb-item [routerLink]="'/overview/'+ vin +'/updateCostItem/' + id" [queryParams]="query">Update {{id}}</nz-breadcrumb-item>
 </nz-breadcrumb>
 
 <div class="inner-content">
