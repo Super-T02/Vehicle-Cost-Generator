@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LastRouteService} from '../../core/services/last-route.service';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddVehicleComponent implements OnInit {
 
-  constructor() {
+  constructor(
+    private lastRoute: LastRouteService
+  ) {
   }
 
   ngOnInit(): void {
+    this.lastRoute.newUrlString('/overview/addVehicle');
   }
 }

@@ -3,6 +3,7 @@ import {AuthService} from '../../core/services/auth.service';
 import {Vehicle} from '../../models/vehicle.model';
 import {ApiService} from '../../core/services/api.service';
 import {Router} from '@angular/router';
+import {LastRouteService} from '../../core/services/last-route.service';
 
 @Component({
   selector: 'app-overview',
@@ -16,7 +17,8 @@ export class OverviewComponent implements OnInit {
   constructor(
     public auth: AuthService,
     private api: ApiService,
-    private route: Router
+    private route: Router,
+    private lastRoute: LastRouteService
   ) {
 
   }
@@ -24,6 +26,7 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
     this.vehicles = [];
     this.loadVehicles();
+    this.lastRoute.newUrlString('/overview');
   }
 
   /**

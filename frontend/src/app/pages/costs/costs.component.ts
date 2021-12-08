@@ -30,7 +30,7 @@ export class CostsComponent implements OnInit {
       if (query.selected) {
         this.util.lastCostSelected = query.selected;
       }
-      this.lastUrl.newUrlString(`/overview/${this.vin}?selected=${this.util.lastCostSelected}`);
+      this.lastUrl.newUrlString(`/overview/${this.vin}`);
     });
   }
 

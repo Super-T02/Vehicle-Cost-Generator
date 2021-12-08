@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRoute, UrlSegment} from '@angular/router';
+import {UrlSegment} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,9 @@ export class LastRouteService {
   route: string = '/';
   query: Object = {};
 
-  constructor() { }
+  constructor() {
+
+  }
 
   /**
    * Filters the url form a array of urlSegments
