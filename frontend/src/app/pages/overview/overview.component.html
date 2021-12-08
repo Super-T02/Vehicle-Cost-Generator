@@ -16,10 +16,22 @@
           [vehicle]="vehicle"
           (deleted)="$event? loadVehicles() : undefined"
         ></app-vehicle>
-
-        <h2 class="centerText" *ngIf="vehicles.length === 0">
-          You have no vehicles yet. Create here your first vehicle!
-        </h2>
+      </div>
+      <div class="centerText" *ngIf="vehicles.length === 0">
+        <nz-empty
+          nzNotFoundImage="assets/empty.svg"
+          [nzNotFoundContent]="contentTpl"
+          [nzNotFoundFooter]="footerTpl"
+        >
+          <ng-template #contentTpl>
+        <span>
+          There are no vehicles.
+        </span>
+          </ng-template>
+          <ng-template #footerTpl>
+            <button nz-button nzType="primary" nzShape="round" (click)="addVehicle()">Create Now</button>
+          </ng-template>
+        </nz-empty>
       </div>
     </nz-card>
 

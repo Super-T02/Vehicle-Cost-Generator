@@ -10,6 +10,7 @@ import {NzStatisticModule} from 'ng-zorro-antd/statistic';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
+import {NzEmptyModule} from "ng-zorro-antd/empty";
 
 
 @NgModule({
@@ -17,15 +18,16 @@ import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
     OverviewComponent,
     VehicleComponent
   ],
-  imports: [
-    CommonModule,
-    OverviewRoutingModule,
-    NzBreadCrumbModule,
-    NzCardModule,
-    NzStatisticModule,
-    NzIconModule,
-    NzButtonModule,
-    NzToolTipModule
-  ]
+    imports: [
+        CommonModule,
+        OverviewRoutingModule,
+        NzBreadCrumbModule,
+        NzCardModule,
+        NzStatisticModule,
+        NzIconModule,
+        NzButtonModule,
+        NzToolTipModule,
+        NzEmptyModule
+    ]
 })
 export class OverviewModule { }
