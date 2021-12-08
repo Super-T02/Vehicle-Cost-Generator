@@ -5,6 +5,7 @@ import {FuelCostItem, RepeatingCostItem, SingleCostItem} from '../../../models/c
 import {Router} from '@angular/router';
 import {CostService} from '../../../core/services/cost.service';
 import {LastRouteService} from '../../../core/services/last-route.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-cost-steps',
@@ -26,6 +27,7 @@ export class CostStepsComponent implements OnInit {
     private router: Router,
     public costService: CostService,
     private lastUrl: LastRouteService,
+    private message: NzMessageService
   ) {
 
   }
@@ -36,8 +38,12 @@ export class CostStepsComponent implements OnInit {
   dataSent(value: boolean) {
     if (value) {
       this.currentStep = 1;
+      this.countdown = 3;
+      let successMessage: string;
 
-      this.countdown = 5;
+      this.deliverData? successMessage='Cost item successfully updated!'
+        : successMessage='Cost item successfully created!';
+      this.message.success(successMessage, {nzDuration: 3000});
 
       // Interval for the timer
       setInterval(() => {
@@ -50,7 +56,7 @@ export class CostStepsComponent implements OnInit {
           queryParams: this.lastUrl.query,
           queryParamsHandling: 'merge'
         }).then();
-      },5000);
+      },this.countdown * 1000);
     }
   }
 

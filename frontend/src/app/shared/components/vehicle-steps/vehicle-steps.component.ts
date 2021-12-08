@@ -8,6 +8,7 @@ import {AuthService} from '../../../core/services/auth.service';
 import {Router} from '@angular/router';
 import {ApiError} from '../../../models/api.model';
 import {Observable} from 'rxjs';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-vehicle-steps',
@@ -32,7 +33,8 @@ export class VehicleStepsComponent implements OnInit {
     public resize: ResizeService,
     private api: ApiService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private message: NzMessageService
   ) {
 
   }
@@ -152,7 +154,12 @@ export class VehicleStepsComponent implements OnInit {
    */
   handleResult(): void {
     this.currentStep += 1;
-    this.countdown = 5;
+    this.countdown = 3;
+    let successMessage: string;
+
+    this.deliverData? successMessage='Vehicle successfully updated!'
+      : successMessage='Vehicle successfully created!';
+    this.message.success(successMessage, {nzDuration: 3000});
 
     // Interval for the timer
     setInterval(() => {
@@ -162,7 +169,7 @@ export class VehicleStepsComponent implements OnInit {
     // Auto redirect
     setTimeout(() => {
       this.router.navigate(['overview']).then();
-    },5000);
+    },this.countdown * 1000);
   }
 
   /**
