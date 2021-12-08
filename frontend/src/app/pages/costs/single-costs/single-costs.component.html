@@ -34,7 +34,7 @@
     >
       {{ column.name }}
     </th>
-    <th>Action</th>
+    <th nzRight>Action</th>
   </tr>
   </thead>
   <tbody>
@@ -46,7 +46,7 @@
       <td>{{ data.km }} <span *ngIf="data.km">km</span> <span *ngIf="!data.km">---</span> </td>
       <td>{{ data.type }}</td>
       <td>{{ data.date | date: 'dd MMM YYYY' }}</td>
-      <td>
+      <td nzRight>
         <a
           (click)="updateCost(data.id)"
           nz-tooltip="Edit"

@@ -12,6 +12,22 @@ export class CostService {
   costPerMonth: Subject<{type: 'single' | 'repeating' | 'fuel', data: CostPerMonth[]}>;
   updateType: 'single' | 'repeating' | 'fuel';
 
+  singleCostTypes = [
+    {text: 'Repair', value: 'Repair'},
+    {text: 'Normal Purchase', value: 'Normal Purchase'},
+    {text: 'Administrative Expenses', value: 'Administrative Expenses'},
+    {text: 'Other', value: 'Other'}
+  ];
+
+  fuelTypes = [
+    {text: 'Super Plus', value: 'Super Plus'},
+    {text: 'Super', value: 'Super'},
+    {text: 'E10', value: 'E10'},
+    {text: 'Diesel', value: 'Diesel'},
+  ];
+
+
+
   constructor(
     private api: ApiService,
     private auth: AuthService

@@ -5,7 +5,7 @@ import {Observable, Subject} from 'rxjs';
 import {ApiService} from '../../core/services/api.service';
 import {AuthService} from '../../core/services/auth.service';
 import {CostService} from '../../core/services/cost.service';
-import {LastRouteService} from "../../core/services/last-route.service";
+import {LastRouteService} from '../../core/services/last-route.service';
 
 @Component({
   selector: 'app-update-cost-item',

@@ -17,8 +17,6 @@ export class CostStepsComponent implements OnInit {
   @Input() deliverData: boolean = false;
   @Input() vin: string;
 
-
-
   breakPoints = MEDIA_BREAKPOINTS;
   currentStep = 0;
   countdown = 0;

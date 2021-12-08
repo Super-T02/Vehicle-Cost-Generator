@@ -30,14 +30,18 @@
   <nz-form-item>
     <nz-form-control nzErrorTip="Type should not be empty!">
       <nz-input-group>
-        <input
-          nz-input
+        <nz-select
           id="type"
-          type="text"
           formControlName="type"
-          placeholder="Type of costs"
+          nzPlaceHolder="Type of costs"
           required
         >
+          <nz-option
+            *ngFor="let type of costService.singleCostTypes"
+            [nzValue]="type.value"
+            [nzLabel]="type.text"
+          ></nz-option>
+        </nz-select>
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>

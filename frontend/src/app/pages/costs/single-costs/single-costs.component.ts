@@ -57,9 +57,9 @@ export class SingleCostsComponent implements OnInit {
       sortOrder: null,
       sortFn: (a: SingleCostItem, b: SingleCostItem) => a.type.localeCompare(b.type),
       sortDirections: ['ascend', 'descend', null],
-      filterMultiple: true,
-      listOfFilter: [],
-      filterFn: null
+      filterMultiple: false,
+      listOfFilter: this.costService.singleCostTypes,
+      filterFn: (type: string, item: SingleCostItem) => item.type.indexOf(type) !== -1
     },
     {
       name: 'Date',

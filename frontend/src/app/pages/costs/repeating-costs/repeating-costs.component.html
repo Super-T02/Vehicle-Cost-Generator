@@ -33,7 +33,7 @@
     >
       {{ column.name }}
     </th>
-    <th>Action</th>
+    <th nzRight>Action</th>
   </tr>
   </thead>
   <tbody>
@@ -44,7 +44,7 @@
       <td>{{ data.period }}</td>
       <td>{{ data.date | date: 'dd MMM YYYY' }}</td>
       <td>{{ data.description ? data.description : '---' }} </td>
-      <td>
+      <td nzRight>
         <a
           (click)="updateCost(data.id)"
           nz-tooltip="Edit"

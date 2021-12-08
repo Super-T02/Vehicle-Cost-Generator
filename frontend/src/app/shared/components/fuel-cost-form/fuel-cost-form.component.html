@@ -72,14 +72,18 @@
     </nz-form-control>
     <nz-form-control nzErrorTip="Type should not be empty!">
       <nz-input-group>
-        <input
-          nz-input
+        <nz-select
           id="type"
-          type="text"
           formControlName="type"
-          placeholder="Type of fuel"
+          nzPlaceHolder="Fuel Type"
           required
         >
+          <nz-option
+            *ngFor="let fuel of costService.fuelTypes"
+            [nzLabel]="fuel.text"
+            [nzValue]="fuel.value"
+          ></nz-option>
+        </nz-select>
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>

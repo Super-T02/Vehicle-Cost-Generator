@@ -74,9 +74,9 @@ export class FuelCostsComponent implements OnInit {
       sortOrder: null,
       sortFn: (a: FuelCostItem, b: FuelCostItem) => a.type.localeCompare(b.type),
       sortDirections: ['ascend', 'descend', null],
-      filterMultiple: true,
-      listOfFilter: [],
-      filterFn: null
+      filterMultiple: false,
+      listOfFilter: this.costService.fuelTypes,
+      filterFn: (type: string, item: FuelCostItem) => item.type.indexOf(type) !== -1
     }
   ];
   expandSet = new Set<string>();
