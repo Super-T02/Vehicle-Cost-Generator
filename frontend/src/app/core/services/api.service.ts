@@ -6,6 +6,14 @@ import {CreateUserInput} from '../../models/user.model';
 import {ApiError, ApiOutput, LoginInput} from '../../models/api.model';
 import {Vehicle, VehicleInput} from '../../models/vehicle.model';
 import {UtilService} from './util.service';
+import {
+  FuelCostItem,
+  FuelCostItemInput,
+  RepeatingCostItem,
+  RepeatingCostItemInput,
+  SingleCostItem,
+  SingleCostItemInput
+} from '../../models/cost.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -88,6 +96,29 @@ export class ApiService {
       `${this.baseUrl}/users`,
       user,
       {observe: 'response'}
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Get a specific user
+   * @param username
+   */
+  getUser(username: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
     ).pipe(
       map((res) => {
         if (!res.body) {
@@ -285,6 +316,384 @@ export class ApiService {
     );
   }
 
+  /**
+   * Gets all single cost items
+   * @param username
+   * @param vin
+   */
+  getSingleCosts(username: string, vin: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
 
+  /**
+   * Gets all repeating cost items
+   * @param username
+   * @param vin
+   */
+  getRepeatingCosts(username: string, vin: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
 
+  /**
+   * Gets all fuel cost items
+   * @param username
+   * @param vin
+   */
+  getFuelCosts(username: string, vin: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Create a new single cost item
+   * @param item
+   * @param username
+   * @param vin
+   */
+  createSingleCostItem(item: SingleCostItemInput, username: string, vin: string): Observable<any> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin}/singleCosts`,
+      item,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Create a new repeating cost item
+   * @param item
+   * @param username
+   * @param vin
+   */
+  createRepeatingCostItem(item: RepeatingCostItemInput, username: string, vin: string): Observable<any> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin}/repeatingCosts`,
+      item,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Create a new fuel cost item
+   * @param item
+   * @param username
+   * @param vin
+   */
+  createFuelCostItem(item: FuelCostItemInput, username: string, vin: string): Observable<any> {
+    return this.http.post<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin}/fuelCosts`,
+      item,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Get one specific single cost item of the given user with the given vin
+   * @param username
+   * @param vin
+   * @param id
+   */
+  getSingleCost(username: string, vin: string, id: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Get one specific repeating cost item of the given user with the given vin
+   * @param username
+   * @param vin
+   * @param id
+   */
+  getRepeatingCost(username: string, vin: string, id: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Get one specific fuel cost item of the given user with the given vin
+   * @param username
+   * @param vin
+   * @param id
+   */
+  getFuelCost(username: string, vin: string, id: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Updates a single cost item in the db
+   * @param vin
+   * @param username
+   * @param id
+   * @param item
+   */
+  updateSingleCostItem(vin: string, username: string, id: string, item: SingleCostItem): Observable<ApiOutput> {
+    return this.http.put<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
+      item,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Updates a repeating cost item in the db
+   * @param vin
+   * @param username
+   * @param id
+   * @param item
+   */
+  updateRepeatingCostItem(vin: string, username: string, id: string, item: RepeatingCostItem): Observable<ApiOutput> {
+    return this.http.put<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
+      item,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Updates a fuel cost item in the db
+   * @param vin
+   * @param username
+   * @param id
+   * @param item
+   */
+  updateFuelCostItem(vin: string, username: string, id: string, item: FuelCostItem): Observable<ApiOutput> {
+    return this.http.put<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
+      item,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Deletes a single cost item from the db
+   * @param vin
+   * @param username
+   * @param id
+   */
+  deleteSingleCostItem(vin: string, username: string, id: string): Observable<ApiOutput> {
+    return this.http.delete<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Deletes a repeating cost item from the db
+   * @param vin
+   * @param username
+   * @param id
+   */
+  deleteRepeatingCostItem(vin: string, username: string, id: string): Observable<ApiOutput> {
+    return this.http.delete<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Deletes a fuel cost item from the db
+   * @param vin
+   * @param username
+   * @param id
+   */
+  deleteFuelCostItem(vin: string, username: string, id: string): Observable<ApiOutput> {
+    return this.http.delete<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

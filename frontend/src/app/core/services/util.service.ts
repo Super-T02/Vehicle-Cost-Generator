@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class UtilService {
 
+  lastCostSelected: number = 0;
+
   constructor() { }
 
   /**

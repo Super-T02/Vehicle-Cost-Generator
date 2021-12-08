@@ -46,6 +46,6 @@ export class OverviewComponent implements OnInit {
    * Navigate to addVehicle
    */
   addVehicle() {
-    this.route.navigate(['addVehicle']).then();
+    this.route.navigate(['overview/addVehicle']).then();
   }
 }

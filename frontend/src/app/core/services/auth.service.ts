@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ApiService} from './api.service';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {ApiError, ApiOutput} from '../../models/api.model';
 import {Router} from '@angular/router';
 import {LastRouteService} from './last-route.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {UtilService} from './util.service';
-import {concatMap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +15,7 @@ export class AuthService {
 
   authenticated: boolean = false;
   username: string = 'user';
+  retried: boolean = false;
 
   constructor(public jwtHelper: JwtHelperService,
               private api: ApiService,
@@ -50,10 +50,10 @@ export class AuthService {
       const accessToken = localStorage.getItem('accessToken');
       const refreshToken = localStorage.getItem('refreshToken');
 
-      if (!accessToken || !refreshToken) {
+      if (!accessToken && !refreshToken) {
         this.authenticated = false;
         observer.next(false);
-      } else if (this.jwtHelper.isTokenExpired(accessToken)) {
+      } else if (this.jwtHelper.isTokenExpired(accessToken) || !accessToken) {
         // Get a new access token
         this.api.getNewToken(refreshToken)
           .subscribe((output: ApiOutput) => {
@@ -90,18 +90,24 @@ export class AuthService {
    * @param error
    */
   handleAuthError(error: ApiError) {
-    if (error.code !== 403) throw(error);
+    if (error.code !== 403) throwError(error);
 
     this.isAuthenticated().subscribe(value => {
-      if (!value) {
+      if (!value || this.retried) {
+        this.retried = false;
         this.logout(false, 'You mus login again');
         this.lastRoute.newUrlString(this.router.url);
         this.router.navigate(['login']).then();
         error.message = 'Please login first';
-        throw(error);
+        this.message.error(error.message, {nzDuration: 3000});
+        return throwError(error);
       } else {
+        this.retried = true;
+        console.log(value);
+        console.log(this.retried);
         error.message = 'Please try again';
-        throw(error);
+        this.message.error(error.message, {nzDuration: 3000});
+        return throwError(error);
       }
     });
   }

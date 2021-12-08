@@ -12,6 +12,7 @@ import { Subject} from 'rxjs';
 })
 export class UpdateVehicleComponent implements OnInit {
   vehicle: Subject<Vehicle> = new Subject<Vehicle>();
+  vin: string;
   dataLoaded: boolean = false;
 
 
@@ -25,7 +26,8 @@ export class UpdateVehicleComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.api.getVehicle(this.auth.username, params.vin).subscribe(
         value => {
-          this.vehicle.next(value.data[0]);
+          this.vin = params.vin;
+          this.vehicle.next(value.data);
           this.dataLoaded = true;
         }
       );

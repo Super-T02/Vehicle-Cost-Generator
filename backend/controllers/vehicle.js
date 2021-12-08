@@ -34,7 +34,7 @@ router.use('/:vin', vehicleService.checkVinParam);
 
 router.get('/:vin', (req, res) => {
 
-	vehicleService.getAlLVehicles(req, (err, vehicle) => {
+	vehicleService.getVehicle(req, (err, vehicle) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
 		} else if (!vehicle) {

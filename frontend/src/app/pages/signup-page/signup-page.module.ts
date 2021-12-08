@@ -5,17 +5,19 @@ import { SignupPageRoutingModule } from './signup-page-routing.module';
 import { SignupPageComponent } from './signup-page.component';
 import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
 import {SharedModule} from '../../shared/shared.module';
+import {NzStepsModule} from "ng-zorro-antd/steps";
 
 
 @NgModule({
   declarations: [
     SignupPageComponent
   ],
-  imports: [
-    CommonModule,
-    SignupPageRoutingModule,
-    NzBreadCrumbModule,
-    SharedModule
-  ]
+    imports: [
+        CommonModule,
+        SignupPageRoutingModule,
+        NzBreadCrumbModule,
+        SharedModule,
+        NzStepsModule
+    ]
 })
 export class SignupPageModule { }
