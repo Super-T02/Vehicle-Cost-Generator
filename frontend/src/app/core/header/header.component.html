@@ -24,7 +24,8 @@
       </button>
     </li>
     <li nz-menu-item
-        routerLink=""
+        [nzSelected]="url === '/'"
+        routerLink="/"
         nz-tooltip
         [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
         nzTooltipTitle="Home"
@@ -38,6 +39,7 @@
     </li>
 
     <li nz-menu-item
+        nzMatchRouter
         routerLink="/overview"
         nz-tooltip
         [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
@@ -53,6 +55,7 @@
 
     <li *ngIf="this.auth.authenticated" nz-menu-item
         routerLink="/user"
+        nzMatchRouter
         nz-tooltip
         [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
         nzTooltipTitle="User"
@@ -67,6 +70,7 @@
 
     <li *ngIf="!this.auth.authenticated" nz-menu-item
         routerLink="/login"
+        nzMatchRouter
         nz-tooltip
         [nzTooltipTrigger]="this.resizeService.isMobile ? 'hover' : null"
         nzTooltipTitle="Login"
