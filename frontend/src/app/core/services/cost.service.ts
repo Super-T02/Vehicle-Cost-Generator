@@ -43,7 +43,7 @@ export class CostService {
     private auth: AuthService
   ) {
     this.unloadCosts();
-    this.costPerMonth = new Subject<{type: 'single' | 'repeating' | 'fuel'; data: CostPerMonth[]}>();
+    this.costPerMonth = new Subject<{type: 'single' | 'repeating' | 'fuel', data: CostPerMonth[]}>();
   }
 
   loadCosts(vin: string) {
@@ -85,6 +85,69 @@ export class CostService {
   }
 
   /**
+   * Only loading the Single Costs
+   * @param vin
+   */
+  loadSingle(vin: string): Promise<SingleCostItem[]> {
+    const username = this.auth.username;
+    return new Promise<SingleCostItem[]>(resolve => {
+      this.api.getSingleCosts(username, vin).subscribe(
+        value => {
+
+          for (const datum of value.data) {
+            datum.date = new Date(datum.date);
+          }
+
+          resolve(value.data);
+        },
+        error => resolve([])
+      );
+    });
+  }
+
+  /**
+   * Only loading the Repeating Costs
+   * @param vin
+   */
+  loadRepeat(vin: string): Promise<RepeatingCostItem[]> {
+    const username = this.auth.username;
+    return new Promise<RepeatingCostItem[]>(resolve => {
+      this.api.getRepeatingCosts(username, vin).subscribe(
+        value => {
+
+          for (const datum of value.data) {
+            datum.date = new Date(datum.date);
+          }
+
+          resolve(value.data);
+        },
+        error => resolve([])
+      );
+    });
+  }
+
+  /**
+   * Only loading the Fuel Costs
+   * @param vin
+   */
+  loadFuel(vin: string): Promise<FuelCostItem[]> {
+    const username = this.auth.username;
+    return new Promise<FuelCostItem[]>(resolve => {
+      this.api.getFuelCosts(username, vin).subscribe(
+        value => {
+
+          for (const datum of value.data) {
+            datum.date = new Date(datum.date);
+          }
+
+          resolve(value.data);
+        },
+        error => resolve([])
+      );
+    });
+  }
+
+  /**
    * Sets all costs to a empty array
    */
   unloadCosts() {
@@ -95,6 +158,10 @@ export class CostService {
     };
   }
 
+  /**
+   * Get costs per month for stats
+   * @param costs
+   */
   getCostPerMonth(costs: SingleCostItem[] | RepeatingCostItem[] | FuelCostItem[]): CostPerMonth[] {
     let result: CostPerMonth[] = [];
 
@@ -118,5 +185,47 @@ export class CostService {
     result.sort((a, b) => a.date.getTime() - b.date.getTime());
 
     return result;
+  }
+
+  /**
+   * Get the sum of the given costs
+   * @param costs
+   */
+  getSumOfCosts(costs: FuelCostItem[] | SingleCostItem[] | RepeatingCostItem[]): number {
+    let sum = 0;
+
+    for (const cost of costs) {
+      sum += cost.price;
+    }
+
+    return sum;
+  }
+
+  /**
+   * Get the sum of driven distance
+   * @param costs
+   */
+  getSumOfDistance(costs: FuelCostItem[]): number {
+    let sum = 0;
+
+    for (const cost of costs) {
+      sum += cost.km;
+    }
+
+    return sum;
+  }
+
+  /**
+   * Get the highest price of the given costs
+   * @param costs
+   */
+  getHighestPrice(costs: FuelCostItem[] | SingleCostItem[] | RepeatingCostItem[]): number {
+    let highest = 0;
+
+    for (const cost of costs) {
+      highest < cost.price? highest = cost.price : undefined;
+    }
+
+    return highest;
   }
 }
