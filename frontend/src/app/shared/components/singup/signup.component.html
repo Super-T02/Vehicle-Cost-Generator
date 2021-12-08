@@ -1,109 +1,133 @@
-<div class="wrapper">
-  <form
-    *ngIf="!success && !error"
-    [formGroup]="signup"
-    (ngSubmit)="onSubmit()"
-    [ngClass]="this.classList"
-    nz-form >
-    <nz-form-item>
-      <nz-form-label *ngIf="this.description" [nzSm]="this.offsetButton" [nzXs]="this.collSmall" [nzFor]="'name'" nzRequired>Username</nz-form-label>
-      <nz-form-control [nzSm]="this.collNormal" [nzXs]="this.collSmall" nzErrorTip="The name is already used!">
-        <input
-          nz-input
-          id="name"
-          type="text"
-          formControlName="username"
-          placeholder="Username"
-          required
-        >
-      </nz-form-control>
-
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label *ngIf="this.description" [nzSm]="this.offsetButton" [nzXs]="this.collSmall" [nzFor]="'email'" nzRequired>Email</nz-form-label>
-      <nz-form-control [nzSm]="this.collNormal" [nzXs]="this.collSmall" nzErrorTip="This isn't a valid E-Mail">
-        <input
-          nz-input
-          id="email"
-          type="email"
-          formControlName="email"
-          placeholder="E-Mail"
-          required
-        >
-      </nz-form-control>
-
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label *ngIf="this.description" [nzSm]="this.offsetButton" [nzXs]="this.collSmall" [nzFor]="'pass'" nzRequired>Password</nz-form-label>
-      <nz-form-control [nzSm]="this.collNormal" [nzXs]="this.collSmall"
-                       nzErrorTip="The Password must contain:
-        At least one digit [0-9]
-        At least one lowercase character [a-z]
-        At least one uppercase character [A-Z]
-        At least one special character [*.!@#$%^&(){}[]:;<>,.?/~_+-=|\]
-        At least 8 characters in length, but no more than 32."
+<form
+  [formGroup]="signup"
+  (ngSubmit)="onSubmit()"
+  [ngClass]="this.classList"
+  nz-form >
+  <nz-form-item>
+    <nz-form-label
+      *ngIf="this.description"
+      [nzSm]="this.offsetButton"
+      [nzXs]="this.collSmall"
+      [nzFor]="'name'"
+      nzRequired
+    >
+      Username
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="this.collNormal"
+      [nzXs]="this.collSmall"
+      nzErrorTip="The name is already used!"
+    >
+      <input
+        nz-input
+        id="name"
+        type="text"
+        formControlName="username"
+        placeholder="Username"
+        required
       >
-        <input
-          nz-input
-          id="pass"
-          type="password"
-          formControlName="password"
-          placeholder="Password"
-          required
-        >
-      </nz-form-control>
+    </nz-form-control>
 
-    </nz-form-item>
+  </nz-form-item>
 
-    <nz-form-item>
-      <nz-form-label *ngIf="this.description" [nzSm]="this.offsetButton" [nzXs]="this.collSmall" [nzFor]="'passwordCheck'" nzRequired>Repeat Password</nz-form-label>
-      <nz-form-control [nzSm]="this.collNormal" [nzXs]="this.collSmall" nzErrorTip="The passwords aren't the same!">
-        <input
-          nz-input
-          id="passwordCheck"
-          type="password"
-          formControlName="passwordCheck"
-          placeholder="Repeat Password"
-          required
-        >
-      </nz-form-control>
+  <nz-form-item>
+    <nz-form-label
+      *ngIf="this.description"
+      [nzSm]="this.offsetButton"
+      [nzXs]="this.collSmall"
+      [nzFor]="'email'"
+      nzRequired
+    >
+      Email
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="this.collNormal"
+      [nzXs]="this.collSmall"
+      nzErrorTip="This isn't a valid E-Mail"
+    >
+      <input
+        nz-input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="E-Mail"
+        required
+      >
+    </nz-form-control>
 
-    </nz-form-item>
+  </nz-form-item>
 
-    <nz-form-item>
-      <nz-form-control [nzSpan]="this.collNormal" [nzOffset]="this.offsetButton">
-        <button nz-button [nzType]="'primary'" [disabled]="!signup.valid">Signup</button>
-      </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label
+      *ngIf="this.description"
+      [nzSm]="this.offsetButton"
+      [nzXs]="this.collSmall"
+      [nzFor]="'pass'"
+      nzRequired
+    >
+      Password
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="this.collNormal"
+      [nzXs]="this.collSmall"
+      nzErrorTip="The Password must contain:
+    At least one digit [0-9]
+    At least one lowercase character [a-z]
+    At least one uppercase character [A-Z]
+    At least one special character [*.!@#$%^&(){}[]:;<>,.?/~_+-=|\]
+    At least 8 characters in length, but no more than 32."
+    >
+      <input
+        nz-input
+        id="pass"
+        type="password"
+        formControlName="password"
+        placeholder="Password"
+        required
+      >
+    </nz-form-control>
 
+  </nz-form-item>
 
-  </form>
+  <nz-form-item>
+    <nz-form-label
+      *ngIf="this.description"
+      [nzSm]="this.offsetButton"
+      [nzXs]="this.collSmall"
+      [nzFor]="'passwordCheck'"
+      nzRequired
+    >
+      Repeat Password
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="this.collNormal"
+      [nzXs]="this.collSmall"
+      nzErrorTip="The passwords aren't the same!"
+    >
+      <input
+        nz-input
+        id="passwordCheck"
+        type="password"
+        formControlName="passwordCheck"
+        placeholder="Repeat Password"
+        required
+      >
+    </nz-form-control>
 
-  <!--Success Template-->
-  <nz-result
-    *ngIf="success"
-    nzStatus="success"
-    nzTitle="Welcome to the Vehicle Cost Generator!"
-    nzSubTitle=" You will be redirected to the login screen in 5 seconds ..."
-    nzIcon=""
-  >
-    <div nz-result-extra>
-      <button nz-button nzType="primary" routerLink="/login">Login Now</button>
-    </div>
+  </nz-form-item>
 
-  </nz-result>
-
-  <!--Error Template-->
-  <nz-result
-    *ngIf="error"
-    nzTitle="{{error.title}}"
-    nzStatus="error"
-    nzSubTitle="{{error.message}}"
-  >
-    <div nz-result-extra>
-      <button nz-button nzType="primary" (click)="error = null">Back</button>
-    </div>
-  </nz-result>
-</div>
+  <nz-form-item>
+    <nz-form-control
+      [nzSpan]="this.collNormal"
+      [nzOffset]="this.offsetButton"
+    >
+      <button
+        nz-button
+        [nzType]="'primary'"
+        [disabled]="!signup.valid"
+      >
+        Signup
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

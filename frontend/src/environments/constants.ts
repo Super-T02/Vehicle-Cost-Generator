@@ -1,6 +1,7 @@
 export const MEDIA_BREAKPOINTS = {
-	extraSmall: 360,
-	small: 520,
+  xxSmall: 425,
+	extraSmall: 490,
+	small: 630,
 	smallMax: 760,
 	medium: 1024,
 };

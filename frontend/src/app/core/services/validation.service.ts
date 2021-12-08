@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import {FormControl} from '@angular/forms';
+import {ApiService} from './api.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ValidationService {
 
-	constructor() { }
+	constructor(
+    private api: ApiService
+  ) { }
 
-	// TODO: Service for checking existing userNames
-	isNameUsed(name: string): boolean{
-		return false;
-	}
 }

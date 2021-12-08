@@ -1,10 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ValidationService} from '../../../core/services/validation.service';
 import {ApiService} from '../../../core/services/api.service';
 import {CreateUserInput} from '../../../models/user.model';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {ApiError} from '../../../models/api.model';
 import {Router} from '@angular/router';
 
 @Component({
@@ -15,18 +13,17 @@ import {Router} from '@angular/router';
 export class SignupComponent implements OnInit {
 
   @Input() description: boolean;
+  @Output() submitted = new EventEmitter<boolean>();
 
   collNormal: number;
   collSmall: number;
   offsetButton: number;
 
+
   signup: FormGroup;
-  success: boolean;
-  error: ApiError;
   classList: String[];
 
   constructor(private fb: FormBuilder,
-              private validateService: ValidationService,
               private apiService: ApiService,
               private message: NzMessageService,
               private router: Router) { }
@@ -44,14 +41,12 @@ export class SignupComponent implements OnInit {
 
     // Define form
   	this.signup = this.fb.group({
-  		username: [null, [Validators.required, this.checkUser]],
+  		username: [null, [Validators.required]],
   		email: [null, [Validators.email, Validators.required]],
   		password: [null, [Validators.required, Validators.pattern(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}\[ \]:;<>,?\/~_+-=|\\]).{8,32}/)]],
   		passwordCheck: [null, [Validators.required, this.confirmationValidator]]
   	});
 
-    // Setting defaults
-    this.success = false;
   }
 
   /**
@@ -79,15 +74,11 @@ export class SignupComponent implements OnInit {
     // Send Request
     this.apiService.createUser(data)
       .subscribe((output) => {
-        console.log(output);
-        this.message.create('success', 'Successfully signed Up!');
         this.signup.reset();
-        this.success = true;
-
-        // Redirect to Login after 5 seconds
-        setTimeout(() => this.router.navigate(['/login']).then(), 5000);
+        this.submitted.emit(true);
       }, (err) => {
-        this.error = err;
+        this.submitted.emit(false);
+        this.message.error(err.message, {nzDuration: 3000});
       });
   }
 
@@ -104,20 +95,6 @@ export class SignupComponent implements OnInit {
   	}
   	return {};
   };
-
-  /**
-   * Validates if the user isn't used yet
-   * @param control
-   */
-  checkUser = (control: FormControl): { [s: string]: boolean } => {
-  	if(!control.value) {
-  		return {require: true};
-  	}
-  	else if(this.validateService.isNameUsed(control.value)) {
-  		return { confirm: true, error: true };
-  	}
-  	return {};
-  }
 
 }
 

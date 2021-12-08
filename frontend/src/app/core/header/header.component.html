@@ -9,7 +9,19 @@
 
   <ul nz-menu nzMode="horizontal">
     <li nz-menu-item nzDisabled class="noHover">
-      <button (click)="this.auth.logout()" routerLink="login" nz-button nzType="primary" [disabled]="!auth.authenticated" nzShape="round">Logout</button>
+      <button
+        (click)="this.auth.logout()"
+        routerLink="login"
+        nz-button
+        nzType="primary"
+        [disabled]="!auth.authenticated"
+        [nzShape]="'round'"
+        nz-tooltip="Logout"
+        nzTooltipPlacement="bottom"
+      >
+        <i *ngIf="this.resizeService.innerWidth < breakPoints.xxSmall" nz-icon nzType="logout" nzTheme="outline"></i>
+        {{this.resizeService.innerWidth >= breakPoints.xxSmall? 'Logout' : undefined}}
+      </button>
     </li>
     <li nz-menu-item
         routerLink=""

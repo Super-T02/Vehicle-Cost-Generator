@@ -109,6 +109,29 @@ export class ApiService {
   }
 
   /**
+   * Get a specific user
+   * @param username
+   */
+  getUser(username: string): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
    * Authenticates the user and collecting the tokens
    * @param loginData
    */

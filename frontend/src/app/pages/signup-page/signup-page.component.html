@@ -3,8 +3,45 @@
   <nz-breadcrumb-item routerLink="/signup">Signup</nz-breadcrumb-item>
 </nz-breadcrumb>
 
-<div class="inner-content inner-flex">
-  <div *ngIf="this.resize.innerWidth < breakPoints.smallMax" class="text">
+<div class="inner-content">
+  <div class="steps-wrapper">
+    <nz-steps [nzCurrent]="currentStep" >
+      <nz-step nzTitle="Enter Data"></nz-step>
+      <nz-step nzTitle="Sign Up"></nz-step>
+    </nz-steps>
+  </div>
+
+  <div class="steps-content">
+
+    <!--    First Step-->
+    <div class="inner-flex" *ngIf="currentStep === 0">
+
+      <img class="pic" src="assets/signup.svg" alt="Sign Up Picture">
+      <div class="right-column">
+        <div class="centerText">
+          <h1>Sign Up Now</h1>
+          Your vehicles are waiting to be tracked!
+        </div>
+        <app-signup id="form" (submitted)="submitted($event)"></app-signup>
+      </div>
+    </div>
+
+    <!--    Second Step-->
+    <div class="horizontal-flex" *ngIf="currentStep === 1">
+      <img class="pic" src="assets/done.svg" alt="Log-in Picture">
+      <div class="centerText">
+        <h1>Signed Up <span class="primary-color">successfully</span>!</h1>
+        You will be redirected to your vehicles in {{countdown | number}} seconds ...
+        <div *ngIf="countdown === 0" routerLink="overview">
+          If you won't be redirected click <a routerLink="overview">here</a>!
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!--<div *ngIf="this.resize.innerWidth < breakPoints.smallMax" class="text">
     <h1>Sign Up Now</h1>
     Your vehicles are waiting to be tracked!
   </div>
@@ -18,5 +55,5 @@
       Your <span class="primary-color">vehicles</span> are waiting to be <span class="primary-color">tracked</span>!
     </div>
     <app-signup class="form"></app-signup>
-  </div>
+  </div>-->
 </div>
