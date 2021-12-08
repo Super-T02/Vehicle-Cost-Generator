@@ -28,7 +28,7 @@ export class RepeatingCostFormComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private router: Router,
-    private costService: CostService
+    public costService: CostService
     ) { }
 
   ngOnInit(): void {

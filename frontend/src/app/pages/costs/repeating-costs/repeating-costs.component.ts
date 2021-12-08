@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder} from 'ng-zorro-antd/table';
-import {RepeatingCostItem} from '../../../models/cost.model';
+import { RepeatingCostItem} from '../../../models/cost.model';
 import {CostService} from '../../../core/services/cost.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from '../../../core/services/api.service';
@@ -48,10 +48,14 @@ export class RepeatingCostsComponent implements OnInit {
       name: 'Period',
       sortOrder: null,
       sortDirections: ['ascend', 'descend', null],
-      sortFn: null, // TODO: sort function
-      filterMultiple: null,
-      listOfFilter: [],
-      filterFn: null
+      sortFn: (a: RepeatingCostItem, b: RepeatingCostItem) => {
+        let firstIndex = this.costService.repeatingPeriods.findIndex(value => value.value === a.period);
+        let secondIndex = this.costService.repeatingPeriods.findIndex(value => value.value === b.period);
+        return secondIndex - firstIndex;
+      },
+      filterMultiple: false,
+      listOfFilter: this.costService.repeatingPeriods,
+      filterFn: (type: string, item: RepeatingCostItem) => item.period.indexOf(type) !== -1
     },
     {
       name: 'Date',

@@ -30,14 +30,18 @@
   <nz-form-item>
     <nz-form-control nzErrorTip="Period should not be empty!">
       <nz-input-group>
-        <input
-          nz-input
+        <nz-select
           id="period"
-          type="text"
           formControlName="period"
-          placeholder="Period of repeating"
+          nzPlaceHolder="Period of repeating"
           required
         >
+          <nz-option
+            *ngFor="let fuel of costService.repeatingPeriods"
+            [nzLabel]="fuel.text"
+            [nzValue]="fuel.value"
+          ></nz-option>
+        </nz-select>
       </nz-input-group>
     </nz-form-control>
     <nz-form-control nzErrorTip="Price should not be empty!">

@@ -26,6 +26,16 @@ export class CostService {
     {text: 'Diesel', value: 'Diesel'},
   ];
 
+  // Important: Index is used for sorting!
+  repeatingPeriods = [
+    {text: 'Yearly', value: 'Yearly'},
+    {text: 'Half a year', value: 'Half a year'},
+    {text: 'Quarter', value: 'Quarter'},
+    {text: 'Monthly', value: 'Monthly'},
+    {text: 'Weekly', value: 'Weekly'},
+    {text: 'Daily', value: 'Daily'},
+  ];
+
 
 
   constructor(
