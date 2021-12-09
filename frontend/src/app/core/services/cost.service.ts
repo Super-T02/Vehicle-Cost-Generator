@@ -336,4 +336,17 @@ export class CostService {
 
     return highest;
   }
+
+  /**
+   * Get the sum of consumtion
+   * @param costs
+   */
+  getSumOfConsumption(costs: FuelCostItem[]): number {
+    let sum = 0;
+    for (const cost of costs) {
+      sum += cost.consumption;
+    }
+    return sum;
+  }
+
 }

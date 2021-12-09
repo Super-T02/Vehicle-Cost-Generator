@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {EChartsOption} from 'echarts';
 import {CostService} from '../../../core/services/cost.service';
 import {DatePipe} from '@angular/common';
 import {CostChart} from '../../../models/cost.model';
@@ -38,7 +37,14 @@ export class CostOverviewComponent implements OnInit {
       ],
     }
   }
-
+  stats: {
+    highestGroup: string,
+    averageCosts: number,
+    averageConsumption: number,
+    sumSingle: number,
+    sumRepeating: number,
+    sumFuel: number
+  }
 
 
   constructor(
@@ -46,7 +52,23 @@ export class CostOverviewComponent implements OnInit {
     private datePipe: DatePipe
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.stats = {
+      highestGroup: 'nn',
+      averageCosts: 0,
+      averageConsumption: 0,
+      sumSingle: 0,
+      sumRepeating: 0,
+      sumFuel: 0
+    };
+
+    // Init stats
+    this.costService.actualized.subscribe(() => {
+      this.generateStats().then();
+    });
+
+
+    // Loading Charts
     this.costService.actualized.subscribe(value => {
       if(value === 'fuel'){
         this.generateConsumptionChart();
@@ -168,5 +190,49 @@ export class CostOverviewComponent implements OnInit {
       ]
     };
     this.distance.loaded = true;
+  }
+
+  /**
+   * Loads the statistics for the cost overview
+   */
+  async generateStats(): Promise<void> {
+    const single = this.costService.costs.single;
+    const repeat = this.costService.costs.repeating;
+    const fuel = this.costService.costs.fuel;
+
+    // Get highest group
+    const highSingle = this.costService.getHighestPrice(single);
+    const highRepeat = this.costService.getHighestPrice(repeat);
+    const highFuel = this.costService.getHighestPrice(fuel);
+
+    (highSingle > highRepeat && highSingle > highFuel)? this.stats.highestGroup = 'Single Costs' : undefined;
+    (highRepeat > highSingle && highRepeat > highFuel)? this.stats.highestGroup = 'Repeating Costs' : undefined;
+    (highFuel > highRepeat && highFuel > highSingle)? this.stats.highestGroup = 'Fuel Costs' : undefined;
+
+    // Get Sum costs
+    this.stats.sumSingle = this.costService.getSumOfCosts(single);
+    this.stats.sumRepeating = this.costService.getSumOfCosts(repeat);
+    this.stats.sumFuel = this.costService.getSumOfCosts(fuel);
+
+    // Average Cost per month
+    this.costService.allCostsPerMonth.subscribe( value => {
+      const allCostsPerMonth = value;
+      let sum = 0;
+      for (const dataSet of allCostsPerMonth) {
+        for (const datum of dataSet.data) {
+          sum += datum.costs;
+        }
+      }
+
+      (allCostsPerMonth.length !== 0)?
+        this.stats.averageCosts = sum / allCostsPerMonth.length : this.stats.averageCosts = 0;
+    });
+
+    // Get average Consumption
+    const sumOfConsumption = this.costService.getSumOfConsumption(fuel);
+    (fuel.length !== 0)?
+      this.stats.averageConsumption = sumOfConsumption / fuel.length  : this.stats.averageConsumption = 0;
+
+
   }
 }

@@ -13,17 +13,17 @@
 <nz-divider></nz-divider>
 
 <div class="stats">
-  <nz-statistic class="centerText" [nzValue]="'Single Costs'" nzTitle="Highest Cost Group"></nz-statistic>
+  <nz-statistic class="centerText" [nzValue]="stats.highestGroup" nzTitle="Highest Cost Group"></nz-statistic>
   <nz-divider [nzType]="'vertical'" style="height: 50px"></nz-divider>
-  <nz-statistic class="centerText" [nzValue]="50 | number" nzTitle="Average Costs per month (EUR)"></nz-statistic>
+  <nz-statistic class="centerText" [nzValue]="stats.averageCosts | number : '1.2-2': 'de'" nzTitle="Average Costs per month (EUR)"></nz-statistic>
   <nz-divider [nzType]="'vertical'" style="height: 50px"></nz-divider>
-  <nz-statistic class="centerText" [nzValue]="8.06 | number" nzTitle="Average Consumption (L/100km)"></nz-statistic>
+  <nz-statistic class="centerText" [nzValue]="stats.averageConsumption | number : '1.2-2': 'de'" nzTitle="Average Consumption (L/100km)"></nz-statistic>
   <nz-divider [nzType]="'vertical'" style="height: 50px"></nz-divider>
-  <nz-statistic class="centerText" [nzValue]="150 | number" nzTitle="Sum Single Costs (EUR)"></nz-statistic>
+  <nz-statistic class="centerText" [nzValue]="stats.sumSingle | number : '1.2-2': 'de'" nzTitle="Sum Single Costs (EUR)"></nz-statistic>
   <nz-divider [nzType]="'vertical'" style="height: 50px"></nz-divider>
-  <nz-statistic class="centerText" [nzValue]="1000 | number" nzTitle="Sum Repeating Costs (EUR)"></nz-statistic>
+  <nz-statistic class="centerText" [nzValue]="stats.sumFuel | number : '1.2-2': 'de'" nzTitle="Sum Repeating Costs (EUR)"></nz-statistic>
   <nz-divider [nzType]="'vertical'" style="height: 50px"></nz-divider>
-  <nz-statistic class="centerText" [nzValue]="120 | number" nzTitle="Sum Fuel Costs (EUR)"></nz-statistic>
+  <nz-statistic class="centerText" [nzValue]="stats.sumRepeating | number : '1.2-2': 'de'" nzTitle="Sum Fuel Costs (EUR)"></nz-statistic>
   <nz-divider [nzType]="'vertical'" style="height: 50px"></nz-divider>
 </div>
 
@@ -31,7 +31,7 @@
 
 <!--Chart for sum per month for each-->
 <div>
-  <h2>Costs per Month</h2>
+  <h2 class="centerText">Costs per Month</h2>
   <nz-divider></nz-divider>
   <app-costs-per-month-chart [type]="'all'"></app-costs-per-month-chart>
 </div>
@@ -39,13 +39,13 @@
 <div id="bottom-chart-wrapper">
   <!--Chart for Average Consumption for each month-->
   <div *ngIf="averageConsumption.loaded">
-    <h2>Consumption per Month</h2>
+    <h2 class="centerText">Consumption per Month</h2>
     <nz-divider></nz-divider>
     <div echarts class="chart" [options]="averageConsumption.options" [loading]="!averageConsumption.loaded"></div>
   </div>
   <!--Driven Distance per month-->
   <div *ngIf="distance.loaded">
-    <h2>Consumption per Month</h2>
+    <h2 class="centerText">Consumption per Month</h2>
     <nz-divider></nz-divider>
     <div echarts class="chart" [options]="distance.options" [loading]="!distance.loaded"></div>
   </div>
