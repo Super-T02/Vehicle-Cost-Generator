@@ -30,10 +30,25 @@
 <nz-divider></nz-divider>
 
 <!--Chart for sum per month for each-->
-<h2>Costs per Month</h2>
-<nz-divider></nz-divider>
-<app-costs-per-month-chart [type]="'all'"></app-costs-per-month-chart>
+<div>
+  <h2>Costs per Month</h2>
+  <nz-divider></nz-divider>
+  <app-costs-per-month-chart [type]="'all'"></app-costs-per-month-chart>
+</div>
 
-<!--Chart for Average Consumption for each month-->
+<div id="bottom-chart-wrapper">
+  <!--Chart for Average Consumption for each month-->
+  <div *ngIf="averageConsumption.loaded">
+    <h2>Consumption per Month</h2>
+    <nz-divider></nz-divider>
+    <div echarts class="chart" [options]="averageConsumption.options" [loading]="!averageConsumption.loaded"></div>
+  </div>
+  <!--Driven Distance per month-->
+  <div *ngIf="distance.loaded">
+    <h2>Consumption per Month</h2>
+    <nz-divider></nz-divider>
+    <div echarts class="chart" [options]="distance.options" [loading]="!distance.loaded"></div>
+  </div>
+</div>
 
-<!--Driven Distance per month-->
+

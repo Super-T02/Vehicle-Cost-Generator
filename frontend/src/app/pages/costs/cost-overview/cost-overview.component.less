@@ -25,3 +25,30 @@
 nz-statistic{
   width: 204px;
 }
+
+#bottom-chart-wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .chart{
+    min-width: 650px;
+  }
+}
+
+@media screen and (max-width: 1400px){
+  #bottom-chart-wrapper{
+    display: unset;
+     .chart{
+       min-width: unset;
+     }
+  }
+}
+
+@media screen and (min-width: 1550px){
+  .stats{
+    justify-content: center;
+  }
+}

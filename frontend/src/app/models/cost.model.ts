@@ -1,3 +1,5 @@
+import {EChartsOption} from 'echarts';
+
 export interface SingleCostItemInput {
   km?: number,
   price: number,
@@ -77,4 +79,9 @@ export interface AllCostsPerMonth {
 export interface CostPerMonthBuffer {
   type: 'single' | 'repeating' | 'fuel',
   data: CostPerMonth[]
+}
+
+export interface CostChart {
+  loaded: boolean,
+  options: EChartsOption
 }

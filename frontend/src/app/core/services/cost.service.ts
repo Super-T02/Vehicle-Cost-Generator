@@ -19,23 +19,23 @@ export class CostService {
   loaded: {single: boolean, repeating: boolean, fuel: boolean};
   costPerMonth: Subject<CostPerMonthBuffer>;
   allCostsPerMonth: Subject<AllCostsPerMonth[]>;
+  actualized: Subject<'single' | 'repeating' | 'fuel'>;
   updateType: 'single' | 'repeating' | 'fuel';
   dataBuffer: CostPerMonthBuffer[];
 
+  // Types definition
   singleCostTypes = [
     {text: 'Repair', value: 'Repair'},
     {text: 'Normal Purchase', value: 'Normal Purchase'},
     {text: 'Administrative Expenses', value: 'Administrative Expenses'},
     {text: 'Other', value: 'Other'}
   ];
-
   fuelTypes = [
     {text: 'Super Plus', value: 'Super Plus'},
     {text: 'Super', value: 'Super'},
     {text: 'E10', value: 'E10'},
     {text: 'Diesel', value: 'Diesel'},
   ];
-
   // Important: Index is used for sorting!
   repeatingPeriods = [
     {text: 'Yearly', value: 'Yearly'},
@@ -55,6 +55,7 @@ export class CostService {
     this.unloadCosts();
     this.costPerMonth = new Subject<{type: 'single' | 'repeating' | 'fuel', data: CostPerMonth[]}>();
     this.allCostsPerMonth = new Subject<AllCostsPerMonth[]>();
+    this.actualized = new Subject<'single' | 'repeating' | 'fuel'>();
   }
 
   /**
@@ -80,6 +81,7 @@ export class CostService {
 
         this.costs.single = value.data;
         this.loaded.single = true;
+        this.actualized.next('single');
         this.costPerMonth.next({type: 'single', data: this.getCostPerMonth(value.data)});
       }
     );
@@ -94,6 +96,7 @@ export class CostService {
 
         this.costs.repeating = value.data;
         this.loaded.repeating = true;
+        this.actualized.next('repeating');
         this.costPerMonth.next({type: 'repeating', data: this.getCostPerMonth(value.data)});
       }
     );
@@ -107,6 +110,7 @@ export class CostService {
 
         this.costs.fuel = value.data;
         this.loaded.fuel = true;
+        this.actualized.next('fuel');
         this.costPerMonth.next({type: 'fuel', data: this.getCostPerMonth(value.data)});
       }
     );
@@ -122,7 +126,7 @@ export class CostService {
 
     // Init all cost per Month
     this.costPerMonth.subscribe(data => {
-      console.log(data);
+
       // Get all actual Data into the buffer
       for (const i in this.dataBuffer) {
         if(this.dataBuffer[i].type === data.type) {
@@ -134,7 +138,7 @@ export class CostService {
           }
         }
       }
-      console.log(this.loaded, existsData);
+
       // Only if all cost types are loaded
       if (
         this.loaded.single
@@ -142,7 +146,6 @@ export class CostService {
         && this.loaded.fuel
         && existsData
       ) {
-        console.log('Buffer', this.dataBuffer);
         this.allCostsPerMonth.next(this.getAllCostsPerMonth());
       }
     });
@@ -255,7 +258,7 @@ export class CostService {
    * Generating all cost per month object
    * @private
    */
-  private getAllCostsPerMonth(): AllCostsPerMonth[]  {
+  getAllCostsPerMonth(): AllCostsPerMonth[]  {
     let result: AllCostsPerMonth[] = [];
     // Go through the rows single, then fuel, then repeating
     for (const row of this.dataBuffer) {
