@@ -6,6 +6,9 @@
 
 <div class="inner-content">
   <nz-tabset nzType="card" [nzSelectedIndex]="this.util.lastCostSelected" (nzSelectedIndexChange)="changedInput($event)">
+    <nz-tab [nzTitle]="'Cost Overview'">
+      <app-cost-overview></app-cost-overview>
+    </nz-tab>
     <nz-tab [nzTitle]="'Single Costs'" >
       <app-single-costs></app-single-costs>
     </nz-tab>

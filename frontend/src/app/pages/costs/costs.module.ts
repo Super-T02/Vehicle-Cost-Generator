@@ -17,6 +17,8 @@ import { RepeatingCostsComponent } from './repeating-costs/repeating-costs.compo
 import { FuelCostsComponent } from './fuel-costs/fuel-costs.component';
 import { CostsPerMonthChartComponent } from './costs-per-month-chart/costs-per-month-chart.component';
 import {NgxEchartsModule} from 'ngx-echarts';
+import { CostOverviewComponent } from './cost-overview/cost-overview.component';
+import {NzStatisticModule} from "ng-zorro-antd/statistic";
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import {NgxEchartsModule} from 'ngx-echarts';
     SingleCostsComponent,
     RepeatingCostsComponent,
     FuelCostsComponent,
-    CostsPerMonthChartComponent
+    CostsPerMonthChartComponent,
+    CostOverviewComponent
   ],
     imports: [
         CommonModule,
@@ -40,8 +43,9 @@ import {NgxEchartsModule} from 'ngx-echarts';
         NzInputModule,
         NzPopconfirmModule,
         NgxEchartsModule.forRoot({
-          echarts: () => import('echarts'),
+            echarts: () => import('echarts'),
         }),
+        NzStatisticModule,
     ]
 })
 export class CostsModule { }

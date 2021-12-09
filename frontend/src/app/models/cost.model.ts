@@ -63,3 +63,18 @@ export interface CostPerMonth {
   date: Date,
   costs: number
 }
+
+export interface AllCostsPerMonth {
+  date: Date,
+  data: [
+    {
+      type: 'single' | 'repeating' | 'fuel',
+      costs: number
+    }
+  ]
+}
+
+export interface CostPerMonthBuffer {
+  type: 'single' | 'repeating' | 'fuel',
+  data: CostPerMonth[]
+}

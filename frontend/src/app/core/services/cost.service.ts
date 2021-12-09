@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import {CostPerMonth, FuelCostItem, RepeatingCostItem, SingleCostItem} from '../../models/cost.model';
+import {
+  AllCostsPerMonth,
+  CostPerMonth,
+  CostPerMonthBuffer,
+  FuelCostItem,
+  RepeatingCostItem,
+  SingleCostItem
+} from '../../models/cost.model';
 import {ApiService} from './api.service';
 import {AuthService} from './auth.service';
 import {Subject} from 'rxjs';
@@ -9,8 +16,11 @@ import {Subject} from 'rxjs';
 })
 export class CostService {
   costs: {single: SingleCostItem[], repeating: RepeatingCostItem[], fuel: FuelCostItem[]};
-  costPerMonth: Subject<{type: 'single' | 'repeating' | 'fuel', data: CostPerMonth[]}>;
+  loaded: {single: boolean, repeating: boolean, fuel: boolean};
+  costPerMonth: Subject<CostPerMonthBuffer>;
+  allCostsPerMonth: Subject<AllCostsPerMonth[]>;
   updateType: 'single' | 'repeating' | 'fuel';
+  dataBuffer: CostPerMonthBuffer[];
 
   singleCostTypes = [
     {text: 'Repair', value: 'Repair'},
@@ -44,11 +54,23 @@ export class CostService {
   ) {
     this.unloadCosts();
     this.costPerMonth = new Subject<{type: 'single' | 'repeating' | 'fuel', data: CostPerMonth[]}>();
+    this.allCostsPerMonth = new Subject<AllCostsPerMonth[]>();
   }
 
+  /**
+   * Loads all costs
+   * @param vin
+   */
   loadCosts(vin: string) {
+    this.loaded = {
+      single: false,
+      repeating: false,
+      fuel: false
+    };
+
     const username = this.auth.username;
 
+    // load single costs
     this.api.getSingleCosts(username, vin).subscribe(
       value => {
 
@@ -57,9 +79,12 @@ export class CostService {
         }
 
         this.costs.single = value.data;
+        this.loaded.single = true;
         this.costPerMonth.next({type: 'single', data: this.getCostPerMonth(value.data)});
       }
     );
+
+    // load Repeating costs
     this.api.getRepeatingCosts(username, vin).subscribe(
       value => {
 
@@ -68,20 +93,59 @@ export class CostService {
         }
 
         this.costs.repeating = value.data;
+        this.loaded.repeating = true;
         this.costPerMonth.next({type: 'repeating', data: this.getCostPerMonth(value.data)});
       }
     );
+
+    // load Fuel costs
     this.api.getFuelCosts(username, vin).subscribe(
       value => {
-
         for (const datum of value.data) {
           datum.date = new Date(datum.date);
         }
 
         this.costs.fuel = value.data;
+        this.loaded.fuel = true;
         this.costPerMonth.next({type: 'fuel', data: this.getCostPerMonth(value.data)});
       }
     );
+
+    // Wait for completing the loading of every dataset
+    this.dataBuffer = [
+      {type: 'single', data: []},
+      {type: 'fuel', data: []},
+      {type: 'repeating', data: []},
+    ];
+
+    let existsData = false; // Show if there exist any data
+
+    // Init all cost per Month
+    this.costPerMonth.subscribe(data => {
+      console.log(data);
+      // Get all actual Data into the buffer
+      for (const i in this.dataBuffer) {
+        if(this.dataBuffer[i].type === data.type) {
+          this.dataBuffer[i].data = data.data;
+
+          if (data.data.length > 0) {
+            console.log(data.data.length);
+            existsData = true;
+          }
+        }
+      }
+      console.log(this.loaded, existsData);
+      // Only if all cost types are loaded
+      if (
+        this.loaded.single
+        && this.loaded.repeating
+        && this.loaded.fuel
+        && existsData
+      ) {
+        console.log('Buffer', this.dataBuffer);
+        this.allCostsPerMonth.next(this.getAllCostsPerMonth());
+      }
+    });
   }
 
   /**
@@ -184,6 +248,47 @@ export class CostService {
 
     result.sort((a, b) => a.date.getTime() - b.date.getTime());
 
+    return result;
+  }
+
+  /**
+   * Generating all cost per month object
+   * @private
+   */
+  private getAllCostsPerMonth(): AllCostsPerMonth[]  {
+    let result: AllCostsPerMonth[] = [];
+    // Go through the rows single, then fuel, then repeating
+    for (const row of this.dataBuffer) {
+      // Go through the new data
+      for (const newDatum of row.data) {
+
+        // First data
+        if(result.length === 0) {
+          result.push({date: newDatum.date, data: [{type: row.type, costs: newDatum.costs}]});
+        } else {
+          let added = false;
+
+          // Go through existing data
+          for (const i in result) {
+            // Date exists -> push only a new data set
+            if(
+              newDatum.date.getMonth() === result[i].date.getMonth()
+              && newDatum.date.getFullYear() === result[i].date.getFullYear()
+            ) {
+              result[i].data.push({type: row.type, costs: newDatum.costs});
+              added = true;
+            }
+          }
+
+          // Date doesn't exist -> new entry with date
+          if (!added) {
+            result.push({date: newDatum.date, data: [{type: row.type, costs: newDatum.costs}]});
+          }
+        }
+      }
+    }
+
+    result.sort((a, b) => a.date.getTime() - b.date.getTime());
     return result;
   }
 
