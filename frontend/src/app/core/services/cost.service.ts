@@ -74,44 +74,48 @@ export class CostService {
     // load single costs
     this.api.getSingleCosts(username, vin).subscribe(
       value => {
+        if (value) {
+          for (const datum of value.data) {
+            datum.date = new Date(datum.date);
+          }
 
-        for (const datum of value.data) {
-          datum.date = new Date(datum.date);
+          this.costs.single = value.data;
+          this.loaded.single = true;
+          this.actualized.next('single');
+          this.costPerMonth.next({type: 'single', data: this.getCostPerMonth(value.data)});
         }
-
-        this.costs.single = value.data;
-        this.loaded.single = true;
-        this.actualized.next('single');
-        this.costPerMonth.next({type: 'single', data: this.getCostPerMonth(value.data)});
       }
     );
 
     // load Repeating costs
     this.api.getRepeatingCosts(username, vin).subscribe(
       value => {
+        if (value) {
+          for (const datum of value.data) {
+            datum.date = new Date(datum.date);
+          }
 
-        for (const datum of value.data) {
-          datum.date = new Date(datum.date);
+          this.costs.repeating = value.data;
+          this.loaded.repeating = true;
+          this.actualized.next('repeating');
+          this.costPerMonth.next({type: 'repeating', data: this.getCostPerMonth(value.data)});
         }
-
-        this.costs.repeating = value.data;
-        this.loaded.repeating = true;
-        this.actualized.next('repeating');
-        this.costPerMonth.next({type: 'repeating', data: this.getCostPerMonth(value.data)});
       }
     );
 
     // load Fuel costs
     this.api.getFuelCosts(username, vin).subscribe(
       value => {
-        for (const datum of value.data) {
-          datum.date = new Date(datum.date);
-        }
+        if (value) {
+          for (const datum of value.data) {
+            datum.date = new Date(datum.date);
+          }
 
-        this.costs.fuel = value.data;
-        this.loaded.fuel = true;
-        this.actualized.next('fuel');
-        this.costPerMonth.next({type: 'fuel', data: this.getCostPerMonth(value.data)});
+          this.costs.fuel = value.data;
+          this.loaded.fuel = true;
+          this.actualized.next('fuel');
+          this.costPerMonth.next({type: 'fuel', data: this.getCostPerMonth(value.data)});
+        }
       }
     );
 
@@ -133,7 +137,6 @@ export class CostService {
           this.dataBuffer[i].data = data.data;
 
           if (data.data.length > 0) {
-            console.log(data.data.length);
             existsData = true;
           }
         }

@@ -10,7 +10,6 @@ export class LastRouteService {
   query: Object = {};
 
   constructor() {
-
   }
 
   /**

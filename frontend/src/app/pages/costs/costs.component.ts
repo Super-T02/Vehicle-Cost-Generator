@@ -17,7 +17,7 @@ export class CostsComponent implements OnInit {
     private costs: CostService,
     private route: ActivatedRoute,
     private lastUrl: LastRouteService,
-    public util: UtilService
+    public util: UtilService,
   ) { }
 
   ngOnInit(): void {

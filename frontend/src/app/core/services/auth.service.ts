@@ -3,7 +3,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {ApiService} from './api.service';
 import {Observable, throwError} from 'rxjs';
 import {ApiError, ApiOutput} from '../../models/api.model';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LastRouteService} from './last-route.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {UtilService} from './util.service';
@@ -20,6 +20,7 @@ export class AuthService {
   constructor(public jwtHelper: JwtHelperService,
               private api: ApiService,
               private router: Router,
+              private active: ActivatedRoute,
               private lastRoute: LastRouteService,
               private message: NzMessageService,
               private util: UtilService
@@ -96,7 +97,6 @@ export class AuthService {
       if (!value || this.retried) {
         this.retried = false;
         this.logout(false, 'You mus login again');
-        this.lastRoute.newUrlString(this.router.url);
         this.router.navigate(['login']).then();
         error.message = 'Please login first';
         this.message.error(error.message, {nzDuration: 3000});
@@ -107,6 +107,7 @@ export class AuthService {
         console.log(this.retried);
         error.message = 'Please try again';
         this.message.error(error.message, {nzDuration: 3000});
+        setTimeout(() => this.retried = false, 300000); // Timout is smaller then token expiration time
         return throwError(error);
       }
     });

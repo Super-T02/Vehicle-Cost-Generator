@@ -45,7 +45,7 @@
   </div>
   <!--Driven Distance per month-->
   <div *ngIf="distance.loaded">
-    <h2 class="centerText">Consumption per Month</h2>
+    <h2 class="centerText">Distance per Month</h2>
     <nz-divider></nz-divider>
     <div echarts class="chart" [options]="distance.options" [loading]="!distance.loaded"></div>
   </div>

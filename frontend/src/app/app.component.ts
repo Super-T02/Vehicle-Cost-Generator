@@ -2,6 +2,7 @@ import {Component, ErrorHandler, OnInit} from '@angular/core';
 import {ResizeService} from './core/services/resize.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {AuthService} from './core/services/auth.service';
+import {ApiError} from './models/api.model';
 
 @Component({
 	selector: 'app-root',
@@ -11,8 +12,13 @@ import {AuthService} from './core/services/auth.service';
 export class AppComponent implements ErrorHandler, OnInit{
 
   handleError(error: any): void {
-    console.log(error);
-    this.message.create('error', error.message, {nzDuration: 10000});
+    if(error.code === 403) {
+      this.auth.handleAuthError(error as ApiError);
+    }
+    else {
+      console.log(error);
+      this.message.create('error', error.message, {nzDuration: 10000});
+    }
   }
 
 	constructor(public resizeService: ResizeService,

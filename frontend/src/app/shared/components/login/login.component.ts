@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         this.auth.actualizeName();
 
         // Redirect to last visited page or default dashboard
-        this.router.navigate([this.lastRoute.route]).then();
+        this.router.navigate([this.lastRoute.route], {queryParams: this.lastRoute.query}).then();
       });
 
   }

@@ -112,6 +112,7 @@ export class RepeatingCostFormComponent implements OnInit {
    */
   handleError(err: ApiError): void {
     this.sentData.emit(false);
+    this.auth.handleAuthError(err);
     throwError(err);
   }
 }

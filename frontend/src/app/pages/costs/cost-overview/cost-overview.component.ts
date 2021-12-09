@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CostService} from '../../../core/services/cost.service';
 import {DatePipe} from '@angular/common';
 import {CostChart} from '../../../models/cost.model';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-cost-overview',
@@ -45,14 +46,21 @@ export class CostOverviewComponent implements OnInit {
     sumRepeating: number,
     sumFuel: number
   }
+  vin: string;
 
 
   constructor(
     private costService: CostService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(
+      params => this.vin = params.vin.toUpperCase()
+    );
+
     this.stats = {
       highestGroup: 'nn',
       averageCosts: 0,
@@ -81,7 +89,8 @@ export class CostOverviewComponent implements OnInit {
    * Redirect to add new cost item
    */
   add(): void {
-
+    this.costService.updateType = 'single';
+    this.router.navigate(['overview/'+ this.vin +'/addCostItem']).then();
   }
 
   /**

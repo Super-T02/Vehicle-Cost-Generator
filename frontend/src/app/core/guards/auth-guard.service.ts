@@ -19,18 +19,20 @@ export class AuthGuardService implements CanActivate{
     return new Observable<boolean>((observer) => {
       this.auth.isAuthenticated()
         .subscribe((isAuthenticated) => {
-          if(!isAuthenticated){
-            // Get the actual URL
-            this.lastRoute.newUrl(route.url);
+            if (!isAuthenticated) {
+              // Get the actual URL
+              this.lastRoute.newUrl(route.url);
 
-            this.router.navigate(['/login']).then();
-            this.message.error('Please login first', {nzDuration: 7000});
+              this.router.navigate(['/login']).then();
+              this.message.error('Please login first', {nzDuration: 7000});
 
-            observer.next(false);
-          } else {
-            observer.next(true);
-          }
-        });
+              observer.next(false);
+            } else {
+              observer.next(true);
+            }
+          },
+          error => this.auth.handleAuthError(error)
+        );
     });
 
 
