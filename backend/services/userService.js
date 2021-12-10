@@ -139,6 +139,72 @@ exports.checkNewUser = async (req, res, next) => {
 };
 
 /**
+ * Middleware for checking the required body to update a user.
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.checkUpdateUser = async (req, res, next) => {
+	await check('username')
+		.exists()
+		.bail()
+		.isString()
+		.trim(' ')
+		.toLowerCase()
+		.run(req);
+
+	await check('password')
+		.exists()
+		.bail()
+		.custom(value => {
+			// eslint-disable-next-line no-useless-escape
+			if (!/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}\[ \]:;<>,?\/~_+-=|\\]).{8,32}/.exec(value)) {
+				return Promise.reject('Password does not match the pattern!');
+			} else {
+				return Promise.resolve();
+			}
+		})
+		.run(req);
+
+	await check('email')
+		.exists()
+		.bail()
+		.isEmail()
+		.not().custom(value => existsUserMail(value))
+		.run(req);
+
+	await check('role')
+		.exists()
+		.bail()
+		.custom(value => {
+			if (value !== 'member' && value !== 'admin') {
+				return Promise.reject('Role is not admin or member');
+			} else {
+				return Promise.resolve();
+			}
+		})
+		.run(req);
+
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({errors: errors.array()});
+	} else {
+		const {username, email, role, password} = req.body;
+
+		req.body.newUser = {
+			username: username,
+			email: email,
+			password: password,
+			role: role
+		};
+
+		next();
+	}
+
+};
+
+/**
  * Middleware for checking the username param to be a string and trim it to lower case
  * @param req
  * @param res

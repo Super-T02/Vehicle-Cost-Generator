@@ -22,4 +22,20 @@ export class UtilService {
   getRefreshToken(): string {
     return  localStorage.getItem('refreshToken');
   }
+
+  /**
+   * Set the access token
+   * @param input
+   */
+  setAccessToken(input: string): void {
+    localStorage.setItem('accessToken', input);
+  }
+
+  /**
+   * Set the refresh token
+   * @param input
+   */
+  setRefreshToken(input: string): void {
+    localStorage.setItem('refreshToken', input);
+  }
 }

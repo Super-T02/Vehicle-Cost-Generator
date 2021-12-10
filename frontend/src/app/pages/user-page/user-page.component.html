@@ -3,75 +3,90 @@
   <nz-breadcrumb-item routerLink="/user">User</nz-breadcrumb-item>
 </nz-breadcrumb>
 
+<nz-modal [(nzVisible)]="visible && loaded" nzTitle="Update personal data" (nzOnCancel)="handleCancel()">
+  <div *nzModalContent>
+    <form class="form"  [formGroup]="editForm" nz-form>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Email should not be empty!">
+          <nz-input-group>
+            <input
+              nz-input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Email"
+              required
+            >
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Password shouldn't be empty">
+          <nz-input-group>
+            <input
+              nz-input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Password"
+            >
+          </nz-input-group>
+        </nz-form-control>
+        <nz-form-control nzErrorTip="Passwords aren't the same">
+          <nz-input-group>
+            <input
+              nz-input
+              id="passwordCheck"
+              type="password"
+              formControlName="passwordCheck"
+              placeholder="Repeat password"
+            >
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+    <button nz-button nzType="primary" (click)="handleSubmit()">Edit</button>
+  </div>
+</nz-modal>
+
 <div class="inner-content">
   <h1 class="centerText">Welcome to your profile, <span class="primary-color">{{this.auth.username | uppercase}}</span></h1>
 
-  <nz-modal [(nzVisible)]="visible && loaded" nzTitle="Update User credentials" (nzOnCancel)="handleCancel()">
-    <div *nzModalContent>
-      <form class="form"  [formGroup]="editForm" nz-form>
-        <nz-form-item>
-          <nz-form-control nzErrorTip="Username should not be empty!">
-            <nz-input-group>
-              <input
-                nz-input
-                id="username"
-                type="text"
-                formControlName="username"
-                placeholder="Username"
-                required
-              >
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
+  <img src="assets/user.svg" alt="user"/>
 
-        <nz-form-item>
-          <nz-form-control nzErrorTip="Email should not be empty!">
-            <nz-input-group>
-              <input
-                nz-input
-                id="email"
-                type="email"
-                formControlName="email"
-                placeholder="Email"
-                required
-              >
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-form-control nzErrorTip="Password shouldn't be empty">
-            <nz-input-group>
-              <input
-                nz-input
-                id="password"
-                type="password"
-                formControlName="password"
-                placeholder="Password"
-              >
-            </nz-input-group>
-          </nz-form-control>
-          <nz-form-control nzErrorTip="Passwords aren't the same">
-            <nz-input-group>
-              <input
-                nz-input
-                id="passwordCheck"
-                type="password"
-                formControlName="passwordCheck"
-                placeholder="Repeat password"
-              >
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-      </form>
-    </div>
-    <div *nzModalFooter>
-      <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
-      <button nz-button nzType="primary" (click)="handleSubmit()">Edit</button>
-    </div>
-  </nz-modal>
-
-  <div *ngIf="loaded" (click)="this.api.deleteUser('testuser').subscribe()">
-    Test
+  <div class="data" *ngIf="loaded">
+    <nz-statistic class="centerText" [nzValue]="userData.username.toUpperCase()" nzTitle="Username"></nz-statistic>
+    <nz-divider *ngIf="resize.innerWidth > 870" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+    <nz-statistic class="centerText" [nzValue]="userData.email" nzTitle="Email"></nz-statistic>
+    <nz-divider *ngIf="resize.innerWidth > 870" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+    <nz-statistic  class="centerText" [nzValue]="userData.role.toUpperCase()" nzTitle="Role"></nz-statistic>
   </div>
+  <div class="data">
+    <button *ngIf="loaded"
+            nz-button
+            (click)="handleEdit()"
+            nzType="primary"
+            nzShape="round"
+    >
+      Edit data
+      <i nz-icon nzType="edit"></i>
+    </button>
+    <button
+      nz-button
+      nzType="default"
+      nzShape="round"
+      nzDanger
+      (click)="showDeleteConfirm()"
+    >
+      Delete Account
+      <i nz-icon nzType="delete"></i>
+    </button>
+  </div>
+
+
+
 </div>

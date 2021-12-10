@@ -10,6 +10,11 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NzInputModule} from 'ng-zorro-antd/input';
+import {NzCardModule} from "ng-zorro-antd/card";
+import {NzToolTipModule} from "ng-zorro-antd/tooltip";
+import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzStatisticModule} from "ng-zorro-antd/statistic";
+import {NzDividerModule} from "ng-zorro-antd/divider";
 
 
 @NgModule({
@@ -25,7 +30,12 @@ import {NzInputModule} from 'ng-zorro-antd/input';
     NzButtonModule,
     NzFormModule,
     ReactiveFormsModule,
-    NzInputModule
+    NzInputModule,
+    NzCardModule,
+    NzToolTipModule,
+    NzIconModule,
+    NzStatisticModule,
+    NzDividerModule
   ]
 })
 export class UserPageModule { }

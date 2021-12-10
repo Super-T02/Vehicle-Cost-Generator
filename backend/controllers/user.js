@@ -47,7 +47,7 @@ router.delete('/:username', (req, res) => {
 	});
 });
 
-router.put('/:username', userService.checkNewUser, (req, res) => {
+router.put('/:username', userService.checkUpdateUser, (req, res) => {
 	userService.updateUser(req, (err, data) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
