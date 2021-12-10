@@ -5,3 +5,10 @@ export interface CreateUserInput {
   passwordCheck: string,
   role: string
 }
+
+export interface User {
+  username: string,
+  email: string,
+  password: string,
+  role: string
+}

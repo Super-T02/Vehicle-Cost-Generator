@@ -27,6 +27,10 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     loadChildren: () => import('./pages/overview/overview.module').then(m => m.OverviewModule)
   },
+  {
+    path: 'user',
+    loadChildren: () => import('./pages/user-page/user-page.module').then(m => m.UserPageModule)
+  },
 	{
 		path: '**',
 		redirectTo: '404'
