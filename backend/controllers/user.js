@@ -2,7 +2,7 @@ const express = require('express');
 const userService = require('../services/userService');
 const {generateErrorMessage} = require('../util/error');
 const authService = require('../services/authService');
-const vehicle = require('./vehicle');
+const vehicle = require('vehicle');
 const router = express.Router();
 
 router.post('/', userService.checkNewUser, (req, res) => {
@@ -33,6 +33,28 @@ router.get('/:username',  (req, res) => {
 			res.status(404).json(generateErrorMessage('Not able to find user', 'params'));
 		} else {
 			res.status(200).json(data);
+		}
+	});
+});
+
+router.delete('/:username', (req, res) => {
+	userService.deleteUser(req, (err, data) => {
+		if (err) {
+			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+		} else {
+			res.status(204).json({});
+		}
+	});
+});
+
+router.put('/:username', userService.checkNewUser, (req, res) => {
+	userService.updateUser(req, (err, data) => {
+		if (err) {
+			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+		} else if (!data) {
+			res.status(400).json(generateErrorMessage('No data updated', 'Params'));
+		} else {
+			res.status(201).json({});
 		}
 	});
 });

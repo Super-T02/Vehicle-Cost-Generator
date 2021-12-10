@@ -1,6 +1,7 @@
 const userModel = require('../models/userModel');
 const {validationResult, check} = require('express-validator');
 const {generateErrorMessage} = require('../util/error');
+const deleteCosts = require('../util/deleteCosts');
 
 /**
  * adds a user to the database
@@ -30,6 +31,42 @@ exports.getUser = (username, callback) => {
 			callback(null, null);
 		} else {
 			callback(null, data);
+		}
+	});
+};
+
+/**
+ * Updates a user with given username and full Set
+ * @param req
+ * @param callback
+ */
+exports.updateUser = (req, callback) => {
+	const {newUser} = req.body;
+
+	userModel.modifyUser(newUser.username, newUser, (err, numReplaced) => {
+		if (err) {
+			callback(err, null);
+		} else if (numReplaced === 0) {
+			callback(null, null);
+		} else {
+			callback(null, numReplaced);
+		}
+	});
+};
+
+/**
+ * Delete a user via username
+ * @param req
+ * @param callback
+ */
+exports.deleteUser = (req, callback) => {
+	const {username} = req;
+
+	userModel.deleteUser(username, (err, data) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			deleteCosts.deleteAllVehicles(username).then(callback(null, data));
 		}
 	});
 };
@@ -123,8 +160,8 @@ exports.checkUser = async (req, res, next) => {
 	if (!errors.isEmpty()) {
 		return res.status(400).json({errors: errors.array()});
 	} else {
-		req.body.username = req.params.username;
-		req.username = req.params.username;
+		req.body.username = req.params.username.toLowerCase();
+		req.username = req.params.username.toLowerCase();
 		next();
 	}
 };

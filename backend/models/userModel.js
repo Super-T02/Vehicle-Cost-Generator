@@ -60,3 +60,34 @@ exports.checkLogin = (loginData, callback) => {
 	});
 };
 
+/**
+ * Deletes a user via username (primary key)
+ * @param username
+ * @param callback
+ */
+exports.deleteUser = (username, callback) => {
+	db.user.remove({username: username}, (err, data) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, data);
+		}
+	});
+};
+
+/**
+ * Updates a given user
+ * @param username
+ * @param updatedSet
+ * @param callback
+ */
+exports.modifyUser = (username, updatedSet, callback) => {
+	db.user.update({ username: username }, {$set: updatedSet}, {}, (err, numReplaced) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, numReplaced);
+		}
+	});
+};
+

@@ -57,7 +57,7 @@ exports.getVehicle = (req, callback) => {
 };
 
 /**
- * Updates a vehicle with given vin und full Set
+ * Updates a vehicle with given vin and full Set
  * @param req
  * @param callback
  */
