@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
     this.api.login(this.login.value)
       .subscribe((output) => {
         this.login.reset();
-
         localStorage.setItem('accessToken', output.data.accessToken);
         localStorage.setItem('refreshToken', output.data.refreshToken);
+        this.auth.refreshAccessToken();
         this.auth.authenticated = true;
         this.auth.actualizeName();
 

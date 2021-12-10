@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 import {AuthGuardService} from './core/guards/auth-guard.service';
+import {LoginGuardService} from './core/guards/login-guard.service';
 
 const routes: Routes = [
 	{
@@ -18,6 +19,7 @@ const routes: Routes = [
   },
 	{
     path: 'login',
+    canActivate: [LoginGuardService],
     loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule)
   },
 	{

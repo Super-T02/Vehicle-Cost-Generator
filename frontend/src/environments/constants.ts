@@ -5,3 +5,8 @@ export const MEDIA_BREAKPOINTS = {
 	smallMax: 760,
 	medium: 1024,
 };
+
+export const token: {accessExp: number, refreshExp: number} = {
+  accessExp: 600, // in seconds
+  refreshExp: null,
+};

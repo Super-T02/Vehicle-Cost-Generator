@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LastRouteService} from './last-route.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {UtilService} from './util.service';
+import {token} from '../../../environments/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class AuthService {
   authenticated: boolean = false;
   username: string = 'user';
   retried: boolean = false;
+  refreshInterval: any = null;
 
   constructor(public jwtHelper: JwtHelperService,
               private api: ApiService,
@@ -43,6 +45,28 @@ export class AuthService {
   }
 
   /**
+   * Starts a timeout for refreshing the access token before it expires
+   * Important this interval needs to be cleared on logout!
+   */
+  refreshAccessToken(): void {
+    this.refreshInterval =  setInterval(() => {
+      localStorage.setItem('accessToken', '');
+      this.api.getNewToken(this.util.getRefreshToken()).subscribe(response => {
+        if(response.data.accessToken){
+          this.authenticated = true;
+          localStorage.setItem('accessToken', response.data.accessToken);
+        } else {
+          this.logout(false, 'You must login again');
+          this.router.navigate(['/login']).then();
+          this.actualizeName();
+        }
+      });
+    }, token.accessExp * 1000);
+
+    console.log(this.refreshInterval);
+  }
+
+  /**
    * Check whether the access token is expired or not
    * If the token is expired a new one would be requested from the api
    */
@@ -60,14 +84,15 @@ export class AuthService {
           .subscribe((output: ApiOutput) => {
               if (output.data.accessToken) {
                 const {accessToken} = output.data;
-
+                console.log('hi');
                 localStorage.setItem('accessToken', accessToken);
+                if(!this.refreshInterval) this.refreshAccessToken();
                 this.actualizeName();
                 this.authenticated = true;
                 observer.next(true);
               } else {
                 this.authenticated = true;
-                this.logout(false, 'You mus login again');
+                this.logout(false, 'You must login again');
                 observer.next(false);
               }
             },
@@ -75,11 +100,13 @@ export class AuthService {
               console.log(err);
               if (err.code === 403) {
                 this.authenticated = true;
-                this.logout(false, 'You mus login again');
+                this.logout(false, 'You must login again');
+                this.router.navigate(['/login']).then();
                 observer.next(false);
               }
             });
       } else {
+        if(!this.refreshInterval) this.refreshAccessToken();
         this.authenticated = true;
         observer.next(true);
       }
@@ -99,6 +126,7 @@ export class AuthService {
         this.logout(false, 'You mus login again');
         this.router.navigate(['login']).then();
         error.message = 'Please login first';
+        clearInterval(this.refreshInterval);
         this.message.error(error.message, {nzDuration: 3000});
         return throwError(error);
       } else {
@@ -107,7 +135,7 @@ export class AuthService {
         console.log(this.retried);
         error.message = 'Please try again';
         this.message.error(error.message, {nzDuration: 3000});
-        setTimeout(() => this.retried = false, 300000); // Timout is smaller then token expiration time
+        setTimeout(() => this.retried = false, token.accessExp * 1000 - 3000); // Timout is smaller then token expiration time
         return throwError(error);
       }
     });
@@ -118,9 +146,11 @@ export class AuthService {
    */
   logout(success: boolean = true, message: string = 'You are successfully logged out'): void {
     if (this.authenticated) {
-      this.api.logout(this.util.getRefreshToken()).subscribe(); // TODO: Logout message on success!
+      this.api.logout(this.util.getRefreshToken()).subscribe();
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      clearInterval(this.refreshInterval);
+
       this.authenticated = false;
       this.message.loading('Logout', {nzDuration: 500});
       if (success) {

@@ -5,7 +5,6 @@ import {ApiService} from '../../core/services/api.service';
 import {Router} from '@angular/router';
 import {LastRouteService} from '../../core/services/last-route.service';
 import {CostService} from '../../core/services/cost.service';
-import de from "@angular/common/locales/de";
 
 @Component({
   selector: 'app-overview',
@@ -60,6 +59,7 @@ export class OverviewComponent implements OnInit {
         },
         error => {
           if (error.code === 403) {
+            this.auth.retried = true; // to avoid empty page
             this.auth.handleAuthError(error);
           } else {
             resolve(null);
