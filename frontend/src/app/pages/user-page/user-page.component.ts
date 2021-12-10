@@ -17,7 +17,7 @@ export class UserPageComponent implements OnInit {
 
   constructor(
     public auth: AuthService,
-    private api: ApiService,
+    public api: ApiService,
     private fb: FormBuilder
   ) { }
 

@@ -1,7 +1,7 @@
 const userModel = require('../models/userModel');
 const {validationResult, check} = require('express-validator');
 const {generateErrorMessage} = require('../util/error');
-const deleteCosts = require('../util/deleteCosts');
+const deleteVehicle = require('../util/deleteVehicles');
 
 /**
  * adds a user to the database
@@ -66,7 +66,7 @@ exports.deleteUser = (req, callback) => {
 		if (err) {
 			callback(err, null);
 		} else {
-			deleteCosts.deleteAllVehicles(username).then(callback(null, data));
+			deleteVehicle.deleteAllVehicles(username).then(callback(null, data));
 		}
 	});
 };

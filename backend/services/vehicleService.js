@@ -1,6 +1,6 @@
 const vehicleModel = require('../models/vehicleModel');
 const {validationResult, check, body} = require('express-validator');
-const deleteCosts = require('../util/deleteCosts');
+const {deleteAllCosts} = require('../util/deleteCosts');
 
 /**
  * Get a list of all vehicles
@@ -88,7 +88,7 @@ exports.deleteVehicle = (req, callback) => {
 		if (err) {
 			callback(err, null);
 		} else {
-			deleteCosts.deleteAllCosts(vin).then(callback(null, data));
+			deleteAllCosts(vin).then(callback(null, data));
 		}
 	});
 };

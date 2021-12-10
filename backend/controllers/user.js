@@ -2,7 +2,7 @@ const express = require('express');
 const userService = require('../services/userService');
 const {generateErrorMessage} = require('../util/error');
 const authService = require('../services/authService');
-const vehicle = require('vehicle');
+const vehicle = require('./vehicle');
 const router = express.Router();
 
 router.post('/', userService.checkNewUser, (req, res) => {

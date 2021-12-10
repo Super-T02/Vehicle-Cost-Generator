@@ -132,6 +132,54 @@ export class ApiService {
   }
 
   /**
+   * Deletes a user from the db
+   * @param username
+   */
+  deleteUser(username: string): Observable<ApiOutput> {
+    return this.http.delete<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Updates a user in the db
+   * @param username
+   * @param user
+   */
+  updateUser(username: string, user: CreateUserInput): Observable<ApiOutput> {
+    return this.http.put<HttpResponse<any>>(
+      `${this.baseUrl}/users/${username.toLowerCase()}`,
+      user,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      }
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
    * Authenticates the user and collecting the tokens
    * @param loginData
    */

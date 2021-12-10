@@ -71,7 +71,7 @@
     </div>
   </nz-modal>
 
-  <div *ngIf="loaded" (click)="this.visible = true">
-    Test Data
+  <div *ngIf="loaded" (click)="this.api.deleteUser('testuser').subscribe()">
+    Test
   </div>
 </div>

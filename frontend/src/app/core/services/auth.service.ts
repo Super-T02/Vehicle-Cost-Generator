@@ -97,13 +97,10 @@ export class AuthService {
               }
             },
             (err: ApiError) => {
-              console.log(err);
-              if (err.code === 403) {
-                this.authenticated = true;
-                this.logout(false, 'You must login again');
-                this.router.navigate(['/login']).then();
-                observer.next(false);
-              }
+              this.authenticated = true;
+              this.logout(false, 'You must login again');
+              this.router.navigate(['/login']).then();
+              observer.next(false);
             });
       } else {
         if(!this.refreshInterval) this.refreshAccessToken();
