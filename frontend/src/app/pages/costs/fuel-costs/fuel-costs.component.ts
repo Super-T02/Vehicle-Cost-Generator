@@ -6,7 +6,7 @@ import {NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder} fro
 import {ApiService} from '../../../core/services/api.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
-import {UtilService} from '../../../core/services/util.service';
+import {ResizeService} from '../../../core/services/resize.service';
 
 interface ColumnItem {
   name: string;
@@ -90,6 +90,7 @@ export class FuelCostsComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private modal: NzModalService,
+    public resize: ResizeService
   ) { }
 
   ngOnInit(): void {

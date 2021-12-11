@@ -1,13 +1,26 @@
 <div class="headline">
   <h1 class="fuel-color">Fuel Costs</h1>
   <button
-    id="add"
+    *ngIf="resize.innerWidth > 370"
+    class="add"
     nz-button
     (click)="addFuelCost()"
     nzType="primary"
     nzShape="round"
   >
     Add Cost Item
+    <i nz-icon nzType="plus"></i>
+  </button>
+
+  <button
+    *ngIf="resize.innerWidth <= 370"
+    class="add"
+    nz-button
+    (click)="addFuelCost()"
+    nzType="primary"
+    nzShape="circle"
+    nz-tooltip="New Cost Item"
+  >
     <i nz-icon nzType="plus"></i>
   </button>
 </div>
@@ -21,6 +34,7 @@
   [nzPaginationPosition]="'both'"
   [nzPageSizeOptions]="[5,10,20,30]"
   [nzScroll]="{ x: '800px'}"
+  [nzSize]="resize.innerWidth < 650 ? 'middle' : 'default'"
   nzTableLayout="auto"
 >
   <thead>

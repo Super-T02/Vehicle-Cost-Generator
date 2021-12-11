@@ -1,8 +1,13 @@
 @import "~ng-zorro-antd/ng-zorro-antd.less";
 
-#add{
+.add{
   background-color: var(--fuel-color);
   border-color: var(--fuel-color);
+
+  &:hover {
+    background-color: rgba(255, 112, 182, 0.85);
+    border-color: rgba(255, 112, 182, 0.85);
+  }
 }
 
 .headline{
@@ -15,5 +20,11 @@
   h1{
     padding: unset;
     margin: unset;
+  }
+}
+
+@media all and (max-width: 450px) {
+  nz-table{
+    font-size: 0.8rem !important;
   }
 }

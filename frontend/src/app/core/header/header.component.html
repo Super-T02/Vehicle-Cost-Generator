@@ -1,6 +1,6 @@
 <nz-header>
 
-  <img *ngIf="this.resizeService.innerWidth > breakPoints.extraSmall" class="logo"
+  <img *ngIf="this.resizeService.innerWidth > 390" class="logo"
        src="assets/{{this.resizeService.logo.name}}.svg"
        alt="Vehicle Cost Calculator Logo"
        width="{{this.resizeService.logo.width}}"
@@ -10,6 +10,7 @@
   <ul nz-menu nzMode="horizontal">
     <li nz-menu-item nzDisabled class="noHover">
       <button
+        *ngIf="this.resizeService.innerWidth > 500"
         (click)="this.auth.logout()"
         routerLink="login"
         nz-button
@@ -19,8 +20,22 @@
         nz-tooltip="Logout"
         nzTooltipPlacement="bottom"
       >
-        <i *ngIf="this.resizeService.innerWidth < breakPoints.xxSmall" nz-icon nzType="logout" nzTheme="outline"></i>
-        {{this.resizeService.innerWidth >= breakPoints.xxSmall? 'Logout' : undefined}}
+        <i nz-icon nzType="logout" nzTheme="outline"></i>
+        Logout
+      </button>
+
+      <button
+        *ngIf="this.resizeService.innerWidth <= 500"
+        (click)="this.auth.logout()"
+        routerLink="login"
+        nz-button
+        nzType="primary"
+        [disabled]="!auth.authenticated"
+        [nzShape]="'circle'"
+        nz-tooltip="Logout"
+        nzTooltipPlacement="bottom"
+      >
+        <i nz-icon nzType="logout" nzTheme="outline"></i>
       </button>
     </li>
     <li nz-menu-item
