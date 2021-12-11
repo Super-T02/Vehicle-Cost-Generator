@@ -41,8 +41,16 @@ nz-breadcrumb {
   background: #ffffff !important;
 }
 
-.primary-color{
+.primary-color, .single-color{
   color: @primary-color !important;
+}
+
+.fuel-color{
+  color: var(--fuel-color) !important;
+}
+
+.repeating-color{
+  color: var(--repeat-color) !important;
 }
 
 nz-footer {
@@ -69,6 +77,8 @@ app-header {
 
 :root {
   --inner-grid-padding: 50px;
+  --repeat-color: #FF4D4F;
+  --fuel-color: #FF69B4;
 
   @media all and (max-width: @screen-sm-max){
     --inner-grid-padding: 25px;

@@ -10,3 +10,9 @@ export const token: {accessExp: number, refreshExp: number} = {
   accessExp: 600, // in seconds
   refreshExp: null,
 };
+
+export const colors = {
+  singleCosts: '#1890FF',
+  repeatingCosts: '#FF4D4F',
+  fuelCosts: '#FF69B4'
+};

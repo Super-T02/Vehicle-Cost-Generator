@@ -3,6 +3,7 @@ import {EChartsOption} from 'echarts';
 import {CostService} from '../../../core/services/cost.service';
 import {DatePipe} from '@angular/common';
 import {AllCostsPerMonth, CostPerMonthBuffer} from '../../../models/cost.model';
+import {colors} from '../../../../environments/constants';
 
 @Component({
   selector: 'app-costs-per-month-chart',
@@ -56,13 +57,13 @@ export class CostsPerMonthChartComponent implements OnInit {
 
       switch (costPerMonth.type) {
         case 'single':
-          color = '#1890FF';
+          color = colors.singleCosts;
           break;
         case 'repeating':
-          color = '#FF4D4F';
+          color = colors.repeatingCosts;
           break;
         case 'fuel':
-          color = '#FF69B4';
+          color = colors.fuelCosts;
       }
 
       for (const costPerMonthElement of costPerMonth.data) {
@@ -124,11 +125,11 @@ export class CostsPerMonthChartComponent implements OnInit {
       symbolSize: 8,
       lineStyle: {
         width: 2,
-        shadowColor: '#1890FF',
+        shadowColor: colors.singleCosts,
         shadowBlur: 8,
         shadowOffsetY: 8
       },
-      color: '#1890FF'
+      color: colors.singleCosts
     };
     const seriesOptionsRepeating: any = {
       name: 'Repeating Costs',
@@ -138,11 +139,11 @@ export class CostsPerMonthChartComponent implements OnInit {
       symbolSize: 8,
       lineStyle: {
         width: 2,
-        shadowColor: '#FF4D4F',
+        shadowColor: colors.repeatingCosts,
         shadowBlur: 8,
         shadowOffsetY: 8
       },
-      color: '#FF4D4F'
+      color: colors.repeatingCosts
     };
     const seriesOptionsFuel: any = {
       name: 'Fuel Costs',
@@ -152,11 +153,11 @@ export class CostsPerMonthChartComponent implements OnInit {
       symbolSize: 8,
       lineStyle: {
         width: 2,
-        shadowColor: '#FF69B4',
+        shadowColor: colors.fuelCosts,
         shadowBlur: 8,
         shadowOffsetY: 8
       },
-      color: '#FF69B4'
+      color: colors.fuelCosts
     };
 
     // series with 0: single, 1: repeating, 2: fuel
