@@ -7,13 +7,14 @@ import {CostService} from '../../../core/services/cost.service';
 import {LastRouteService} from '../../../core/services/last-route.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {UtilService} from '../../../core/services/util.service';
+import {ResizeService} from '../../../core/services/resize.service';
 
 @Component({
   selector: 'app-cost-steps',
   templateUrl: './cost-steps.component.html',
   styleUrls: ['./cost-steps.component.less']
 })
-export class CostStepsComponent implements OnInit {
+export class CostStepsComponent {
 
   @Input() item: Observable<SingleCostItem | FuelCostItem | RepeatingCostItem>;
   @Input() deliverData: boolean = false;
@@ -29,12 +30,10 @@ export class CostStepsComponent implements OnInit {
     public costService: CostService,
     private lastUrl: LastRouteService,
     private message: NzMessageService,
-    private util: UtilService
+    private util: UtilService,
+    public resize: ResizeService
   ) {
 
-  }
-
-  ngOnInit(): void {
   }
 
   dataSent(value: boolean) {

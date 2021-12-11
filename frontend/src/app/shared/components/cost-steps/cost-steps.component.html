@@ -1,5 +1,5 @@
 <div class="steps-wrapper">
-  <nz-steps [nzCurrent]="currentStep" >
+  <nz-steps [nzCurrent]="currentStep"  [nzSize]="resize.innerWidth > 520? 'default' : 'small'">
     <nz-step nzTitle="Enter Data"></nz-step>
     <nz-step nzTitle="Finished"></nz-step>
   </nz-steps>
@@ -11,9 +11,9 @@
   <!--    First Step-->
   <div class="inner-flex" *ngIf="currentStep === 0">
 
-    <img class="pic" src="assets/steps.svg" alt="Configure Vehicle">
+    <img *ngIf="resize.innerWidth >= 880" class="pic" src="assets/steps.svg" alt="Configure Vehicle">
     <div class="right-column">
-      <h1>{{deliverData ?  "Update Cost Item" : "Create new Cost Item"}}</h1>
+      <h1 class="centerText">{{deliverData ?  "Update Cost Item" : "Create new Cost Item"}}</h1>
       <div id="costType">
         <div>
           Type of cost:
@@ -24,6 +24,8 @@
           <nz-option nzValue="fuel" nzLabel="Fuel" [nzDisabled]="deliverData"></nz-option>
         </nz-select>
       </div>
+
+      <img *ngIf="resize.innerWidth < 880 && resize.innerWidth > 465" class="pic" src="assets/steps.svg" alt="Configure Vehicle">
 
       <app-single-cost-form
         *ngIf="costService.updateType === 'single'"

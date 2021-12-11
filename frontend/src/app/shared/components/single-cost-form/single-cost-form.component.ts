@@ -7,6 +7,7 @@ import {AuthService} from '../../../core/services/auth.service';
 import {Router} from '@angular/router';
 import {CostService} from '../../../core/services/cost.service';
 import {ApiError} from '../../../models/api.model';
+import {ResizeService} from '../../../core/services/resize.service';
 
 @Component({
   selector: 'app-single-cost-form',
@@ -28,7 +29,8 @@ export class SingleCostFormComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private router: Router,
-    public costService: CostService
+    public costService: CostService,
+    public resize: ResizeService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class SingleCostFormComponent implements OnInit {
     this.addSingle = this.fb.group({
       name: [null, Validators.required],
       date: [null, Validators.required],
-      type: [null, Validators.required], // TODO: As select !
+      type: [null, Validators.required],
       price: [null, Validators.required],
       km: [null],
       description: [null]

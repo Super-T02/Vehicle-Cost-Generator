@@ -33,11 +33,25 @@
             >
           </nz-input-group>
         </nz-form-control>
-        <nz-form-control nzErrorTip="Passwords aren't the same">
+        <nz-form-control *ngIf="resize.innerWidth > 580" nzErrorTip="Passwords aren't the same">
           <nz-input-group>
             <input
               nz-input
               id="passwordCheck"
+              type="password"
+              formControlName="passwordCheck"
+              placeholder="Repeat password"
+            >
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item *ngIf="resize.innerWidth <= 580">
+        <nz-form-control  nzErrorTip="Passwords aren't the same">
+          <nz-input-group>
+            <input
+              nz-input
+              id="passwordCheck2"
               type="password"
               formControlName="passwordCheck"
               placeholder="Repeat password"

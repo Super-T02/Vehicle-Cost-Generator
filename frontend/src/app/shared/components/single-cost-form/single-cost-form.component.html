@@ -12,12 +12,28 @@
         >
       </nz-input-group>
     </nz-form-control>
-    <nz-form-control nzErrorTip="Date should not be empty!">
+    <nz-form-control *ngIf="resize.innerWidth > 580" nzErrorTip="Date should not be empty!">
       <nz-input-group>
         <nz-date-picker
           nzMode="date"
           formControlName="date"
           id="date"
+          nzPlaceHolder="Date"
+          style="width: 100%"
+          required
+        >
+        </nz-date-picker>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item  *ngIf="resize.innerWidth <= 580">
+    <nz-form-control nzErrorTip="Date should not be empty!">
+      <nz-input-group>
+        <nz-date-picker
+          nzMode="date"
+          formControlName="date"
+          id="date2"
           nzPlaceHolder="Date"
           style="width: 100%"
           required
@@ -61,11 +77,27 @@
         >
       </nz-input-group>
     </nz-form-control>
-    <nz-form-control>
+    <nz-form-control  *ngIf="resize.innerWidth > 580">
       <nz-input-group nzAddOnAfter="km">
         <input
           nz-input
           id="km"
+          type="number"
+          min="0"
+          step="100"
+          formControlName="km"
+          placeholder="Mileage"
+        >
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="resize.innerWidth <= 580">
+    <nz-form-control >
+      <nz-input-group nzAddOnAfter="km">
+        <input
+          nz-input
+          id="km2"
           type="number"
           min="0"
           step="100"

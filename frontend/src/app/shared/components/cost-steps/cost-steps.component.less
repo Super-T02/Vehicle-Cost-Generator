@@ -68,3 +68,32 @@
     max-width: 1500px;
   }
 }
+
+@media all and (max-width: 1050px) {
+  .right-column{
+    min-width: unset;
+    min-height: unset;
+  }
+}
+
+@media all and (max-width: 550px) {
+  .pic{
+    min-width: unset !important;
+  }
+
+  .steps-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+
+}
+
+@media all and (max-width: 390px) {
+  .right-column{
+    #costType{
+      flex-direction: column;
+    }
+  }
+}

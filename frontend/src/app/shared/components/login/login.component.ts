@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ValidationService} from '../../../core/services/validation.service';
 import {ApiService} from '../../../core/services/api.service';
 import {Router} from '@angular/router';
 import {LastRouteService} from '../../../core/services/last-route.service';
@@ -16,7 +15,6 @@ export class LoginComponent implements OnInit {
   login: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private validateService: ValidationService,
               private api: ApiService,
               private router: Router,
               private lastRoute: LastRouteService,
@@ -24,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   	this.login = this.fb.group({
-  		username: [null, Validators.required], // TODO: Service for validating data
+  		username: [null, Validators.required],
   		password: [null, Validators.required]
   	});
   }
