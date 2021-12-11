@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {CostService} from '../../../core/services/cost.service';
 import {LastRouteService} from '../../../core/services/last-route.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {UtilService} from '../../../core/services/util.service';
 
 @Component({
   selector: 'app-cost-steps',
@@ -27,7 +28,8 @@ export class CostStepsComponent implements OnInit {
     private router: Router,
     public costService: CostService,
     private lastUrl: LastRouteService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private util: UtilService
   ) {
 
   }
@@ -52,10 +54,7 @@ export class CostStepsComponent implements OnInit {
 
       // Auto redirect
       setTimeout(() => {
-        this.router.navigate(['overview/' + this.vin], {
-          queryParams: this.lastUrl.query,
-          queryParamsHandling: 'merge'
-        }).then();
+        this.router.navigate(['overview/' + this.vin], {queryParams: {selected: this.util.lastCostSelected}}).then();
       },this.countdown * 1000);
     }
   }

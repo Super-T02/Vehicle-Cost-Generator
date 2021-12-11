@@ -81,15 +81,13 @@ export class SingleCostsComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private auth: AuthService,
-    private modal: NzModalService,
-    private util: UtilService
+    private modal: NzModalService
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(
       params => this.vin = params.vin.toUpperCase()
     );
-    this.util.lastCostSelected = 1;
   }
 
   /**
@@ -141,12 +139,5 @@ export class SingleCostsComponent implements OnInit {
         );
       }
     });
-  }
-
-  /**
-   * Reloads the current path on screen resize
-   */
-  onResize() {
-    location.reload();
   }
 }

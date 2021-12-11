@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FuelCostItem, RepeatingCostItem, SingleCostItem} from '../../models/cost.model';
-import {Observable, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {ApiService} from '../../core/services/api.service';
 import {AuthService} from '../../core/services/auth.service';
 import {CostService} from '../../core/services/cost.service';
-import {LastRouteService} from '../../core/services/last-route.service';
+import {UtilService} from '../../core/services/util.service';
 
 @Component({
   selector: 'app-update-cost-item',
@@ -25,14 +25,14 @@ export class UpdateCostItemComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private costService: CostService,
-    private lastRoute: LastRouteService
+    private util: UtilService
   ) { }
 
   ngOnInit(): void {
-    this.query = this.lastRoute.query;
-    this.route.params.subscribe(parms => {
-      this.vin = parms.vin.toUpperCase();
-      this.id = parms.id;
+    this.query = {selected: this.util.lastCostSelected};
+    this.route.params.subscribe(params => {
+      this.vin = params.vin.toUpperCase();
+      this.id = params.id;
       switch (this.costService.updateType) {
         case 'single':
           this.api.getSingleCost(this.auth.username, this.vin, this.id).subscribe(

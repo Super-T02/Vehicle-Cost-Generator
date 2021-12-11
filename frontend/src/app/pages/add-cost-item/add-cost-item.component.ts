@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LastRouteService} from '../../core/services/last-route.service';
+import {UtilService} from '../../core/services/util.service';
 
 @Component({
   selector: 'app-add-cost-item',
@@ -14,13 +14,13 @@ export class AddCostItemComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private lastRoute: LastRouteService
+    private util: UtilService
   ) { }
 
   ngOnInit(): void {
-    this.query = this.lastRoute.query;
-    this.route.params.subscribe(parms => {
-      this.vin = parms.vin.toUpperCase();
+    this.query = {selected: this.util.lastCostSelected};
+    this.route.params.subscribe(params => {
+      this.vin = params.vin.toUpperCase();
     });
   }
 

@@ -87,14 +87,12 @@ export class RepeatingCostsComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private modal: NzModalService,
-    private util: UtilService
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(
       params => this.vin = params.vin.toUpperCase()
     );
-    this.util.lastCostSelected = 2;
   }
 
   /**
@@ -134,12 +132,4 @@ export class RepeatingCostsComponent implements OnInit {
       }
     });
   }
-
-  /**
-   * Reloads the current path on screen resize
-   */
-  onResize() {
-    location.reload();
-  }
-
 }

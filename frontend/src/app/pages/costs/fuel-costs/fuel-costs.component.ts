@@ -90,11 +90,9 @@ export class FuelCostsComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private modal: NzModalService,
-    private util: UtilService
   ) { }
 
   ngOnInit(): void {
-    this.util.lastCostSelected = 3;
     this.route.params.subscribe(
       params => this.vin = params.vin.toUpperCase()
     );
@@ -136,12 +134,5 @@ export class FuelCostsComponent implements OnInit {
         );
       }
     });
-  }
-
-  /**
-   * Reloads the current path on screen resize
-   */
-  onResize() {
-    location.reload();
   }
 }

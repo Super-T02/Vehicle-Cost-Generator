@@ -1,11 +1,11 @@
-<nz-breadcrumb>
+<nz-breadcrumb (window:resize)="onResize()">
   <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
   <nz-breadcrumb-item routerLink="/overview">Overview</nz-breadcrumb-item>
   <nz-breadcrumb-item [routerLink]="'/overview/' + vin">{{vin}}</nz-breadcrumb-item>
 </nz-breadcrumb>
 
 <div class="inner-content">
-  <nz-tabset nzType="card" [nzSelectedIndex]="lastSelected" (nzSelectedIndexChange)="changedInput($event)">
+  <nz-tabset nzType="card" [nzSelectedIndex]="util.lastCostSelected" (nzSelectedIndexChange)="changedInput($event)">
     <nz-tab [nzTitle]="'Cost Overview'">
       <app-cost-overview></app-cost-overview>
     </nz-tab>

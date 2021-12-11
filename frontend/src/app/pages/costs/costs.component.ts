@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CostService} from '../../core/services/cost.service';
 import {LastRouteService} from '../../core/services/last-route.service';
 import {UtilService} from '../../core/services/util.service';
@@ -9,35 +9,30 @@ import {UtilService} from '../../core/services/util.service';
   templateUrl: './costs.component.html',
   styleUrls: ['./costs.component.less']
 })
-export class CostsComponent implements OnInit, OnDestroy {
+export class CostsComponent implements OnInit {
 
   vin: string;
-  lastSelected: number;
 
   constructor(
     private costs: CostService,
     private route: ActivatedRoute,
     private lastUrl: LastRouteService,
+    private router: Router,
     public util: UtilService,
   ) { }
 
   ngOnInit(): void {
-    this.lastSelected = this.util.lastCostSelected;
-    this.route.params.subscribe(parms => {
-      this.vin = parms.vin.toUpperCase();
+    this.route.params.subscribe(params => {
+      this.vin = params.vin.toUpperCase();
       this.costs.loadCosts(this.vin);
     });
 
     this.route.queryParams.subscribe(query => {
-      if (query.selected && this.lastSelected === 0) {
+      if (query.selected) {
         this.util.lastCostSelected = query.selected;
       }
       this.lastUrl.newUrlString(`/overview/${this.vin}`);
     });
-  }
-
-  ngOnDestroy(): void{
-    this.util.lastCostSelected = this.lastSelected;
   }
 
   /**
@@ -49,4 +44,14 @@ export class CostsComponent implements OnInit, OnDestroy {
     this.lastUrl.query = {selected: this.util.lastCostSelected};
     this.lastUrl.newUrlString(`/overview/${this.vin}`);
   }
+
+  /**
+   * Handles the resize
+   */
+  onResize(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/overview/' + this.vin], {queryParams: {selected: this.util.lastCostSelected}}).then();
+  }
+
 }
