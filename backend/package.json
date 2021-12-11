@@ -1,6 +1,6 @@
 {
   "name": "backend-vehicle-cost-calculator",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Backend for the Vehicle Cost Calculator",
   "main": "app.js",
   "scripts": {
