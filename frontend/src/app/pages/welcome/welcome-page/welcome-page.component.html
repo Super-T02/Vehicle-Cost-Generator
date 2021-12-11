@@ -13,6 +13,8 @@
       >
     </div>
 
+    <nz-divider></nz-divider>
+
     <div id="advantages" class="background">
       <i id="track-icon" nz-icon nzType="dashboard" nzTheme="outline"></i>
       <i id="design-icon" nz-icon nzType="picture" nzTheme="outline"></i>
@@ -25,6 +27,8 @@
       <div id="free">For Free!</div>
     </div>
 
+    <nz-divider></nz-divider>
+
     <div *ngIf="this.resizeService.innerWidth > this.breakPoints.small" class="pic">
       <img
         src="assets/stacks.svg"
@@ -34,18 +38,19 @@
 
     <div class="text">
       <h1>
-        Add all your vehicles and track all together in your dashboard!
+        <span class="primary-color">Add all your vehicles</span>
+        and track all together in <span class="primary-color">your dashboard!</span>
       </h1>
     </div>
 
-    <div class="background signup">
-      <h1>
-        Haven't signup yet?
-        Signup now!
-      </h1>
-      <div *ngIf="this.resizeService.innerWidth > this.breakPoints.medium" class="horizontal-divider"></div>
-      <app-signup [description]="true"></app-signup>
+    <nz-divider></nz-divider>
 
+    <div class="background signup">
+      <h1 class="centerText">
+        Haven't signup yet?
+        <br>
+        Signup now, click <a [routerLink]="'/signup'">here</a>!
+      </h1>
     </div>
 
   </div>
