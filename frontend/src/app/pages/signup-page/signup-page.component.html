@@ -16,12 +16,13 @@
     <!--    First Step-->
     <div class="inner-flex" *ngIf="currentStep === 0">
 
-      <img class="pic" src="assets/signup.svg" alt="Sign Up Picture">
+      <img *ngIf="resize.innerWidth > 850" class="pic" src="assets/signup.svg" alt="Sign Up Picture">
       <div class="right-column">
         <div class="centerText">
           <h1>Sign Up Now</h1>
           Your vehicles are waiting to be tracked!
         </div>
+        <img *ngIf="resize.innerWidth <= 850" class="pic" src="assets/signup.svg" alt="Sign Up Picture">
         <app-signup id="form" (submitted)="submitted($event)"></app-signup>
       </div>
     </div>
@@ -39,21 +40,4 @@
 
     </div>
   </div>
-
-
-  <!--<div *ngIf="this.resize.innerWidth < breakPoints.smallMax" class="text">
-    <h1>Sign Up Now</h1>
-    Your vehicles are waiting to be tracked!
-  </div>
-
-  <img class="pic" src="assets/signup.svg" alt="Sign Up Picture">
-  <div *ngIf="this.resize.innerWidth > this.breakPoints.medium" class="horizontal-divider"></div>
-
-  <div class="right-column">
-    <div *ngIf="this.resize.innerWidth > breakPoints.smallMax" class="text">
-      <h1>Sign Up Now</h1>
-      Your <span class="primary-color">vehicles</span> are waiting to be <span class="primary-color">tracked</span>!
-    </div>
-    <app-signup class="form"></app-signup>
-  </div>-->
 </div>
