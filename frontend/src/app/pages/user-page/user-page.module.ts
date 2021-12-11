@@ -18,6 +18,7 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzSelectModule} from "ng-zorro-antd/select";
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {NzSelectModule} from "ng-zorro-antd/select";
     NzDividerModule,
     NzTableModule,
     NzPopconfirmModule,
-    NzSelectModule
+    NzSelectModule,
+    NzDropDownModule
   ]
 })
 export class UserPageModule { }

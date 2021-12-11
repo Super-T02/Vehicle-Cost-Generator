@@ -86,46 +86,87 @@
       <i nz-icon nzType="delete"></i>
     </button>
   </div>
-  <div *ngIf="loaded && userData.role === 'admin'">
-    <nz-table #editUserTable nzBordered [nzData]="users" [nzLoading]="!tableLoaded" nzTableLayout="auto">
-      <thead>
-      <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Password</th>
-        <th>Password Repeat</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let data of editUserTable.data">
-        <ng-container *ngIf="!cache[data.username].edit; else editTemplate">
-          <td>{{ data.username }}</td>
-          <td>{{ data.email }}</td>
-          <td>{{ data.role }}</td>
-          <td>{{ "*".repeat(data.password.length) }}</td>
-          <td>{{ "*".repeat(data.password.length) }}</td>
-          <td><a (click)="startEdit(data.username)">Edit</a></td>
-        </ng-container>
-        <ng-template #editTemplate>
-          <td>{{ data.username }}</td>
-          <td><input type="text" nz-input [(ngModel)]="cache[data.username].data.email" /></td>
-          <td>
-            <nz-select  [(ngModel)]="cache[data.username].data.role">
-              <nz-option [nzValue]="'member'" nzLabel="Member"></nz-option>
-              <nz-option [nzValue]="'admin'" nzLabel="Admin"></nz-option>
-            </nz-select>
-          </td>
-          <td>{{ "*".repeat(data.password.length) }}</td>
-          <td>{{ "*".repeat(data.password.length) }}</td>
-          <td>
-            <a (click)="saveEdit(data.username)" class="save">Save</a>
-            <a nz-popconfirm nzPopconfirmTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data.username)">Cancel</a>
-          </td>
-        </ng-template>
-      </tr>
-      </tbody>
-    </nz-table>
+  <nz-divider></nz-divider>
+  <div>
+    <h2 class="centerText">User table for admins</h2>
+    <div *ngIf="loaded && userData.role === 'admin' && resize.innerWidth > 460">
+      <nz-table
+        #editUserTable
+        [nzData]="userDisplayed"
+        [nzLoading]="!tableLoaded"
+        [nzPageSizeOptions]="[5,10,20,30]"
+        [nzSize]="resize.innerWidth > 580? 'default':'small'"
+        [nzPaginationPosition]="'both'"
+        [nzShowSizeChanger]="true"
+        nzPaginationType="small"
+        nzTableLayout="auto"
+      >
+        <thead>
+        <tr>
+          <th>
+            <span *ngIf="!menuVisible; else searchTemplate">Username</span>
+            <nz-filter-trigger>
+              <i nz-icon nzType="search" (click)="cancelSearch()"></i>
+            </nz-filter-trigger>
+
+          </th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Password</th>
+          <th>Password Repeat</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of editUserTable.data">
+          <ng-container *ngIf="!cache[data.username].edit; else editTemplate">
+            <td nzBreakWord>{{ data.username }}</td>
+            <td nzBreakWord>{{ data.email }}</td>
+            <td nzBreakWord>{{ data.role }}</td>
+            <td nzBreakWord>{{ "*".repeat(data.password.length) }}</td>
+            <td nzBreakWord>{{ "*".repeat(data.password.length) }}</td>
+            <td>
+              <a (click)="startEdit(data.username)" nz-tooltip="Edit">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+              </a>
+              <nz-divider [nzType]="'vertical'"></nz-divider>
+              <a (click)="deleteOtherConfirm(data.username)" nz-tooltip="Delete">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </a>
+            </td>
+          </ng-container>
+          <ng-template #editTemplate>
+            <td>{{ data.username }}</td>
+            <td><input type="text" nz-input [(ngModel)]="cache[data.username].data.email"/></td>
+            <td>
+              <nz-select  [(ngModel)]="cache[data.username].data.role">
+                <nz-option [nzValue]="'member'" nzLabel="Member"></nz-option>
+                <nz-option [nzValue]="'admin'" nzLabel="Admin"></nz-option>
+              </nz-select>
+            </td>
+            <td>{{ "*".repeat(data.password.length) }}</td>
+            <td>{{ "*".repeat(data.password.length) }}</td>
+            <td>
+              <a (click)="saveEdit(data.username)" class="save">Save</a>
+              <nz-divider [nzType]="'vertical'"></nz-divider>
+              <a nz-popconfirm nzPopconfirmTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data.username)">Cancel</a>
+            </td>
+          </ng-template>
+        </tr>
+        </tbody>
+      </nz-table>
+      <ng-template #searchTemplate>
+        <input
+          class="search"
+          type="text"
+          nz-input placeholder="Username"
+          [(ngModel)]="searchName"
+          (ngModelChange)="search()"
+        />
+      </ng-template>
+    </div>
+    <h4 *ngIf="resize.innerWidth < 460" class="centerText">
+      Your device is not wide enough for the admin table, please change to a wider device.
+    </h4>
   </div>
 </div>

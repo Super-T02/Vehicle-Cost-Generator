@@ -165,4 +165,13 @@ export class AuthService {
 
     }
   }
+
+  /**
+   * Checks whether the current user is admin or not
+   */
+  checkAdmin(): boolean {
+    const token = this.util.getAccessToken();
+    const role = this.jwtHelper.decodeToken(token).role;
+    return role && role === 'admin';
+  }
 }

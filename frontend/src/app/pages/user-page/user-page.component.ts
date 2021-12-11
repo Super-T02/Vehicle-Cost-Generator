@@ -15,13 +15,21 @@ import {Router} from '@angular/router';
   styleUrls: ['./user-page.component.less']
 })
 export class UserPageComponent implements OnInit {
+  // For normal users
   visible: boolean = false;
   loaded: boolean = false;
-  tableLoaded: boolean = false;
-  users: User[] = [];
-  cache: {[username: string]: {edit: boolean, data: User}} = {};
   userData: User;
   editForm: FormGroup
+
+  // For table
+  tableLoaded: boolean = false;
+  cache: {[username: string]: {edit: boolean, data: User}} = {};
+  users: User[] = [];
+  userDisplayed: User[] = [];
+
+  // For table search
+  searchName: string = '';
+  menuVisible: boolean = false;
 
   constructor(
     public auth: AuthService,
@@ -46,6 +54,12 @@ export class UserPageComponent implements OnInit {
         this.users = undefined;
         this.tableLoaded = false;
       }
+    }, error => {
+      console.log(error);
+      this.util.setAccessToken('');
+      this.router.navigate(['/login']).then();
+      this.api.logout(this.util.getRefreshToken()).subscribe(() => this.util.setRefreshToken(''));
+      this.message.error(error.message, {nzDuration: 5000});
     });
 
     this.editForm = this.fb.group({
@@ -188,13 +202,8 @@ export class UserPageComponent implements OnInit {
   loadAllUsers(): void{
     this.api.getAllUsers().subscribe( response => {
       this.users = response.data as User[];
-      for (const user of response.data as User[]) {
-        this.cache[user.username] = {
-          edit: false,
-          data: user
-        };
-      }
-
+      this.userDisplayed = this.users;
+      this.updateCache();
       this.tableLoaded = true;
     }, error => {
         this.message.error('Not able to load users, please try again later', {nzDuration: 5000});
@@ -203,33 +212,50 @@ export class UserPageComponent implements OnInit {
   }
 
   /**
+   * Updates the cache
+   */
+  updateCache(): void {
+    this.users.forEach(user => {
+      this.cache[user.username] = {
+        edit: false,
+        data: { ...user }
+      };
+    });
+  }
+
+  /**
    * Save the edit for the admin table
    * @param username
    */
   saveEdit(username: string): void{
-    const actualCache = this.cache[username].data;
-    const updatedUser: CreateUserInput = {
-      email: actualCache.email,
-      password: actualCache.password,
-      passwordCheck: actualCache.password,
-      role: actualCache.role,
-      username: actualCache.username
-    };
+    if(this.auth.checkAdmin()) {
+      const actualCache = this.cache[username].data;
+      const updatedUser: CreateUserInput = {
+        email: actualCache.email,
+        password: actualCache.password,
+        passwordCheck: actualCache.password,
+        role: actualCache.role,
+        username: actualCache.username
+      };
 
 
-    this.api.updateUser(username, updatedUser).subscribe(() => {
-      this.message.success(`User ${username} successfully updated!`, {nzDuration: 3000});
-      const index = this.users.findIndex(user => user.username === username);
-      if(index === -1) {
-        this.tableLoaded = false;
-        this.loadAllUsers();
-      }
-      else {
-        this.users[index] = this.cache[username].data;
-        console.log(this.cache);
-        this.cache[username].edit = false;
-      }
-    });
+      this.api.updateUser(username, updatedUser).subscribe(() => {
+        this.message.success(`User ${username} successfully updated!`, {nzDuration: 3000});
+        const index = this.users.findIndex(user => user.username === username);
+        if(index === -1) {
+          this.tableLoaded = false;
+          this.loadAllUsers();
+        }
+        else {
+          Object.assign(this.users[index], this.cache[username].data);
+          this.cache[username].edit = false;
+        }
+      });
+    } else {
+      this.message.error('You have not the permission to edit this users!', {nzDuration: 5000});
+      this.cancelEdit(username);
+    }
+
   }
 
   /**
@@ -245,14 +271,61 @@ export class UserPageComponent implements OnInit {
    * @param username
    */
   cancelEdit(username: string): void {
-    this.cache[username].edit = false;
     const index = this.users.findIndex(user => user.username === username);
-    if(index === -1){
-      this.message.error('Oh there is a problem with the table, it will be reloaded', {nzDuration: 5000});
-      this.tableLoaded = false;
-      this.loadAllUsers();
+    this.cache[username] = {
+      data: { ...this.users[index] },
+      edit: false
+    };
+  }
+
+  /**
+   * Search for username in table
+   */
+  search(): void {
+    const regex = new RegExp(`${this.searchName.toLowerCase()}`, 'g');
+    this.userDisplayed = this.users.filter((user: User) => user.username.match(regex));
+  }
+
+  /**
+   * Handles the cancel of the search field
+   */
+  cancelSearch(): void {
+    this.searchName = '';
+    this.search();
+    this.menuVisible = !this.menuVisible;
+  }
+
+  /**
+   * Confirm for deleting a other account
+   * @param username
+   */
+  deleteOtherConfirm(username: string): void {
+    console.log(username);
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this account?',
+      nzContent: 'Are you sure to delete the complete account with all vehicles and data. This decision ist final!',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => this.deleteOtherAccount(username),
+      nzCancelText: 'Cancel'
+    });
+  }
+
+  /**
+   * Deletes a other account
+   * @param username
+   */
+  deleteOtherAccount(username: string): void{
+    if(this.auth.checkAdmin()) {
+      this.api.deleteUser(username).subscribe(() => {
+        this.message.success('User deleted successfully', {nzDuration: 3000});
+        this.users = this.users.filter(user => user.username !== username);
+        this.updateCache();
+        this.userDisplayed = this.users;
+      });
     } else {
-      this.cache[username].data = this.users[index];
+     this.message.error('You do not have the permission to delete users', {nzDuration: 5000});
     }
   }
 }
