@@ -3,7 +3,7 @@
 openapi: 3.0.0
 info:
   description: This is the API for the Vehicle Cost Calculator
-  version: "0.0.1"
+  version: "1.0.0"
   title: Vehicle Cost Calculator API
 tags:
   - name: Authentication
@@ -187,12 +187,51 @@ paths:
           content:
             aplication/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserInput'
         responses:
           '201':
             description: User created successfully
           '400':
             description: Request has not the wantet format
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      get:
+        tags:
+          - Users
+        summary: Gets all users
+        description: |
+          Delivers all users only if the user is admin
+        responses:
+          '200':
+            description: Users
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/User'
+          '400':
+            description: Request has not the needed format
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: No Token
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '403':
+            description: Not the needed permission
             content:
               application/json:
                 schema:
@@ -245,6 +284,99 @@ paths:
                 $ref: '#/components/schemas/Error'
         '404':
           description: Not able to find user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Users
+      summary: Deletes one User
+      description: |
+        Deletes one User with the given username
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+      responses:
+        '204':
+          description: Successfully deleted
+        '400':
+          description: The username does't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not able to find user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Users
+      summary: Overwrites a User
+      description: |
+        Overwrites a User with the given username
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+        description: User to overwrite (username must match username in path)
+      responses:
+        '201':
+          description: User overwritten
+        '400':
+          description: Username does't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not the needed permission
           content:
             application/json:
               schema:
@@ -1472,6 +1604,31 @@ components:
           type: string
           example: "max.mustermann@host.de"
         password:
+          type: string
+          example: "Test-123"
+        role:
+          type: string
+          example: admin | member
+
+    UserInput:
+      type: object
+      required:
+        - username
+        - mail
+        - password
+        - passwordRepeat
+        - role
+      properties:
+        username:
+          type: string
+          example: "Mustermann25"
+        mail:
+          type: string
+          example: "max.mustermann@host.de"
+        password:
+          type: string
+          example: "Test-123"
+        passwordRepeat:
           type: string
           example: "Test-123"
         role:
