@@ -86,10 +86,11 @@
       <i nz-icon nzType="delete"></i>
     </button>
   </div>
-  <nz-divider></nz-divider>
-  <div>
+
+  <div *ngIf="loaded && userData.role === 'admin'">
+    <nz-divider></nz-divider>
     <h2 class="centerText">User table for admins</h2>
-    <div *ngIf="loaded && userData.role === 'admin' && resize.innerWidth > 460">
+    <div *ngIf="resize.innerWidth > 460">
       <nz-table
         #editUserTable
         [nzData]="userDisplayed"
