@@ -71,3 +71,36 @@
     max-width: 1500px;
   }
 }
+
+@media all and (max-width: 970px){
+  .pic{
+    min-width: unset !important;
+    min-height: unset !important;
+  }
+}
+
+@media all and (max-width: 450px){
+  .steps-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  .right-column{
+    .form{
+      min-height: 0;
+      min-width: 0;
+      nz-form-item{
+        min-width: 0;
+      }
+    }
+  }
+
+  .button-flex {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px
+  }
+
+}

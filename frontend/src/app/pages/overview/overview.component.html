@@ -25,12 +25,23 @@
       <div class="titleFlex">
         <h2>Your Vehicles</h2>
         <button
+          *ngIf="resize.innerWidth > 360"
           nz-button
           (click)="addVehicle()"
           nzType="primary"
           nzShape="round"
         >
           Add Vehicle
+          <i nz-icon nzType="plus"></i>
+        </button>
+        <button
+          *ngIf="resize.innerWidth <= 360"
+          nz-button
+          (click)="addVehicle()"
+          nzType="primary"
+          nzShape="circle"
+          nz-tooltip="Add Vehicle"
+        >
           <i nz-icon nzType="plus"></i>
         </button>
       </div>
