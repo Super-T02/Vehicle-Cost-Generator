@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from '../../../core/services/api.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {UtilService} from '../../../core/services/util.service';
 
 interface ColumnItem {
   name: string;
@@ -85,13 +86,15 @@ export class RepeatingCostsComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private auth: AuthService,
-    private modal: NzModalService
+    private modal: NzModalService,
+    private util: UtilService
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(
       params => this.vin = params.vin.toUpperCase()
     );
+    this.util.lastCostSelected = 2;
   }
 
   /**
@@ -130,6 +133,13 @@ export class RepeatingCostsComponent implements OnInit {
         );
       }
     });
+  }
+
+  /**
+   * Reloads the current path on screen resize
+   */
+  onResize() {
+    location.reload();
   }
 
 }

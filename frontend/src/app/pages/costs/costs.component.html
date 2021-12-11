@@ -5,7 +5,7 @@
 </nz-breadcrumb>
 
 <div class="inner-content">
-  <nz-tabset nzType="card" [nzSelectedIndex]="this.util.lastCostSelected" (nzSelectedIndexChange)="changedInput($event)">
+  <nz-tabset nzType="card" [nzSelectedIndex]="lastSelected" (nzSelectedIndexChange)="changedInput($event)">
     <nz-tab [nzTitle]="'Cost Overview'">
       <app-cost-overview></app-cost-overview>
     </nz-tab>

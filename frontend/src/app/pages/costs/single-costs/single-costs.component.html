@@ -1,4 +1,4 @@
-<div class="headline">
+<div class="headline" (window:resize)="onResize()">
   <h1>Single Costs</h1>
   <button
     nz-button
@@ -16,8 +16,11 @@
   #basicTable
   [nzData]="costService.costs.single"
   nzPaginationType="small"
-  [nzPageSize]="20"
-  [nzScroll]="{ x: '1080px', y: '340px' }"
+  [nzShowSizeChanger]="true"
+  [nzPaginationPosition]="'both'"
+  [nzPageSizeOptions]="[5,10,20,30]"
+  [nzScroll]="{ x: '800px'}"
+  nzTableLayout="auto"
 >
   <thead>
   <tr>
@@ -34,7 +37,7 @@
     >
       {{ column.name }}
     </th>
-    <th nzRight>Action</th>
+    <th nzWidth="80px" nzRight>Action</th>
   </tr>
   </thead>
   <tbody>

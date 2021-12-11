@@ -6,6 +6,7 @@ import {NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder} fro
 import {ApiService} from '../../../core/services/api.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {UtilService} from '../../../core/services/util.service';
 
 interface ColumnItem {
   name: string;
@@ -88,10 +89,12 @@ export class FuelCostsComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private auth: AuthService,
-    private modal: NzModalService
+    private modal: NzModalService,
+    private util: UtilService
   ) { }
 
   ngOnInit(): void {
+    this.util.lastCostSelected = 3;
     this.route.params.subscribe(
       params => this.vin = params.vin.toUpperCase()
     );
@@ -133,5 +136,12 @@ export class FuelCostsComponent implements OnInit {
         );
       }
     });
+  }
+
+  /**
+   * Reloads the current path on screen resize
+   */
+  onResize() {
+    location.reload();
   }
 }
