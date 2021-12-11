@@ -84,7 +84,6 @@ export class AuthService {
           .subscribe((output: ApiOutput) => {
               if (output.data.accessToken) {
                 const {accessToken} = output.data;
-                console.log('hi');
                 localStorage.setItem('accessToken', accessToken);
                 if(!this.refreshInterval) this.refreshAccessToken();
                 this.actualizeName();

@@ -132,6 +132,28 @@ export class ApiService {
   }
 
   /**
+   * Get a all users
+   */
+  getAllUsers(): Observable<ApiOutput> {
+    return this.http.get<HttpResponse<any>>(
+      `${this.baseUrl}/users`,
+      {
+        headers: this.generateHeader(),
+        observe: 'response'
+      },
+    ).pipe(
+      map((res) => {
+        if (!res.body) {
+          return {data: null};
+        } else {
+          return {data: (res.body as any)};
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
    * Deletes a user from the db
    * @param username
    */

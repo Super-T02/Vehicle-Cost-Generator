@@ -15,6 +15,9 @@ import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzStatisticModule} from "ng-zorro-antd/statistic";
 import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzTableModule} from "ng-zorro-antd/table";
+import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
+import {NzSelectModule} from "ng-zorro-antd/select";
 
 
 @NgModule({
@@ -35,7 +38,10 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
     NzToolTipModule,
     NzIconModule,
     NzStatisticModule,
-    NzDividerModule
+    NzDividerModule,
+    NzTableModule,
+    NzPopconfirmModule,
+    NzSelectModule
   ]
 })
 export class UserPageModule { }

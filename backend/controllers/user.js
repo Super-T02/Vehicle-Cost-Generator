@@ -16,6 +16,16 @@ router.post('/', userService.checkNewUser, (req, res) => {
 	});
 });
 
+router.get('/', authService.authenticateJWT, userService.isUserPermitted, (req, res) => {
+	userService.getAllUsers(req, (err, data) => {
+		if (err) {
+			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+		} else {
+			res.status(200).json(data);
+		}
+	});
+});
+
 router.use('/:username',
 	authService.authenticateJWT,
 	userService.checkUser,

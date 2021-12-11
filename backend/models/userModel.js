@@ -16,6 +16,20 @@ exports.createUser = (userData, callback) => {
 };
 
 /**
+ * Gets all users in the db
+ * @param callback
+ */
+exports.getAllUsers = (callback) => {
+	db.user.find({}, (err, data) => {
+		if(err) {
+			callback(err, null);
+		} else {
+			callback(null, data);
+		}
+	});
+};
+
+/**
  * Gets the data of the given user
  * @param username
  * @param callback

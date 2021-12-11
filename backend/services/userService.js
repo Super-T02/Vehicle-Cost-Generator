@@ -18,6 +18,16 @@ exports.addUser = (data, callback) => {
 	});
 };
 
+exports.getAllUsers = (req, callback) => {
+	userModel.getAllUsers((err, data) => {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, data);
+		}
+	});
+};
+
 /**
  * Get the user passed with the given username
  * @param username
