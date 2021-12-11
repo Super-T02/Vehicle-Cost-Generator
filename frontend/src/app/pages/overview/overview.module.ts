@@ -11,6 +11,7 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzEmptyModule} from "ng-zorro-antd/empty";
+import {NzDividerModule} from "ng-zorro-antd/divider";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {NzEmptyModule} from "ng-zorro-antd/empty";
         NzIconModule,
         NzButtonModule,
         NzToolTipModule,
-        NzEmptyModule
+        NzEmptyModule,
+        NzDividerModule
     ]
 })
 export class OverviewModule { }

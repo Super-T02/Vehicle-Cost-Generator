@@ -5,11 +5,35 @@
 
 <div class="inner-content">
   <h1 class="centerText title">
-    Overview for <span class="primary-color">{{this.auth.username | uppercase}}</span>
+    Vehicle overview for <span class="primary-color">{{this.auth.username | uppercase}}</span>
   </h1>
 
   <div class="outerFlex">
-    <nz-card id="vehicles" [nzTitle]="titleTemplate">
+    <div class="statsFlex">
+      <nz-statistic class="centerText" [nzValue]="stats.numOfVehicles | number" nzTitle="Num of vehicles"></nz-statistic>
+      <nz-divider *ngIf="resize.innerWidth > 1170" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+      <nz-statistic  class="centerText" [nzValue]="stats.sum | number" nzTitle="Costs (EUR)"></nz-statistic>
+      <nz-divider *ngIf="resize.innerWidth > 1170" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+      <nz-statistic class="centerText" [nzValue]="stats.distance | number" nzTitle="Distance (KM) "></nz-statistic>
+      <nz-divider *ngIf="resize.innerWidth > 1170" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+      <nz-statistic class="centerText" [nzValue]="stats.highest | number" nzTitle="Highest Cost (EUR)"></nz-statistic>
+      <nz-divider *ngIf="resize.innerWidth > 1170" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+      <nz-statistic class="centerText" [nzValue]="stats.averagePerCar | number" nzTitle="Average Cost (EUR)"></nz-statistic>
+    </div>
+    <div id="vehicles">
+      <nz-divider></nz-divider>
+      <div class="titleFlex">
+        <h2>Your Vehicles</h2>
+        <button
+          nz-button
+          (click)="addVehicle()"
+          nzType="primary"
+          nzShape="round"
+        >
+          Add Vehicle
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </div>
       <div class="vehicleFlex">
         <app-vehicle
           *ngFor="let vehicle of this.vehicles"
@@ -24,7 +48,7 @@
           [nzNotFoundFooter]="footerTpl"
         >
           <ng-template #contentTpl>
-        <span>
+            <span>
           There are no vehicles.
         </span>
           </ng-template>
@@ -33,39 +57,19 @@
           </ng-template>
         </nz-empty>
       </div>
-    </nz-card>
+    </div>
 
-    <nz-card id="stats" [nzTitle]="statisticTemplate">
-      <div class="statsFlex">
-        <nz-statistic class="centerText" [nzValue]="stats.numOfVehicles | number" nzTitle="Num of vehicles"></nz-statistic>
-        <nz-statistic class="centerText" [nzValue]="stats.sum | number" nzTitle="Costs (EUR)"></nz-statistic>
-        <nz-statistic class="centerText" [nzValue]="stats.distance | number" nzTitle="Distance (KM) "></nz-statistic>
-        <nz-statistic class="centerText" [nzValue]="stats.highest | number" nzTitle="Highest Cost (EUR)"></nz-statistic>
-        <nz-statistic class="centerText" [nzValue]="stats.averagePerCar | number" nzTitle="Average Cost (EUR)"></nz-statistic>
-      </div>
-    </nz-card>
   </div>
 
 
 </div>
 
 <ng-template #titleTemplate>
-  <div class="titleFlex">
-    <h2>Your Vehicles</h2>
-    <button
-      nz-button
-      (click)="addVehicle()"
-      nzType="primary"
-      nzShape="round"
-    >
-      Add Vehicle
-      <i nz-icon nzType="plus"></i>
-    </button>
-  </div>
+
 
 
 </ng-template>
 
 <ng-template #statisticTemplate>
-  <h2 class="centerText">Personal Stats</h2>
+
 </ng-template>

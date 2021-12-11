@@ -5,6 +5,7 @@ import {ApiService} from '../../core/services/api.service';
 import {Router} from '@angular/router';
 import {LastRouteService} from '../../core/services/last-route.service';
 import {CostService} from '../../core/services/cost.service';
+import {ResizeService} from '../../core/services/resize.service';
 
 @Component({
   selector: 'app-overview',
@@ -27,7 +28,8 @@ export class OverviewComponent implements OnInit {
     private api: ApiService,
     private route: Router,
     private lastRoute: LastRouteService,
-    private costService: CostService
+    private costService: CostService,
+    public resize: ResizeService
   ) {
 
   }
