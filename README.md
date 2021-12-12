@@ -1,6 +1,6 @@
 # Web-Engineering-Project - Vehicle Cost Calculator
 
-##Functionality
+## Functionality
 
 The Vehicle Cost Calculator (VCC) is a web application for tracking and managing the costs
 of different vehicles. There are different users with different vehicles. Every vehicle
@@ -29,7 +29,7 @@ a table of all users of VCC. He is able to delete them and edit their role and e
 - not IE 11
 
 
-##Installation
+## Installation
 
 1. At first unzip the .zip archive. 
 2. Then go into the frontend folder.
@@ -57,7 +57,7 @@ npm run-script start
 8. The server is now running under ``http://localhost:3000``, (opt.) if you are hosting the server, the address is
 the address of your server.
 
-##First steps
+## First steps
 
 After installing and starting the server you are able to use the VCC. Initially there exists an admin user with following
 login data:
@@ -81,14 +81,14 @@ his login data are:
 
 Also, there are 4 Dummy Users to train the admin functionality under your admin profile
 
-##Api Documentation
+## Api Documentation
 
 The documentation of the api is located in the root directory of the .zip archive. It's written with
 OpenApi.
 
-##References and Libraries
+## References and Libraries
 
-###1. Frontend
+### 1. Frontend
 
 - SVGs on the page from: [unDraw](https://undraw.co/)
 - [Angular 12](https://angular.io/)
@@ -97,7 +97,7 @@ OpenApi.
 - For the charts [ngx-echarts](https://xieziyu.github.io/ngx-echarts/api-doc/overview.html) 
 with [echarts](https://echarts.apache.org/en/index.html)
 
-###2. Backend
+### 2. Backend
 
 - [Express](https://expressjs.com/)
 - For validating the requests [express-validator](https://express-validator.github.io/docs/)
@@ -105,6 +105,6 @@ with [echarts](https://echarts.apache.org/en/index.html)
 - Database [neDB](https://github.com/louischatriot/nedb)
 - For generating ids [uuid](https://www.npmjs.com/package/uuid)
 
-###3. Api Documentation
+### 3. Api Documentation
 
 - [OpenApi](https://swagger.io/specification/)
