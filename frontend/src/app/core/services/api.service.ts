@@ -14,13 +14,14 @@ import {
   SingleCostItem,
   SingleCostItemInput
 } from '../../models/cost.model';
+import {backend} from '../../../environments/constants';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ApiService {
 
-  private readonly baseUrl = 'http://localhost:3000/api';
+  private readonly baseUrl = backend.url;
   private readonly accessToken = localStorage.getItem('accessToken');
   private readonly refreshToken = localStorage.getItem('refreshToken');
 
