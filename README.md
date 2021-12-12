@@ -1,5 +1,7 @@
 # Web-Engineering-Project - Vehicle Cost Calculator
+
 ##Functionality
+
 The Vehicle Cost Calculator (VCC) is a web application for tracking and managing the costs
 of different vehicles. There are different users with different vehicles. Every vehicle
 belongs to one user and has different cost items of different cost types. In the VCC are you
@@ -16,6 +18,7 @@ using VCC. The admin has the same functionality such as a member. But he can see
 a table of all users of VCC. He is able to delete them and edit their role and email.
 
 ## Compatibility
+
 - For devices with a minimal screen width of 320px, for perfect functionality minimal screen width of 360px
 - last 1 Chrome version
 - last 1 Firefox version
@@ -27,6 +30,7 @@ a table of all users of VCC. He is able to delete them and edit their role and e
 
 
 ##Installation
+
 1. At first unzip the .zip archive. 
 2. Then go into the frontend folder.
 3. (opt.) If you want to host this tool, and use it not only at the local host:
@@ -52,7 +56,9 @@ npm run-script start
 ```
 8. The server is now running under ``http://localhost:3000``, (opt.) if you are hosting the server, the address is
 the address of your server.
+
 ##First steps
+
 After installing and starting the server you are able to use the VCC. Initially there exists an admin user with following
 login data:
 - Username: Admin
@@ -76,11 +82,14 @@ his login data are:
 Also, there are 4 Dummy Users to train the admin functionality under your admin profile
 
 ##Api Documentation
+
 The documentation of the api is located in the root directory of the .zip archive. It's written with
 OpenApi.
 
 ##References and Libraries
+
 ###1. Frontend
+
 - SVGs on the page from: [unDraw](https://undraw.co/)
 - [Angular 12](https://angular.io/)
 - Design with [NG-Zorro](https://ng.ant.design/docs/introduce/en)
@@ -89,6 +98,7 @@ OpenApi.
 with [echarts](https://echarts.apache.org/en/index.html)
 
 ###2. Backend
+
 - [Express](https://expressjs.com/)
 - For validating the requests [express-validator](https://express-validator.github.io/docs/)
 - For the jwt token [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
@@ -96,4 +106,5 @@ with [echarts](https://echarts.apache.org/en/index.html)
 - For generating ids [uuid](https://www.npmjs.com/package/uuid)
 
 ###3. Api Documentation
+
 - [OpenApi](https://swagger.io/specification/)
