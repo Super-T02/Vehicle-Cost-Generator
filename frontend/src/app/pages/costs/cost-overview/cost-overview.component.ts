@@ -102,14 +102,26 @@ export class CostOverviewComponent implements OnInit {
     const {fuel} = this.costService.costs;
     let months = [];
     let consumption = [];
+    let numOfElements = [];
 
     // Sort
     fuel.sort((a, b) => a.date.getTime() - b.date.getTime());
 
     // Push important data
     for (const fuelCostItem of fuel) {
-      months.push(this.datePipe.transform(fuelCostItem.date, 'MMMM YYYY'));
-      consumption.push(fuelCostItem.consumption);
+      const index = months.findIndex(value => value === this.datePipe.transform(fuelCostItem.date, 'MMMM YYYY'));
+      if(index === -1) {
+        months.push(this.datePipe.transform(fuelCostItem.date, 'MMMM YYYY'));
+        consumption.push(fuelCostItem.consumption);
+        numOfElements.push(1);
+      } else {
+        consumption[index] += fuelCostItem.consumption;
+        numOfElements[index] ++;
+      }
+    }
+
+    for (const index in consumption) {
+      consumption[index] /= numOfElements[index];
     }
 
     // Initialize chart
@@ -162,8 +174,13 @@ export class CostOverviewComponent implements OnInit {
 
     // Push important data
     for (const fuelCostItem of fuel) {
-      months.push(this.datePipe.transform(fuelCostItem.date, 'MMMM YYYY'));
-      distance.push(fuelCostItem.km);
+      const index = months.findIndex(value => value === this.datePipe.transform(fuelCostItem.date, 'MMMM YYYY'));
+      if(index === -1) {
+        months.push(this.datePipe.transform(fuelCostItem.date, 'MMMM YYYY'));
+        distance.push(fuelCostItem.km);
+      } else {
+        distance[index] += fuelCostItem.km;
+      }
     }
 
     // Initialize chart
@@ -212,9 +229,9 @@ export class CostOverviewComponent implements OnInit {
     const fuel = this.costService.costs.fuel;
 
     // Get highest group
-    const highSingle = this.costService.getHighestPrice(single);
-    const highRepeat = this.costService.getHighestPrice(repeat);
-    const highFuel = this.costService.getHighestPrice(fuel);
+    const highSingle = this.costService.getSumOfCosts(single);
+    const highRepeat = this.costService.getSumOfCosts(repeat);
+    const highFuel = this.costService.getSumOfCosts(fuel);
 
     (highSingle > highRepeat && highSingle > highFuel)? this.stats.highestGroup = 'Single Costs' : undefined;
     (highRepeat > highSingle && highRepeat > highFuel)? this.stats.highestGroup = 'Repeating Costs' : undefined;

@@ -59,7 +59,7 @@
   <ng-container *ngFor="let data of basicTable.data">
     <tr>
       <td>{{ data.name }}</td>
-      <td>{{ data.price }} €</td>
+      <td>{{ data.price | number :'1.2-2' :'de'}} €</td>
       <td>{{ data.period }}</td>
       <td>{{ data.date | date: 'dd MMM YYYY' }}</td>
       <td>{{ data.description ? data.description : '---' }} </td>

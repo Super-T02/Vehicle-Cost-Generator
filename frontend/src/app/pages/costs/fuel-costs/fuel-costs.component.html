@@ -58,10 +58,10 @@
   <tbody>
   <ng-container *ngFor="let data of basicTable.data">
     <tr>
-      <td>{{ data.price }} €</td>
-      <td>{{ data.km }} km</td>
-      <td>{{ data.volume }} l</td>
-      <td>{{ data.consumption }}l / 100 km</td>
+      <td>{{ data.price | number :'1.2-2' :'de'}} €</td>
+      <td>{{ data.km | number : '1.0-0' : 'de'}} km</td>
+      <td>{{ data.volume | number :'1.2-2' :'de'}} l</td>
+      <td>{{ data.consumption | number :'1.2-2' :'de'}} l / 100 km</td>
       <td>{{ data.date | date: 'dd MMM YYYY' }}</td>
       <td>{{ data.type }}</td>
       <td nzRight>

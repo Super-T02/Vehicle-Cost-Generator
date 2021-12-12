@@ -8,7 +8,6 @@ const db = require('./db');
  */
 exports.saveRefreshToken = (refreshToken, callback) => {
 	const decoded = jwt.decode(refreshToken);
-	console.log(decoded);
 	db.token.remove({username: decoded.username, refreshToken: refreshToken}, (err) => {
 		if (err) {
 			callback(err, null);

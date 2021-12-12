@@ -1,7 +1,6 @@
 const singleCostModel = require('../models/singleCostModel');
 const fuelCostModel = require('../models/fuelCostModel');
 const repeatingCostModel = require('../models/repeatingCostModel');
-const vehicleModel = require('../models/vehicleModel');
 
 /**
  * Deletes all costs for this vin

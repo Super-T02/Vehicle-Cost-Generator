@@ -60,8 +60,8 @@
     <tr>
       <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
       <td>{{ data.name }}</td>
-      <td>{{ data.price }} €</td>
-      <td>{{ data.km }} <span *ngIf="data.km">km</span> <span *ngIf="!data.km">---</span> </td>
+      <td>{{ data.price | number :'1.2-2' :'de'}} €</td>
+      <td>{{ data.km | number: '1.0-0': 'de'}} <span *ngIf="data.km">km</span> <span *ngIf="!data.km">---</span> </td>
       <td>{{ data.type }}</td>
       <td>{{ data.date | date: 'dd MMM YYYY' }}</td>
       <td nzRight>
@@ -81,7 +81,7 @@
       </td>
     </tr>
     <tr [nzExpand]="expandSet.has(data.id)">
-      Description: {{ data.description }}
+      Description: {{ data.description? data.description : '---' }}
     </tr>
   </ng-container>
   </tbody>
