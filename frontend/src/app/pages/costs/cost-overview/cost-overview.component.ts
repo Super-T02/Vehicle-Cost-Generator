@@ -3,7 +3,7 @@ import {CostService} from '../../../core/services/cost.service';
 import {DatePipe} from '@angular/common';
 import {CostChart} from '../../../models/cost.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ResizeService} from "../../../core/services/resize.service";
+import {ResizeService} from '../../../core/services/resize.service';
 
 @Component({
   selector: 'app-cost-overview',
@@ -51,7 +51,7 @@ export class CostOverviewComponent implements OnInit {
 
 
   constructor(
-    private costService: CostService,
+    public costService: CostService,
     private datePipe: DatePipe,
     private router: Router,
     private route: ActivatedRoute,

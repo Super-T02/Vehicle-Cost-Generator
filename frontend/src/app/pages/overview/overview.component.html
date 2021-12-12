@@ -45,7 +45,8 @@
           <i nz-icon nzType="plus"></i>
         </button>
       </div>
-      <div class="vehicleFlex">
+      <nz-spin *ngIf="!loaded" nzSize="large" nzDelay="100"></nz-spin>
+      <div class="vehicleFlex" *ngIf="loaded">
         <app-vehicle
           *ngFor="let vehicle of this.vehicles"
           [vehicle]="vehicle"

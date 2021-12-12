@@ -33,21 +33,36 @@
   <nz-divider *ngIf="resize.innerWidth > 1510" [nzType]="'vertical'" style="height: 50px"></nz-divider>
   <nz-statistic class="centerText" [nzValue]="stats.sumSingle | number : '1.2-2': 'de'" nzTitle="Sum Single Costs (EUR)"></nz-statistic>
   <nz-divider *ngIf="resize.innerWidth > 1510" [nzType]="'vertical'" style="height: 50px"></nz-divider>
-  <nz-statistic class="centerText" [nzValue]="stats.sumFuel | number : '1.2-2': 'de'" nzTitle="Sum Repeating Costs (EUR)"></nz-statistic>
+  <nz-statistic class="centerText" [nzValue]="stats.sumRepeating | number : '1.2-2': 'de'" nzTitle="Sum Repeating Costs (EUR)"></nz-statistic>
   <nz-divider *ngIf="resize.innerWidth > 1510" [nzType]="'vertical'" style="height: 50px"></nz-divider>
-  <nz-statistic class="centerText" [nzValue]="stats.sumRepeating | number : '1.2-2': 'de'" nzTitle="Sum Fuel Costs (EUR)"></nz-statistic>
+  <nz-statistic class="centerText" [nzValue]="stats.sumFuel | number : '1.2-2': 'de'" nzTitle="Sum Fuel Costs (EUR)"></nz-statistic>
 </div>
 
 <nz-divider></nz-divider>
 
 <!--Chart for sum per month for each-->
-<div>
-  <h2 class="centerText">Costs per Month</h2>
-  <nz-divider></nz-divider>
-  <app-costs-per-month-chart [type]="'all'"></app-costs-per-month-chart>
-</div>
+<h2 class="centerText">Costs per Month</h2>
+<nz-spin *ngIf="!costService.loaded.fuel || !costService.loaded.single || !costService.loaded.repeating" nzSize="large" nzDelay="100"></nz-spin>
+<nz-divider></nz-divider>
+<app-costs-per-month-chart [type]="'all'"></app-costs-per-month-chart>
 
-<div id="bottom-chart-wrapper">
+<nz-empty
+  *ngIf="costService.costs.fuel.length === 0 && costService.costs.single.length === 0 && costService.costs.repeating.length === 0"
+  nzNotFoundImage="assets/empty.svg"
+  [nzNotFoundContent]="contentTpl"
+  [nzNotFoundFooter]="footerTpl"
+>
+  <ng-template #contentTpl>
+            <span>
+          There are no cost items.
+        </span>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button nzType="primary" nzShape="round" (click)="add()">Create Now</button>
+  </ng-template>
+</nz-empty>
+
+<div id="bottom-chart-wrapper" *ngIf="costService.costs.fuel.length > 0">
   <!--Chart for Average Consumption for each month-->
   <div *ngIf="averageConsumption.loaded">
     <h2 class="centerText">Consumption per Month</h2>

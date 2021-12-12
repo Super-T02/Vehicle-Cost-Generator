@@ -19,6 +19,8 @@ import { CostsPerMonthChartComponent } from './costs-per-month-chart/costs-per-m
 import {NgxEchartsModule} from 'ngx-echarts';
 import { CostOverviewComponent } from './cost-overview/cost-overview.component';
 import {NzStatisticModule} from "ng-zorro-antd/statistic";
+import {NzEmptyModule} from "ng-zorro-antd/empty";
+import {NzSpinModule} from "ng-zorro-antd/spin";
 
 
 @NgModule({
@@ -46,6 +48,8 @@ import {NzStatisticModule} from "ng-zorro-antd/statistic";
             echarts: () => import('echarts'),
         }),
         NzStatisticModule,
+        NzEmptyModule,
+        NzSpinModule,
     ]
 })
 export class CostsModule { }

@@ -35,6 +35,7 @@
   [nzPageSizeOptions]="[5,10,20,30]"
   [nzScroll]="{ x: '800px'}"
   [nzSize]="resize.innerWidth < 650 ? 'middle' : 'default'"
+  [nzLoading]="!costService.loaded.fuel"
   nzTableLayout="auto"
 >
   <thead>
@@ -84,8 +85,25 @@
   </tbody>
 </nz-table>
 
+<br *ngIf="costService.costs.fuel.length === 0" />
 <h2 class="centerText">Fuel Costs per Month</h2>
 <nz-divider></nz-divider>
+<nz-spin *ngIf="!costService.loaded.fuel" nzSize="large" nzDelay="100"></nz-spin>
 <app-costs-per-month-chart [type]="'fuel'"></app-costs-per-month-chart>
 
 
+<nz-empty
+  *ngIf="costService.costs.fuel.length === 0 && costService.loaded.fuel"
+  nzNotFoundImage="assets/empty-fuel.svg"
+  [nzNotFoundContent]="contentTpl"
+  [nzNotFoundFooter]="footerTpl"
+>
+  <ng-template #contentTpl>
+            <span>
+          There are no fuel cost items.
+        </span>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button class="add" nz-button nzType="primary" nzShape="round" (click)="addFuelCost()">Create Now</button>
+  </ng-template>
+</nz-empty>

@@ -21,6 +21,7 @@ export class OverviewComponent implements OnInit {
     highest: number,
     averagePerCar: number
   }
+  loaded: boolean = false;
 
 
   constructor(
@@ -45,6 +46,7 @@ export class OverviewComponent implements OnInit {
     this.vehicles = [];
     this.loadVehicles().then( value => {
       this.vehicles = value;
+      this.loaded = true;
       this.getStats().then();
     });
     this.lastRoute.newUrlString('/overview');
@@ -85,8 +87,10 @@ export class OverviewComponent implements OnInit {
    */
   deleteHandler(deleted: boolean) {
     if (deleted) {
+      this.loaded = false;
       this.loadVehicles().then(value => {
         this.vehicles = value;
+        this.loaded = true;
         this.getStats().then();
       });
     }

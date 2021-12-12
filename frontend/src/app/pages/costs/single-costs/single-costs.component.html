@@ -34,6 +34,7 @@
   [nzPageSizeOptions]="[5,10,20,30]"
   [nzScroll]="{ x: '800px'}"
   [nzSize]="resize.innerWidth < 650 ? 'middle' : 'default'"
+  [nzLoading]="!costService.loaded.single"
   nzTableLayout="auto"
 >
   <thead>
@@ -86,6 +87,25 @@
   </tbody>
 </nz-table>
 
+<br *ngIf="costService.costs.single.length === 0" />
 <h2 class="centerText">Single Costs per Month</h2>
 <nz-divider></nz-divider>
+<nz-spin *ngIf="!costService.loaded.single" nzSize="large" nzDelay="100"></nz-spin>
 <app-costs-per-month-chart [type]="'single'"></app-costs-per-month-chart>
+
+
+<nz-empty
+  *ngIf="costService.costs.single.length === 0 && costService.loaded.single"
+  nzNotFoundImage="assets/empty.svg"
+  [nzNotFoundContent]="contentTpl"
+  [nzNotFoundFooter]="footerTpl"
+>
+  <ng-template #contentTpl>
+            <span>
+          There are no single cost items.
+        </span>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button class="add" nz-button nzType="primary" nzShape="round" (click)="addSingleCost()">Create Now</button>
+  </ng-template>
+</nz-empty>

@@ -13,6 +13,7 @@ import {colors} from '../../../../environments/constants';
 export class CostsPerMonthChartComponent implements OnInit {
 
   @Input() type: 'single' | 'repeating' | 'fuel' | 'all';
+  display: boolean = false;
 
   chartOption: EChartsOption = {
     xAxis: {
@@ -22,8 +23,7 @@ export class CostsPerMonthChartComponent implements OnInit {
     yAxis: {
       type: 'value',
     },
-    series: [
-    ],
+    series: [],
   };
 
   constructor(
@@ -38,7 +38,10 @@ export class CostsPerMonthChartComponent implements OnInit {
       this.costService.allCostsPerMonth.subscribe(result => this.generateAllChart(result));
     } else {
       // Only type per month chart
-      this.costService.costPerMonth.subscribe( costPerMonth => this.generateChart(costPerMonth));
+      this.costService.costPerMonth.subscribe( costPerMonth => {
+        console.log(costPerMonth);
+        this.generateChart(costPerMonth);
+      });
     }
   }
 
@@ -48,8 +51,6 @@ export class CostsPerMonthChartComponent implements OnInit {
    * @private
    */
   private generateChart(costPerMonth: CostPerMonthBuffer): void{
-
-
     if (costPerMonth.type === this.type) {
       let months = [];
       let price = [];
@@ -104,9 +105,8 @@ export class CostsPerMonthChartComponent implements OnInit {
           }
         ]
       };
+      costPerMonth.data.length > 0? this.display = true : this.display = false;
     }
-
-
   }
 
   /**
@@ -212,6 +212,8 @@ export class CostsPerMonthChartComponent implements OnInit {
       },
       series: series
     };
+    data.length > 0? this.display = true : this.display = false;
+
   }
 
 }

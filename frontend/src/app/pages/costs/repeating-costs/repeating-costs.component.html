@@ -35,6 +35,7 @@
   [nzPageSizeOptions]="[5,10,20,30]"
   [nzScroll]="{ x: '800px'}"
   [nzSize]="resize.innerWidth < 650 ? 'middle' : 'default'"
+  [nzLoading]="!costService.loaded.repeating"
   nzTableLayout="auto"
 >
   <thead>
@@ -83,7 +84,26 @@
   </tbody>
 </nz-table>
 
+<br *ngIf="costService.costs.repeating.length === 0" />
+
 <h2 class="centerText">Repeating Costs per Month</h2>
 <nz-divider></nz-divider>
+<nz-spin *ngIf="!costService.loaded.repeating" nzSize="large" nzDelay="100"></nz-spin>
 <app-costs-per-month-chart [type]="'repeating'"></app-costs-per-month-chart>
 
+
+<nz-empty
+  *ngIf="costService.costs.repeating.length === 0 && costService.loaded.repeating"
+  nzNotFoundImage="assets/empty-repeat.svg"
+  [nzNotFoundContent]="contentTpl"
+  [nzNotFoundFooter]="footerTpl"
+>
+  <ng-template #contentTpl>
+            <span>
+          There are no repeating cost items.
+        </span>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button class="add" nz-button nzType="primary" nzShape="round" (click)="addRepeatingCost()">Create Now</button>
+  </ng-template>
+</nz-empty>

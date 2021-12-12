@@ -12,6 +12,7 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzEmptyModule} from "ng-zorro-antd/empty";
 import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzSpinModule} from "ng-zorro-antd/spin";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
         NzButtonModule,
         NzToolTipModule,
         NzEmptyModule,
-        NzDividerModule
+        NzDividerModule,
+        NzSpinModule
     ]
 })
 export class OverviewModule { }
