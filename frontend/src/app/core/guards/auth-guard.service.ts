@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AuthService} from '../services/auth.service';
-import {ActivatedRouteSnapshot, CanActivate, Router, UrlTree} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {LastRouteService} from '../services/last-route.service';
 import {Observable} from 'rxjs';

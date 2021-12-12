@@ -81,7 +81,6 @@ export class ApiService {
           newError.message = 'Please inform the developers!';
           break;
       }
-      console.log(newError);
       return throwError(newError);
     }
 

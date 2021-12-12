@@ -26,8 +26,8 @@ export class CostItemGuardService implements CanActivate{
       const loaded = {single: false, repeating: false, fuel: false};
       // Check whether the id exists
       this.api.getSingleCost(this.auth.username, vin, id).subscribe(
-        res => observer.next(true),
-        error => {
+        () => observer.next(true),
+        () => {
           loaded.single = true;
 
           if (loaded.single && loaded.fuel && loaded.repeating) {
@@ -37,8 +37,8 @@ export class CostItemGuardService implements CanActivate{
         }
       );
       this.api.getRepeatingCost(this.auth.username, vin, id).subscribe(
-        res => observer.next(true),
-        error => {
+        () => observer.next(true),
+        () => {
           loaded.repeating = true;
 
           if (loaded.single && loaded.fuel && loaded.repeating) {
@@ -47,8 +47,8 @@ export class CostItemGuardService implements CanActivate{
         }
       );
       this.api.getFuelCost(this.auth.username, vin, id).subscribe(
-        res => observer.next(true),
-        error => {
+        () => observer.next(true),
+        () => {
           loaded.fuel = true;
 
           if (loaded.single && loaded.fuel && loaded.repeating) {

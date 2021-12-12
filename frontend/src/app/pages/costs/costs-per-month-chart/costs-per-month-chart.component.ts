@@ -39,7 +39,6 @@ export class CostsPerMonthChartComponent implements OnInit {
     } else {
       // Only type per month chart
       this.costService.costPerMonth.subscribe( costPerMonth => {
-        console.log(costPerMonth);
         this.generateChart(costPerMonth);
       });
     }

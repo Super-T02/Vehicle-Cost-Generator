@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ResizeService} from '../services/resize.service';
 import {MEDIA_BREAKPOINTS} from '../../../environments/constants';
 import {AuthService} from '../services/auth.service';
-import {LastRouteService} from '../services/last-route.service';
 import {Event, RouterEvent, Router} from '@angular/router';
 import {filter} from 'rxjs/operators';
 
@@ -19,7 +18,6 @@ export class HeaderComponent implements OnInit {
   constructor(
     public resizeService: ResizeService,
     public auth: AuthService,
-    public lastRoute: LastRouteService,
     private router: Router
   ) {
   }

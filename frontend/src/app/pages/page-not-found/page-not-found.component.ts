@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Svg} from '../../models/svg.model';
 import {pageNotFoundSvg} from './page-not-found-svg';
 import {LastRouteService} from '../../core/services/last-route.service';
@@ -8,16 +8,11 @@ import {LastRouteService} from '../../core/services/last-route.service';
 	templateUrl: './page-not-found.component.html',
 	styleUrls: ['./page-not-found.component.less']
 })
-export class PageNotFoundComponent implements OnInit {
+export class PageNotFoundComponent {
 
   picture: Svg = pageNotFoundSvg;
 
-  constructor(
-    public lastRoute: LastRouteService
-  ) {
-  }
-
-  ngOnInit(): void {
+  constructor(public lastRoute: LastRouteService) {
   }
 
 }

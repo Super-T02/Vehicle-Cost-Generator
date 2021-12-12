@@ -101,11 +101,11 @@ export class OverviewComponent implements OnInit {
    * @private
    */
   private async getStats(): Promise<void> {
+    let sumVehicle: number;
+    let averageCosts: number;
     let sum = 0;
     let highestPrice = 0;
     let distance = 0;
-    let sumVehicle = 0;
-    let averageCosts = 0;
 
     for (const vehicle of this.vehicles) {
       // Fetch data

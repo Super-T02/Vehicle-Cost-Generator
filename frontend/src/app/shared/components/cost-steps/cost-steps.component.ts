@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {MEDIA_BREAKPOINTS} from '../../../../environments/constants';
 import {FuelCostItem, RepeatingCostItem, SingleCostItem} from '../../../models/cost.model';

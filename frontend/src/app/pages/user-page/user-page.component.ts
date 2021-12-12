@@ -168,7 +168,7 @@ export class UserPageComponent implements OnInit {
           nzClosable: false,
           nzOnOk: () => this.router.navigate(['/login']).then(() => mod.close())
         });
-      }, error => {
+      }, () => {
         this.util.setRefreshToken('');
         this.util.setAccessToken('');
         let mod: NzModalRef = this.modal.info({
@@ -205,7 +205,7 @@ export class UserPageComponent implements OnInit {
       this.userDisplayed = this.users;
       this.updateCache();
       this.tableLoaded = true;
-    }, error => {
+    }, () => {
         this.message.error('Not able to load users, please try again later', {nzDuration: 5000});
       }
     );

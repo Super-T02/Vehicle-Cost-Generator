@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {MEDIA_BREAKPOINTS} from '../../../environments/constants';
 import {ResizeService} from '../../core/services/resize.service';
 
@@ -7,13 +7,10 @@ import {ResizeService} from '../../core/services/resize.service';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.less', '../../shared/styles/two-columns-two-flex.less']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent {
 
   breakPoints = MEDIA_BREAKPOINTS;
 
   constructor(public resize: ResizeService) { }
-
-  ngOnInit(): void {
-  }
 
 }

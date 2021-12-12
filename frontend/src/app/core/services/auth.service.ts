@@ -62,8 +62,6 @@ export class AuthService {
         }
       });
     }, token.accessExp * 1000);
-
-    console.log(this.refreshInterval);
   }
 
   /**
@@ -95,7 +93,7 @@ export class AuthService {
                 observer.next(false);
               }
             },
-            (err: ApiError) => {
+            () => {
               this.authenticated = true;
               this.logout(false, 'You must login again');
               this.router.navigate(['/login']).then();
@@ -127,8 +125,6 @@ export class AuthService {
         return throwError(error);
       } else {
         this.retried = true;
-        console.log(value);
-        console.log(this.retried);
         error.message = 'Please try again';
         this.message.error(error.message, {nzDuration: 3000});
         setTimeout(() => this.retried = false, token.accessExp * 1000 - 3000); // Timout is smaller then token expiration time

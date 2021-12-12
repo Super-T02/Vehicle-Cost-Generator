@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CostsRoutingModule } from './costs-routing.module';
 import { CostsComponent } from './costs.component';
 import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
@@ -18,9 +17,9 @@ import { FuelCostsComponent } from './fuel-costs/fuel-costs.component';
 import { CostsPerMonthChartComponent } from './costs-per-month-chart/costs-per-month-chart.component';
 import {NgxEchartsModule} from 'ngx-echarts';
 import { CostOverviewComponent } from './cost-overview/cost-overview.component';
-import {NzStatisticModule} from "ng-zorro-antd/statistic";
-import {NzEmptyModule} from "ng-zorro-antd/empty";
-import {NzSpinModule} from "ng-zorro-antd/spin";
+import {NzStatisticModule} from 'ng-zorro-antd/statistic';
+import {NzEmptyModule} from 'ng-zorro-antd/empty';
+import {NzSpinModule} from 'ng-zorro-antd/spin';
 
 
 @NgModule({

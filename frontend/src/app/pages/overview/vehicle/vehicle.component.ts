@@ -48,7 +48,7 @@ export class VehicleComponent implements OnInit {
       nzWidth: 550,
       nzStyle: {top: '25%'},
       nzOnOk: () => {
-        this.api.deleteVehicle(this.vehicle.vin, this.auth.username).subscribe( value => {
+        this.api.deleteVehicle(this.vehicle.vin, this.auth.username).subscribe( () => {
           this.message.success('Vehicle successfully deleted!', {nzDuration: 3000});
           this.deleted.emit(true);
         });

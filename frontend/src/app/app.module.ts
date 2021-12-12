@@ -56,7 +56,13 @@ registerLocaleData(de);
       }
     })
   ],
-	providers: [{ provide: NZ_I18N, useValue: de_DE }, {provide: ErrorHandler, useClass: AppComponent}, {provide: JwtHelperService}, {provide: NzModalService}, {provide: DatePipe}],
+	providers: [
+    { provide: NZ_I18N, useValue: de_DE },
+    {provide: ErrorHandler, useClass: AppComponent},
+    {provide: JwtHelperService},
+    {provide: NzModalService},
+    {provide: DatePipe}
+  ],
 	bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { UserPageRoutingModule } from './user-page-routing.module';
 import { UserPageComponent } from './user-page.component';
 import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
@@ -10,15 +9,15 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NzInputModule} from 'ng-zorro-antd/input';
-import {NzCardModule} from "ng-zorro-antd/card";
-import {NzToolTipModule} from "ng-zorro-antd/tooltip";
-import {NzIconModule} from "ng-zorro-antd/icon";
-import {NzStatisticModule} from "ng-zorro-antd/statistic";
-import {NzDividerModule} from "ng-zorro-antd/divider";
-import {NzTableModule} from "ng-zorro-antd/table";
-import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
-import {NzSelectModule} from "ng-zorro-antd/select";
-import {NzDropDownModule} from "ng-zorro-antd/dropdown";
+import {NzCardModule} from 'ng-zorro-antd/card';
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
+import {NzIconModule} from 'ng-zorro-antd/icon';
+import {NzStatisticModule} from 'ng-zorro-antd/statistic';
+import {NzDividerModule} from 'ng-zorro-antd/divider';
+import {NzTableModule} from 'ng-zorro-antd/table';
+import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import {NzSelectModule} from 'ng-zorro-antd/select';
+import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 
 
 @NgModule({

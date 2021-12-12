@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {AuthService} from '../services/auth.service';
 import {NzMessageService} from 'ng-zorro-antd/message';

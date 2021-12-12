@@ -8,17 +8,17 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import { LoginComponent } from './components/login/login.component';
 import {NzMessageModule} from 'ng-zorro-antd/message';
-import {NzResultModule} from "ng-zorro-antd/result";
-import {RouterModule} from "@angular/router";
+import {NzResultModule} from 'ng-zorro-antd/result';
+import {RouterModule} from '@angular/router';
 import { VehicleStepsComponent } from './components/vehicle-steps/vehicle-steps.component';
-import {NzStepsModule} from "ng-zorro-antd/steps";
-import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
-import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzStepsModule} from 'ng-zorro-antd/steps';
+import {NzDatePickerModule} from 'ng-zorro-antd/date-picker';
+import {NzIconModule} from 'ng-zorro-antd/icon';
 import { CostStepsComponent } from './components/cost-steps/cost-steps.component';
 import { SingleCostFormComponent } from './components/single-cost-form/single-cost-form.component';
 import { RepeatingCostFormComponent } from './components/repeating-cost-form/repeating-cost-form.component';
 import { FuelCostFormComponent } from './components/fuel-cost-form/fuel-cost-form.component';
-import {NzSelectModule} from "ng-zorro-antd/select";
+import {NzSelectModule} from 'ng-zorro-antd/select';
 
 
 @NgModule({

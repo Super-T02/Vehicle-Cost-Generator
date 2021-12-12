@@ -170,7 +170,7 @@ export class CostService {
 
           resolve(value.data);
         },
-        error => resolve([])
+        () => resolve([])
       );
     });
   }
@@ -191,7 +191,7 @@ export class CostService {
 
           resolve(value.data);
         },
-        error => resolve([])
+        () => resolve([])
       );
     });
   }
@@ -212,7 +212,7 @@ export class CostService {
 
           resolve(value.data);
         },
-        error => resolve([])
+        () => resolve([])
       );
     });
   }
@@ -341,7 +341,7 @@ export class CostService {
   }
 
   /**
-   * Get the sum of consumtion
+   * Get the sum of consumption
    * @param costs
    */
   getSumOfConsumption(costs: FuelCostItem[]): number {
