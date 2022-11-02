@@ -1,3 +1,6 @@
+> IMPORTANT
+> THIS PROJECT IS NOT LONGER MAINTAINED. THERE WILL BE NO NEW VERSION!
+
 # Web-Engineering-Project - Vehicle Cost Calculator
 
 ## Functionality
