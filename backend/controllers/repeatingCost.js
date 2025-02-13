@@ -7,6 +7,7 @@ router.get('/', (req, res) => {
 	repeatingCostService.getAllCostItems(req, (err, data) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else if (!data) {
 			res.status(200).json([]);
 		} else {
@@ -19,6 +20,7 @@ router.post('/', repeatingCostService.checkPost, (req, res) => {
 	repeatingCostService.createCostItem(req, (err, data) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else {
 			res.status(201).json({});
 		}
@@ -33,6 +35,7 @@ router.get('/:id', (req, res) => {
 	repeatingCostService.getCostItem(req, (err, data) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else if (!data) {
 			res.status(404).json(generateErrorMessage('Not able to find id', 'Request Params'));
 		} else {
@@ -56,6 +59,7 @@ router.put('/:id', repeatingCostService.checkPost, (req, res) => {
 	repeatingCostService.updateCostItem(req, (err, data) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else {
 			if (err) {
 				res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));

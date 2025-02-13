@@ -9,7 +9,8 @@ router.post('/login', authService.checkLoginData, (req, res) => {
 	const { username, password } = req.body;
 	authService.login({ username: username, password: password }, (err, user) => {
 		if (err) {
-			res.status(500).json(generateErrorMessage('Internal Server Error', 'server'));
+			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else if (!user) {
 			res.status(404).json(generateErrorMessage('Password does not match to the username', 'form'));
 		} else {
@@ -60,7 +61,8 @@ router.post('/logout', authService.checkRefreshToken, (req, res) => {
 
 	authService.removeRefreshToken(token, (err) => {
 		if (err) {
-			res.status(500).json(generateErrorMessage('Internal Server Error', 'server'));
+			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else {
 			res.status(200).json({
 				message: 'Logout successful'

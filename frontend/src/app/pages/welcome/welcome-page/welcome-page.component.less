@@ -1,12 +1,12 @@
-@import "~ng-zorro-antd/ng-zorro-antd.less";
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
 
 
-.mainBanner{
+.mainBanner {
   width: 100%;
   max-width: none !important;
 }
 
-nz-divider{
+nz-divider {
   margin-top: 50px;
   margin-bottom: 50px;
   grid-column: span 3;
@@ -16,26 +16,26 @@ i {
   color: @primary-color !important;
 }
 
-.grid{
+.grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(auto-fill, auto) ;
+  grid-template-rows: repeat(auto-fill, auto);
   gap: var(--inner-grid-padding) 0;
 
   font-size: 1.3rem;
 
-  & >div{
+  &>div {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
-    &.flex-end{
+    &.flex-end {
       align-items: flex-end;
     }
 
-    &#advantages{
+    &#advantages {
       grid-column: span 3;
       padding: var(--inner-grid-padding);
       display: grid;
@@ -47,37 +47,37 @@ i {
       font-size: 1.8rem;
 
 
-      &>div{
+      &>div {
         padding: 25px 25px 0;
       }
     }
 
-    ol{
+    ol {
       padding-left: 23px;
     }
   }
 
-  h1{
+  h1 {
     font-size: 2.5rem;
     text-align: center;
   }
 
-  img{
+  img {
     width: 100%;
     max-width: 500px;
   }
 }
 
-.banner{
+.banner {
   grid-column: span 3;
 }
 
-.text{
+.text {
   grid-column: span 2;
   padding: var(--inner-grid-padding);
 }
 
-app-signup{
+app-signup {
   width: 100%;
   padding-top: var(--inner-grid-padding);
 }
@@ -93,46 +93,51 @@ app-signup{
 
 
 @media all and (max-width: @screen-md-max) {
-  .grid{
-    #advantages{
+  .grid {
+    #advantages {
       grid-template-columns: repeat(2, 1fr) !important;
       grid-template-rows: repeat(auto-fill, auto) !important;
     }
 
-    #track{
+    #track {
       grid-column: 1;
       grid-row: 2;
     }
 
-    #design{
+    #design {
       grid-column: 2;
       grid-row: 2;
     }
 
-    #charts-icon, #free-icon{
+    #charts-icon,
+    #free-icon {
       padding-top: var(--inner-grid-padding);
     }
 
-    #charts{
+    #charts {
       grid-column: 1;
       grid-row: 4;
     }
 
-    #free{
+    #free {
       grid-column: 2;
       grid-row: 4;
     }
   }
 
-  .signup{
+  .signup {
     flex-direction: column !important;
   }
 
-  .banner, .text, #advantages, .signup, .pic{
+  .banner,
+  .text,
+  #advantages,
+  .signup,
+  .pic {
     grid-column: span 3;
   }
 
-  .pic{
+  .pic {
     grid-row: 4;
   }
 
@@ -142,39 +147,48 @@ app-signup{
 
 
 
-  .grid{
+  .grid {
     font-size: 0.8rem !important;
 
-    #advantages{
+    #advantages {
       font-size: 1.2rem !important;
 
-      #track, #track-icon, #design, #design-icon, #charts-icon, #charts, #free-icon, #free{
+      #track,
+      #track-icon,
+      #design,
+      #design-icon,
+      #charts-icon,
+      #charts,
+      #free-icon,
+      #free {
         grid-column: span 2;
       }
 
-      #track{
+      #track {
         grid-row: 2;
       }
 
-      #design{
+      #design {
         grid-row: 4;
       }
 
-      #charts-icon, #free-icon, #design-icon{
+      #charts-icon,
+      #free-icon,
+      #design-icon {
         padding-top: var(--inner-grid-padding);
       }
 
-      #charts{
+      #charts {
         grid-row: 6;
       }
 
-      #free{
+      #free {
         grid-row: 8;
       }
 
     }
 
-    h1{
+    h1 {
       font-size: 1.4rem !important;
     }
   }

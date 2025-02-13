@@ -11,6 +11,7 @@ router.post('/', vehicleService.checkVehicle, (req, res) => {
 	vehicleService.addNewVehicle(req, (err, data) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else {
 			res.status(201).json({});
 		}
@@ -22,6 +23,7 @@ router.get('/', (req, res) => {
 	vehicleService.getAlLVehicles(req, (err, vehicles) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else {
 			res.status(200).json(vehicles);
 		}
@@ -37,6 +39,7 @@ router.get('/:vin', (req, res) => {
 	vehicleService.getVehicle(req, (err, vehicle) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else if (!vehicle) {
 			res.status(404).json(generateErrorMessage('Not able to find vin', 'Request Params'));
 		} else {
@@ -49,6 +52,7 @@ router.delete('/:vin', (req, res) => {
 	vehicleService.deleteVehicle(req, (err, data) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else {
 			res.status(204).json({});
 		}
@@ -59,6 +63,7 @@ router.put('/:vin', vehicleService.checkVehicle, (req, res) => {
 	vehicleService.updateVehicle(req, (err, data) => {
 		if (err) {
 			res.status(500).json(generateErrorMessage('Internal Server Error', 'Server'));
+			console.log(err);
 		} else if (!data) {
 			res.status(400).json(generateErrorMessage('No data updated', 'Params'));
 		} else {

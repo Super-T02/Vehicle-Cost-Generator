@@ -1,12 +1,13 @@
-@import "~ng-zorro-antd/ng-zorro-antd.less";
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0;
 }
 
-nz-breadcrumb-item:hover{
+nz-breadcrumb-item:hover {
   color: @primary-color !important;
   cursor: pointer;
 }
@@ -35,21 +36,22 @@ nz-breadcrumb {
   min-height: 380px !important;
 }
 
-.ant-layout-header{
+.ant-layout-header {
   padding: 0 @distance-left !important;
   height: @header-height !important;
   background: #ffffff !important;
 }
 
-.primary-color, .single-color{
+.primary-color,
+.single-color {
   color: @primary-color !important;
 }
 
-.fuel-color{
+.fuel-color {
   color: var(--fuel-color) !important;
 }
 
-.repeating-color{
+.repeating-color {
   color: var(--repeat-color) !important;
 }
 
@@ -57,7 +59,7 @@ nz-footer {
   text-align: center;
 }
 
-.centerText{
+.centerText {
   text-align: center;
 }
 
@@ -80,14 +82,16 @@ app-header {
   --repeat-color: #FF4D4F;
   --fuel-color: #ff70b6;
 
-  @media all and (max-width: @screen-sm-max){
+  @media all and (max-width: @screen-sm-max) {
     --inner-grid-padding: 25px;
   }
 }
 
 
 @media all and (max-width: 430px) {
-  title, h1 {
+
+  title,
+  h1 {
     font-size: 1.3rem;
   }
 

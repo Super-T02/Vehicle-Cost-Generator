@@ -1,11 +1,11 @@
-@import "~ng-zorro-antd/ng-zorro-antd.less";
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
 
-h1{
+h1 {
   margin: 0;
   width: 100%;
 }
 
-.text{
+.text {
   text-align: center;
   font-size: 1.2rem;
   width: 100%;
@@ -13,7 +13,7 @@ h1{
   align-self: flex-start;
 }
 
-.inner-flex{
+.inner-flex {
   padding: 0 75px;
   display: flex;
   flex-direction: row;
@@ -23,7 +23,7 @@ h1{
   width: 100%;
 }
 
-.right-column{
+.right-column {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33,7 +33,7 @@ h1{
   max-width: 700px;
 }
 
-.form{
+.form {
   min-width: 300px;
   max-width: 700px;
   width: 100%;
@@ -44,43 +44,43 @@ h1{
   height: 500px;
 }
 
-.pic{
+.pic {
   flex-grow: 1;
   max-width: 400px;
   min-width: 150px;
 }
 
-@media all and (max-width: @screen-xl-max){
-  .inner-flex{
+@media all and (max-width: @screen-xl-max) {
+  .inner-flex {
     padding: unset;
   }
 }
 
-@media all and (max-width: @screen-sm-max){
+@media all and (max-width: @screen-sm-max) {
 
-  .right-column{
+  .right-column {
     width: 100%;
   }
 
-  .text{
+  .text {
     font-size: 0.9rem;
     align-self: unset;
     max-width: unset;
   }
 
-  .inner-flex{
+  .inner-flex {
     padding: unset;
     flex-direction: column;
     justify-content: center;
   }
 
-  .form{
+  .form {
     width: 75%;
     max-width: unset;
     min-width: 150px;
   }
 
-  .pic{
+  .pic {
     max-width: 300px;
     width: 100%;
   }
