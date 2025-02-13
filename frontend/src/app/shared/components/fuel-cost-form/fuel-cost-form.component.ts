@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {FuelCostItem, RepeatingCostItem, SingleCostItem} from '../../../models/cost.model';
 import {ApiService} from '../../../core/services/api.service';
 import {AuthService} from '../../../core/services/auth.service';
@@ -21,11 +21,11 @@ export class FuelCostFormComponent implements OnInit {
   @Input() vin: string;
   @Output() sentData = new EventEmitter<boolean>();
 
-  addFuel: FormGroup;
+  addFuel: UntypedFormGroup;
   costItem: FuelCostItem;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private api: ApiService,
     private auth: AuthService,
     private router: Router,

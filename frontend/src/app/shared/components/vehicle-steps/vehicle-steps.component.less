@@ -1,6 +1,6 @@
-@import "~ng-zorro-antd/ng-zorro-antd.less";
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
 
-.steps-content{
+.steps-content {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -8,13 +8,13 @@
   gap: 30px
 }
 
-.steps-wrapper{
+.steps-wrapper {
   width: 100%;
   max-width: 1500px;
   flex: 1 1 auto;
 }
 
-.inner-flex{
+.inner-flex {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -38,14 +38,15 @@
     justify-content: center;
     align-items: center;
     min-height: 430px;
-    nz-form-item{
+
+    nz-form-item {
       width: 80%;
       min-width: 300px;
     }
   }
 }
 
-.pic{
+.pic {
   flex-grow: 1;
   min-height: 338px;
   max-width: 400px;
@@ -58,7 +59,7 @@
   justify-content: space-between;
 }
 
-.horizontal-flex{
+.horizontal-flex {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -72,25 +73,27 @@
   }
 }
 
-@media all and (max-width: 970px){
-  .pic{
+@media all and (max-width: 970px) {
+  .pic {
     min-width: unset !important;
     min-height: unset !important;
   }
 }
 
-@media all and (max-width: 450px){
-  .steps-wrapper{
+@media all and (max-width: 450px) {
+  .steps-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
   }
-  .right-column{
-    .form{
+
+  .right-column {
+    .form {
       min-height: 0;
       min-width: 0;
-      nz-form-item{
+
+      nz-form-item {
         min-width: 0;
       }
     }

@@ -1,19 +1,19 @@
-@import "~ng-zorro-antd/ng-zorro-antd.less";
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
 
-.headline{
+.headline {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: var(--inner-grid-padding);
 
-  h1{
+  h1 {
     padding: unset;
     margin: unset;
   }
 }
 
-.stats{
+.stats {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -22,27 +22,28 @@
   gap: 40px 10px;
 }
 
-nz-statistic{
+nz-statistic {
   width: 204px;
 }
 
-#bottom-chart-wrapper{
+#bottom-chart-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
 
-  .chart{
+  .chart {
     min-width: 650px;
   }
 }
 
-@media screen and (max-width: 1400px){
-  #bottom-chart-wrapper{
+@media screen and (max-width: 1400px) {
+  #bottom-chart-wrapper {
     display: unset;
-     .chart{
-       min-width: unset;
-     }
+
+    .chart {
+      min-width: unset;
+    }
   }
 }

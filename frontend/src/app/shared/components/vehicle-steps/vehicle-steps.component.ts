@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {MEDIA_BREAKPOINTS} from '../../../../environments/constants';
 import {Vehicle, VehicleInput} from '../../../models/vehicle.model';
 import {ResizeService} from '../../../core/services/resize.service';
@@ -20,8 +20,8 @@ export class VehicleStepsComponent implements OnInit {
   @Input() deliverData: boolean = false;
   vin: string;
 
-  addVehicle: FormGroup;
-  addVehicleRequire: FormGroup;
+  addVehicle: UntypedFormGroup;
+  addVehicleRequire: UntypedFormGroup;
   breakPoints = MEDIA_BREAKPOINTS;
   currentStep = 0;
   countdown = 0;
@@ -29,7 +29,7 @@ export class VehicleStepsComponent implements OnInit {
   buffer: VehicleInput; // Buffers the data of the first form
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public resize: ResizeService,
     private api: ApiService,
     private auth: AuthService,

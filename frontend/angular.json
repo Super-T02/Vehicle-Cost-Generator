@@ -54,7 +54,9 @@
               }
             ],
             "styles": [
-              "./node_modules/ng-zorro-antd/ng-zorro-antd.less",
+              {
+                "input": "node_modules/ng-zorro-antd/src/ng-zorro-antd.less"
+              },
               "src/styles.less"
             ],
             "scripts": []
@@ -127,7 +129,9 @@
               }
             ],
             "styles": [
-              "./node_modules/ng-zorro-antd/ng-zorro-antd.less",
+              {
+                "input": "node_modules/ng-zorro-antd/src/ng-zorro-antd.less"
+              },
               "src/styles.less"
             ],
             "scripts": []
@@ -145,8 +149,10 @@
       }
     }
   },
-  "defaultProject": "basic-frontend",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
+    "analytics": false
   }
 }

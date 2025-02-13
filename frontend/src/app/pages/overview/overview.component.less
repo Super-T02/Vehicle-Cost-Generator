@@ -1,6 +1,6 @@
-@import "~ng-zorro-antd/ng-zorro-antd.less";
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
 
-.vehicleFlex{
+.vehicleFlex {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -15,12 +15,13 @@
   align-items: center;
   flex-wrap: wrap;
   gap: var(--inner-grid-padding);
-  nz-statistic{
+
+  nz-statistic {
     min-width: 120px;
   }
 }
 
-.outerFlex{
+.outerFlex {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,6 +35,7 @@
   gap: var(--inner-grid-padding);
   justify-content: center;
   align-items: baseline;
+
   h2 {
     padding: 0;
     margin: 0;
@@ -42,12 +44,8 @@
   margin-bottom: 30px;
 }
 
-#vehicles{
+#vehicles {
   flex: 1 1 auto;
 }
 
-@media screen and (max-width: @screen-sm-max)
-{
-
-}
-
+@media screen and (max-width: @screen-sm-max) {}

@@ -1,16 +1,16 @@
-@import "~ng-zorro-antd/ng-zorro-antd.less";
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
 
-.inner-content{
+.inner-content {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#form{
+#form {
   width: 300px;
 }
 
-.steps-content{
+.steps-content {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -18,13 +18,13 @@
   gap: 30px
 }
 
-.steps-wrapper{
+.steps-wrapper {
   width: 100%;
   max-width: 1500px;
   flex: 1 1 auto;
 }
 
-.inner-flex{
+.inner-flex {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -45,14 +45,14 @@
   max-width: 1000px;
 }
 
-.pic{
+.pic {
   flex-grow: 1;
   min-height: 338px;
   max-width: 400px;
   min-width: 300px;
 }
 
-.horizontal-flex{
+.horizontal-flex {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,18 +66,18 @@
   }
 }
 
-@media screen and (max-width: @screen-sm-max){
-  .steps-content{
+@media screen and (max-width: @screen-sm-max) {
+  .steps-content {
     flex-direction: column;
   }
 
-  .form{
+  .form {
     width: 100%;
   }
 }
 
 @media all and (max-width: 850px) {
-  .pic{
+  .pic {
     width: 100%;
     max-width: 300px !important;
   }
