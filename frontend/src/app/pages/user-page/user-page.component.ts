@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../core/services/auth.service';
 import {ApiService} from '../../core/services/api.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {CreateUserInput, User} from '../../models/user.model';
 import {ResizeService} from '../../core/services/resize.service';
 import {UtilService} from '../../core/services/util.service';
@@ -19,7 +19,7 @@ export class UserPageComponent implements OnInit {
   visible: boolean = false;
   loaded: boolean = false;
   userData: User;
-  editForm: FormGroup
+  editForm: UntypedFormGroup
 
   // For table
   tableLoaded: boolean = false;
@@ -34,7 +34,7 @@ export class UserPageComponent implements OnInit {
   constructor(
     public auth: AuthService,
     private api: ApiService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public resize: ResizeService,
     private util: UtilService,
     private message: NzMessageService,
@@ -186,7 +186,7 @@ export class UserPageComponent implements OnInit {
    * Validates if the passwords equals each other
    * @param control
    */
-  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
+  confirmationValidator = (control: UntypedFormControl): { [s: string]: boolean } => {
     if (!control.value) {
       return { required: true };
     }

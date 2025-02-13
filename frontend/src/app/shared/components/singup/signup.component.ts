@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {ApiService} from '../../../core/services/api.service';
 import {CreateUserInput} from '../../../models/user.model';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -20,10 +20,10 @@ export class SignupComponent implements OnInit {
   offsetButton: number;
 
 
-  signup: FormGroup;
+  signup: UntypedFormGroup;
   classList: String[];
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private apiService: ApiService,
               private message: NzMessageService,
               private router: Router) { }
@@ -86,7 +86,7 @@ export class SignupComponent implements OnInit {
    * Validates if the passwords equals each other
    * @param control
    */
-  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
+  confirmationValidator = (control: UntypedFormControl): { [s: string]: boolean } => {
   	if (!control.value) {
   		return { required: true };
   	}
