@@ -1,0 +1,20 @@
+# Use a compatible Node.js version for the backend
+FROM node:14
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY backend/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY backend/ .
+
+# Expose the port the backend runs on
+EXPOSE 3000
+
+# Start the backend server
+CMD ["npm", "start"]
