@@ -1,5 +1,5 @@
 # Stage 1: Build Stage
-FROM node:lts-alpine AS build
+FROM node:16-slim AS build
 
 # Create a directory for the frontend
 RUN mkdir /frontend
@@ -21,7 +21,7 @@ RUN npm run build
 
 
 # Stage 2: Production Stage
-FROM node:lts-alpine
+FROM node:16-slim
 
 # Set the working directory
 WORKDIR /app
