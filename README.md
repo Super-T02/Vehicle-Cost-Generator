@@ -108,7 +108,7 @@ OpenApi.
 ### 1. Frontend
 
 - SVGs on the page from: [unDraw](https://undraw.co/)
-- [Angular 12](https://angular.io/)
+- [Angular 14](https://angular.io/)
 - Design with [NG-Zorro](https://ng.ant.design/docs/introduce/en)
 - For the token management [auth0/angular-jwt](https://www.npmjs.com/package/@auth0/angular-jwt)
 - For the charts [ngx-echarts](https://xieziyu.github.io/ngx-echarts/api-doc/overview.html) 
