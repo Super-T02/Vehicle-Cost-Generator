@@ -31,8 +31,22 @@ a table of all users of VCC. He is able to delete them and edit their role and e
 - Firefox ESR
 - not IE 11
 
+## Installation - Docker (Prod)
 
-## Installation
+This application provides already a working docker image at docker hub. Simply run:
+
+```sh
+docker pull tomithebest/vehicle-cost-calculator:latest
+```
+
+or 
+
+```sh
+cd <Working Dir>
+docker-compose up
+```
+
+## Installation - On Device (Dev)
 
 1. At first unzip the .zip archive. 
 2. Then go into the frontend folder.
