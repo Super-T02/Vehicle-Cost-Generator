@@ -1,7 +1,7 @@
 {"username":"example user","email":"exaple@user.de","password":"Example-123","role":"member","_id":"9uB5opXiYekC2Cl9"}
 {"username":"dummy2","email":"dummy@user.de","password":"Dummy-123","role":"member","_id":"HC0rGqwMFfSUwHnI"}
+{"username":"test123411","email":"test.test@test.de","password":"Test1234","role":"member","_id":"IFVpWqGvcdP2Teul"}
 {"username":"admin","email":"admin@vcc.de","password":"Admin-123","role":"admin","_id":"atXsJ6bHQIdgoWnW"}
 {"username":"dummy1","email":"dummy@uder.de","password":"Dummy-123","role":"member","_id":"cnVYwm2FmPtDFNnq"}
 {"username":"dummy3","email":"dummy@user.de","password":"Dummy-123","role":"member","_id":"l5WjdSgOglbJSmcz"}
 {"username":"test","email":"test.test@test.de","password":"Test123!","role":"member","_id":"rAHVrK1ZxvI0j9jQ"}
-{"username":"test123411","email":"test.test@test.de","password":"Test1234","role":"member","_id":"IFVpWqGvcdP2Teul"}
