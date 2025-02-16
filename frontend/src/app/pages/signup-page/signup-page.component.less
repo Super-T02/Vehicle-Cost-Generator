@@ -1,0 +1,84 @@
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+.inner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#form {
+  width: 300px;
+}
+
+.steps-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px
+}
+
+.steps-wrapper {
+  width: 100%;
+  max-width: 1500px;
+  flex: 1 1 auto;
+}
+
+.inner-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: var(--inner-grid-padding);
+  width: 100%;
+  max-width: 1300px;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 2;
+  width: 60%;
+  min-height: 440px;
+  min-width: 450px;
+  max-width: 1000px;
+}
+
+.pic {
+  flex-grow: 1;
+  min-height: 338px;
+  max-width: 400px;
+  min-width: 300px;
+}
+
+.horizontal-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--inner-grid-padding);
+
+  .pic {
+    width: 100%;
+    min-width: 500px;
+    max-width: 1500px;
+  }
+}
+
+@media screen and (max-width: @screen-sm-max) {
+  .steps-content {
+    flex-direction: column;
+  }
+
+  .form {
+    width: 100%;
+  }
+}
+
+@media all and (max-width: 850px) {
+  .pic {
+    width: 100%;
+    max-width: 300px !important;
+  }
+}

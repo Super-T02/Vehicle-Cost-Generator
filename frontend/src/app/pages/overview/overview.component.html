@@ -1,0 +1,74 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
+  <nz-breadcrumb-item routerLink="/overview">Overview</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="inner-content">
+  <h1 class="centerText title">
+    Vehicle overview for <span class="primary-color">{{this.auth.username | uppercase}}</span>
+  </h1>
+
+  <div class="outerFlex">
+    <div class="statsFlex">
+      <nz-statistic class="centerText" [nzValue]="stats.numOfVehicles | number" nzTitle="Num of vehicles"></nz-statistic>
+      <nz-divider *ngIf="resize.innerWidth > 1170" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+      <nz-statistic  class="centerText" [nzValue]="stats.sum | number : '1.2-2': 'de'" nzTitle="Costs (EUR)"></nz-statistic>
+      <nz-divider *ngIf="resize.innerWidth > 1170" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+      <nz-statistic class="centerText" [nzValue]="stats.distance | number : '1.0-0': 'de'" nzTitle="Distance (KM) "></nz-statistic>
+      <nz-divider *ngIf="resize.innerWidth > 1170" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+      <nz-statistic class="centerText" [nzValue]="stats.highest | number : '1.2-2': 'de'" nzTitle="Highest Cost (EUR)"></nz-statistic>
+      <nz-divider *ngIf="resize.innerWidth > 1170" [nzType]="'vertical'" style="height: 50px"></nz-divider>
+      <nz-statistic class="centerText" [nzValue]="stats.averagePerCar | number : '1.2-2': 'de'" nzTitle="Average Cost (EUR)"></nz-statistic>
+    </div>
+    <div id="vehicles">
+      <nz-divider></nz-divider>
+      <div class="titleFlex">
+        <h2>Your Vehicles</h2>
+        <button
+          *ngIf="resize.innerWidth > 360"
+          nz-button
+          (click)="addVehicle()"
+          nzType="primary"
+          nzShape="round"
+        >
+          Add Vehicle
+          <i nz-icon nzType="plus"></i>
+        </button>
+        <button
+          *ngIf="resize.innerWidth <= 360"
+          nz-button
+          (click)="addVehicle()"
+          nzType="primary"
+          nzShape="circle"
+          nz-tooltip="Add Vehicle"
+        >
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </div>
+      <nz-spin *ngIf="!loaded" nzSize="large" nzDelay="100"></nz-spin>
+      <div class="vehicleFlex" *ngIf="loaded">
+        <app-vehicle
+          *ngFor="let vehicle of this.vehicles"
+          [vehicle]="vehicle"
+          (deleted)="deleteHandler($event)"
+        ></app-vehicle>
+      </div>
+      <div class="centerText" *ngIf="vehicles.length === 0">
+        <nz-empty
+          nzNotFoundImage="assets/empty.svg"
+          [nzNotFoundContent]="contentTpl"
+          [nzNotFoundFooter]="footerTpl"
+        >
+          <ng-template #contentTpl>
+            <span>
+          There are no vehicles.
+        </span>
+          </ng-template>
+          <ng-template #footerTpl>
+            <button nz-button nzType="primary" nzShape="round" (click)="addVehicle()">Create Now</button>
+          </ng-template>
+        </nz-empty>
+      </div>
+    </div>
+  </div>
+</div>

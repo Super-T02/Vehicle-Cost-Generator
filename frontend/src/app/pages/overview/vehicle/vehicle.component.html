@@ -1,0 +1,69 @@
+<nz-card
+  class="vehicleCard"
+  nzHoverable
+  [nzCover]="coverTemplate"
+  [nzActions]="[actionDelete, actionEdit]"
+>
+  <nz-card-meta
+    [nzTitle]="titleTemplate"
+    [nzDescription]="descriptionTemplate"
+  >
+  </nz-card-meta>
+</nz-card>
+
+<ng-template #coverTemplate>
+  <img [routerLink]="[url]" [queryParams]="query" id="carPic" alt="Vehicle" src="assets/car.svg">
+</ng-template>
+
+<ng-template #descriptionTemplate>
+  <div [routerLink]="url">
+    <div class="flex">
+      <div>Build:</div>
+      <div>
+        {{vehicle.year? year : 'not known'}}
+      </div>
+    </div>
+    <div class="flex">
+      <div>
+        License:
+      </div>
+      <div>
+        {{vehicle.license? vehicle.license : 'not known'}}
+      </div>
+    </div>
+  </div>
+
+</ng-template>
+
+<ng-template #titleTemplate>
+  <div class="flex" [routerLink]="url">
+    <div>
+      {{vehicle.make}} {{vehicle.model}}
+    </div>
+    <div>
+      (<i>{{vehicle.name}}</i>)
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #actionDelete>
+  <i
+    nz-icon
+    nz-tooltip
+    (click)="delete()"
+    nzType="delete"
+    nzTooltipTitle="Delete"
+    nzTooltipPlacement="bottom"
+  ></i>
+</ng-template>
+
+<ng-template #actionEdit>
+  <i
+    nz-icon
+    nz-tooltip
+    [routerLink]="'/overview/updateVehicle/' + vehicle.vin"
+    nzType="edit"
+    nzTooltipTitle="Edit"
+    nzTooltipPlacement="bottom"
+  > </i>
+</ng-template>

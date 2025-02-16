@@ -1,0 +1,60 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item routerLink="">Home</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="inner-content">
+  <div class="grid">
+
+    <div class="banner">
+      <img
+        class="mainBanner"
+        src="assets/{{this.resizeService.banner.name}}.svg"
+        alt="banner"
+      >
+    </div>
+
+    <nz-divider></nz-divider>
+
+    <div id="advantages" class="background">
+      <i id="track-icon" nz-icon nzType="dashboard" nzTheme="outline"></i>
+      <i id="design-icon" nz-icon nzType="picture" nzTheme="outline"></i>
+      <i id="charts-icon" nz-icon nzType="area-chart" nzTheme="outline"></i>
+      <i id="free-icon" nz-icon nzType="euro" nzTheme="outline"></i>
+
+      <div id="track">Track your costs every where</div>
+      <div id="design">Modern Design</div>
+      <div id="charts">User friendly charts and tables</div>
+      <div id="free">For Free!</div>
+    </div>
+
+    <nz-divider></nz-divider>
+
+    <div *ngIf="this.resizeService.innerWidth > this.breakPoints.small" class="pic">
+      <img
+        src="assets/stacks.svg"
+        alt="Dashboard picture"
+      >
+    </div>
+
+    <div class="text">
+      <h1>
+        <span class="primary-color">Add all your vehicles</span>
+        and track all together in <span class="primary-color">your dashboard!</span>
+      </h1>
+    </div>
+
+    <nz-divider></nz-divider>
+
+    <div class="background signup">
+      <h1 class="centerText">
+        Haven't signup yet?
+        <br>
+        Signup now, click <a [routerLink]="'/signup'">here</a>!
+      </h1>
+    </div>
+
+  </div>
+
+</div>
+
+

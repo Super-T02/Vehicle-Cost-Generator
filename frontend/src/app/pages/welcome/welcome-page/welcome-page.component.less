@@ -1,0 +1,195 @@
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+
+.mainBanner {
+  width: 100%;
+  max-width: none !important;
+}
+
+nz-divider {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  grid-column: span 3;
+}
+
+i {
+  color: @primary-color !important;
+}
+
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fill, auto);
+  gap: var(--inner-grid-padding) 0;
+
+  font-size: 1.3rem;
+
+  &>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &.flex-end {
+      align-items: flex-end;
+    }
+
+    &#advantages {
+      grid-column: span 3;
+      padding: var(--inner-grid-padding);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(auto-fill, auto);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 1.8rem;
+
+
+      &>div {
+        padding: 25px 25px 0;
+      }
+    }
+
+    ol {
+      padding-left: 23px;
+    }
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  img {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+.banner {
+  grid-column: span 3;
+}
+
+.text {
+  grid-column: span 2;
+  padding: var(--inner-grid-padding);
+}
+
+app-signup {
+  width: 100%;
+  padding-top: var(--inner-grid-padding);
+}
+
+.signup {
+  width: 100%;
+  grid-column: span 3;
+  padding: var(--inner-grid-padding);
+  align-items: center;
+  justify-content: center;
+  flex-direction: row !important;
+}
+
+
+@media all and (max-width: @screen-md-max) {
+  .grid {
+    #advantages {
+      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-rows: repeat(auto-fill, auto) !important;
+    }
+
+    #track {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    #design {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    #charts-icon,
+    #free-icon {
+      padding-top: var(--inner-grid-padding);
+    }
+
+    #charts {
+      grid-column: 1;
+      grid-row: 4;
+    }
+
+    #free {
+      grid-column: 2;
+      grid-row: 4;
+    }
+  }
+
+  .signup {
+    flex-direction: column !important;
+  }
+
+  .banner,
+  .text,
+  #advantages,
+  .signup,
+  .pic {
+    grid-column: span 3;
+  }
+
+  .pic {
+    grid-row: 4;
+  }
+
+}
+
+@media all and (max-width: @screen-sm-max) {
+
+
+
+  .grid {
+    font-size: 0.8rem !important;
+
+    #advantages {
+      font-size: 1.2rem !important;
+
+      #track,
+      #track-icon,
+      #design,
+      #design-icon,
+      #charts-icon,
+      #charts,
+      #free-icon,
+      #free {
+        grid-column: span 2;
+      }
+
+      #track {
+        grid-row: 2;
+      }
+
+      #design {
+        grid-row: 4;
+      }
+
+      #charts-icon,
+      #free-icon,
+      #design-icon {
+        padding-top: var(--inner-grid-padding);
+      }
+
+      #charts {
+        grid-row: 6;
+      }
+
+      #free {
+        grid-row: 8;
+      }
+
+    }
+
+    h1 {
+      font-size: 1.4rem !important;
+    }
+  }
+}

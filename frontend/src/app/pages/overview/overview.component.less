@@ -1,0 +1,51 @@
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+.vehicleFlex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--inner-grid-padding);
+}
+
+.statsFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--inner-grid-padding);
+
+  nz-statistic {
+    min-width: 120px;
+  }
+}
+
+.outerFlex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.titleFlex {
+  display: flex;
+  flex-direction: row;
+  gap: var(--inner-grid-padding);
+  justify-content: center;
+  align-items: baseline;
+
+  h2 {
+    padding: 0;
+    margin: 0;
+  }
+
+  margin-bottom: 30px;
+}
+
+#vehicles {
+  flex: 1 1 auto;
+}
+
+@media screen and (max-width: @screen-sm-max) {}

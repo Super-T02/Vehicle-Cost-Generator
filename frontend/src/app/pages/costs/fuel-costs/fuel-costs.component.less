@@ -1,0 +1,34 @@
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+.add {
+  background-color: var(--fuel-color);
+  border-color: var(--fuel-color);
+
+  &:hover {
+    background-color: rgba(255, 112, 182, 0.85);
+    border-color: rgba(255, 112, 182, 0.85);
+  }
+}
+
+.headline {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: var(--inner-grid-padding);
+
+  h1 {
+    padding: unset;
+    margin: unset;
+  }
+}
+
+nz-empty {
+  margin-top: 30px !important;
+}
+
+@media all and (max-width: 450px) {
+  nz-table {
+    font-size: 0.8rem !important;
+  }
+}

@@ -1,0 +1,31 @@
+@import "./node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+.logo {
+  height: 45px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 24px 16px 0;
+  float: left;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.noHover:hover {
+  cursor: unset;
+}
+
+li {
+  text-align: center;
+  min-width: 80px;
+}
+
+ul {
+  float: right;
+}
+
+@media all and (max-width: 450px) {
+  li {
+    min-width: 60px;
+  }
+}

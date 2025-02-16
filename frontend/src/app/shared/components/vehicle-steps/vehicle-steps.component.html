@@ -1,0 +1,284 @@
+<div *ngIf="resize.innerWidth > 450" class="steps-wrapper">
+  <nz-steps
+    [nzCurrent]="currentStep"
+    [nzSize]="resize.innerWidth > 530? 'default' : 'small'"
+    [nzDirection]="'horizontal'"
+  >
+    <nz-step nzTitle="Important Data"></nz-step>
+    <nz-step nzTitle="Optional Data"></nz-step>
+    <nz-step nzTitle="Finished"></nz-step>
+  </nz-steps>
+</div>
+
+
+<div class="steps-content">
+
+  <!--    First Step-->
+  <div class="inner-flex" *ngIf="currentStep === 0">
+
+    <img *ngIf="resize.innerWidth > 970" class="pic" src="assets/steps.svg" alt="Configure Vehicle">
+    <div class="right-column">
+      <h1>Important Data</h1>
+      <img *ngIf="resize.innerWidth <= 970 && resize.innerWidth > 450" class="pic" src="assets/steps.svg" alt="Configure Vehicle">
+      <div *ngIf="resize.innerWidth <= 450" class="steps-wrapper">
+        <nz-steps
+          [nzCurrent]="currentStep"
+          [nzSize]="resize.innerWidth > 530? 'default' : 'small'"
+          [nzDirection]="'vertical'"
+        >
+          <nz-step nzTitle="Important Data"></nz-step>
+          <nz-step nzTitle="Optional Data"></nz-step>
+          <nz-step nzTitle="Finished"></nz-step>
+        </nz-steps>
+      </div>
+      <form
+        class="right-column"
+        [formGroup]="addVehicleRequire"
+        (ngSubmit)="onSubmitFirst()"
+        nz-form
+      >
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Vin should not be empty!">
+            <nz-input-group>
+              <input
+                nz-input
+                id="vin"
+                type="text"
+                formControlName="vin"
+                placeholder="(required) VIN"
+                required
+              >
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Name for the Vehicle should not be empty!">
+            <nz-input-group>
+              <input
+                nz-input
+                id="name"
+                type="text"
+                formControlName="name"
+                placeholder="(required) Name for the vehicle"
+                required
+              >
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Brand of the Vehicle should not be empty!">
+            <nz-input-group>
+              <input
+                nz-input
+                id="make"
+                type="text"
+                formControlName="make"
+                placeholder="(required) Brand of the vehicle"
+                required
+              >
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-control *ngIf="resize.innerWidth > 580">
+            <nz-input-group>
+              <input
+                nz-input
+                id="model"
+                type="text"
+                formControlName="model"
+                placeholder="Model"
+              >
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="resize.innerWidth <= 580">
+          <nz-form-control>
+            <nz-input-group>
+              <input
+                nz-input
+                id="model2"
+                type="text"
+                formControlName="model"
+                placeholder="Model"
+              >
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group>
+              <input
+                nz-input
+                id="license"
+                type="text"
+                formControlName="license"
+                placeholder="License"
+              >
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <button
+              id="next-btn"
+              nz-button
+              [nzType]="'primary'"
+              nzShape="round"
+              [disabled]="!addVehicleRequire.valid"
+            >
+              Next
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+
+  <!--    Second step-->
+  <div class="inner-flex" *ngIf="currentStep === 1">
+    <img  *ngIf="resize.innerWidth > 970" class="pic" src="assets/steps.svg" alt="Configure Vehicle">
+    <div class="right-column">
+      <h1>Optional Data</h1>
+      <img  *ngIf="resize.innerWidth <= 970 && resize.innerWidth > 450" class="pic" src="assets/steps.svg" alt="Configure Vehicle">
+      <div *ngIf="resize.innerWidth <= 450" class="steps-wrapper">
+        <nz-steps
+          [nzCurrent]="currentStep"
+          [nzSize]="resize.innerWidth > 530? 'default' : 'small'"
+          [nzDirection]="'vertical'"
+        >
+          <nz-step nzTitle="Important Data"></nz-step>
+          <nz-step nzTitle="Optional Data"></nz-step>
+          <nz-step nzTitle="Finished"></nz-step>
+        </nz-steps>
+      </div>
+      <form class="form"  [formGroup]="addVehicle" (ngSubmit)="onSubmitSecond()" nz-form>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group>
+              <input
+                nz-input
+                id="type"
+                type="text"
+                formControlName="type"
+                placeholder="Car type"
+              >
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-control *ngIf="resize.innerWidth > 580" nzErrorTip="Year should be bigger than 1000 and under 3000!">
+            <nz-input-group>
+              <nz-date-picker
+                nzMode="year"
+                formControlName="year"
+                id="year"
+                nzPlaceHolder="Year of Build"
+                style="width: 100%"
+              >
+              </nz-date-picker>
+            </nz-input-group>
+          </nz-form-control>
+
+        </nz-form-item>
+
+        <nz-form-item  *ngIf="resize.innerWidth <= 580">
+          <nz-form-control nzErrorTip="Year should be bigger than 1000 and under 3000!">
+            <nz-input-group>
+              <nz-date-picker
+                nzMode="year"
+                formControlName="year"
+                id="year2"
+                nzPlaceHolder="Year of Build"
+                style="width: 100%"
+              >
+              </nz-date-picker>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group>
+              <input
+                nz-input
+                id="color"
+                type="text"
+                formControlName="color"
+                placeholder="Car Color"
+              >
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzAddOnAfter="kg">
+              <input
+                nz-input
+                id="weight"
+                type="number"
+                min="0"
+                step="1"
+                formControlName="weight"
+                placeholder="Weight"
+              >
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <div class="button-flex">
+              <button
+                *ngIf="currentStep ===  1 && !deliverData"
+                id="add-btn"
+                nz-button
+                [nzType]="'primary'"
+                nzShape="round"
+                [disabled]="!addVehicle.valid"
+              >
+                Add Vehicle <i nz-icon nzType="plus"></i>
+              </button>
+
+              <button
+                *ngIf="currentStep === 1 && deliverData"
+                id="edit-btn"
+                nz-button
+                [nzType]="'primary'"
+                nzShape="round"
+                [disabled]="!addVehicle.valid"
+              >
+                Update Vehicle <i nz-icon nzType="edit"></i>
+              </button>
+              <button
+                nz-button
+                nzType="default"
+                nzShape="round"
+                (click)="pre()"
+              >
+                Previous
+              </button>
+            </div>
+
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+
+  <!--    Third Step-->
+  <div class="horizontal-flex" *ngIf="currentStep === 2">
+    <img class="pic" src="assets/done.svg" alt="Log-in Picture">
+    <div class="centerText">
+      <h1>Vehicle {{deliverData? 'Updated' : 'Created'}} <span class="primary-color">successfully</span>!</h1>
+      You will be redirected to overview in {{countdown | number}} seconds ...
+      <div *ngIf="countdown === 0" routerLink="overview">
+        If you won't be redirected click <a routerLink="overview">here</a>!
+      </div>
+    </div>
+
+  </div>
+</div>
+
