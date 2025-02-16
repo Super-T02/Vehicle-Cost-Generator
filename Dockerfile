@@ -11,7 +11,7 @@ WORKDIR /frontend
 COPY frontend/package*.json ./
 
 # Install dependencies
-RUN npm install --omit=dev
+RUN npm install
 
 # Copy the rest of the application code
 COPY frontend/ .
