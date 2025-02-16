@@ -14,18 +14,19 @@ import {
   SingleCostItem,
   SingleCostItemInput
 } from '../../models/cost.model';
-import {backend} from '../../../environments/constants';
+import { ConfigService } from '../guards/config.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ApiService {
 
-  private readonly baseUrl = backend.url;
+  private configService: ConfigService;
   private readonly accessToken = localStorage.getItem('accessToken');
   private readonly refreshToken = localStorage.getItem('refreshToken');
 
-  constructor(private http: HttpClient, private util: UtilService) {
+  constructor(private http: HttpClient, private util: UtilService, private configService_: ConfigService) {
+    this.configService = configService_;
   }
 
   /**
@@ -93,7 +94,7 @@ export class ApiService {
    */
   createUser(user: CreateUserInput): Observable<ApiOutput> {
     return this.http.post<HttpResponse<any>>(
-      `${this.baseUrl}/users`,
+      `${this.configService.backendUrl}/users`,
       user,
       {observe: 'response'}
     ).pipe(
@@ -114,7 +115,7 @@ export class ApiService {
    */
   getUser(username: string): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -136,7 +137,7 @@ export class ApiService {
    */
   getAllUsers(): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users`,
+      `${this.configService.backendUrl}/users`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -159,7 +160,7 @@ export class ApiService {
    */
   deleteUser(username: string): Observable<ApiOutput> {
     return this.http.delete<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -183,7 +184,7 @@ export class ApiService {
    */
   updateUser(username: string, user: CreateUserInput): Observable<ApiOutput> {
     return this.http.put<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}`,
       user,
       {
         headers: this.generateHeader(),
@@ -207,7 +208,7 @@ export class ApiService {
    */
   login(loginData: LoginInput): Observable<ApiOutput> {
   	return this.http.post<HttpResponse<any>>(
-  		`${this.baseUrl}/auth/login`,
+  		`${this.configService.backendUrl}/auth/login`,
   		loginData,
       {observe: 'response'}
   	).pipe(
@@ -228,7 +229,7 @@ export class ApiService {
    */
   getNewToken(refreshToken: String): Observable<ApiOutput> {
     return this.http.post<HttpResponse<any>>(
-      `${this.baseUrl}/auth/token`,
+      `${this.configService.backendUrl}/auth/token`,
       {token: refreshToken},
       {observe: 'response'}
     ).pipe(
@@ -249,7 +250,7 @@ export class ApiService {
    */
   logout(refreshToken: String): Observable<ApiOutput> {
     return this.http.post<HttpResponse<any>>(
-      `${this.baseUrl}/auth/logout`,
+      `${this.configService.backendUrl}/auth/logout`,
       {token: refreshToken},
       {observe: 'response'}
     ).pipe(
@@ -271,7 +272,7 @@ export class ApiService {
    */
   createVehicle(vehicle: VehicleInput, username: string): Observable<any> {
     return this.http.post<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles`,
       vehicle,
       {
         headers: this.generateHeader(),
@@ -295,7 +296,7 @@ export class ApiService {
    */
   getVehicles(username: string): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -319,7 +320,7 @@ export class ApiService {
    */
   getVehicle(username: string, vin: string): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -343,7 +344,7 @@ export class ApiService {
    */
   deleteVehicle(vin: string, username: string): Observable<ApiOutput> {
     return this.http.delete<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -368,7 +369,7 @@ export class ApiService {
    */
   updateVehicle(vin: string, username: string, vehicle: Vehicle): Observable<ApiOutput> {
     return this.http.put<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}`,
       vehicle,
       {
         headers: this.generateHeader(),
@@ -393,7 +394,7 @@ export class ApiService {
    */
   getSingleCosts(username: string, vin: string): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -417,7 +418,7 @@ export class ApiService {
    */
   getRepeatingCosts(username: string, vin: string): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -441,7 +442,7 @@ export class ApiService {
    */
   getFuelCosts(username: string, vin: string): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -466,7 +467,7 @@ export class ApiService {
    */
   createSingleCostItem(item: SingleCostItemInput, username: string, vin: string): Observable<any> {
     return this.http.post<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin}/singleCosts`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin}/singleCosts`,
       item,
       {
         headers: this.generateHeader(),
@@ -492,7 +493,7 @@ export class ApiService {
    */
   createRepeatingCostItem(item: RepeatingCostItemInput, username: string, vin: string): Observable<any> {
     return this.http.post<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin}/repeatingCosts`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin}/repeatingCosts`,
       item,
       {
         headers: this.generateHeader(),
@@ -518,7 +519,7 @@ export class ApiService {
    */
   createFuelCostItem(item: FuelCostItemInput, username: string, vin: string): Observable<any> {
     return this.http.post<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin}/fuelCosts`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin}/fuelCosts`,
       item,
       {
         headers: this.generateHeader(),
@@ -544,7 +545,7 @@ export class ApiService {
    */
   getSingleCost(username: string, vin: string, id: string): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -569,7 +570,7 @@ export class ApiService {
    */
   getRepeatingCost(username: string, vin: string, id: string): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -594,7 +595,7 @@ export class ApiService {
    */
   getFuelCost(username: string, vin: string, id: string): Observable<ApiOutput> {
     return this.http.get<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -620,7 +621,7 @@ export class ApiService {
    */
   updateSingleCostItem(vin: string, username: string, id: string, item: SingleCostItem): Observable<ApiOutput> {
     return this.http.put<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
       item,
       {
         headers: this.generateHeader(),
@@ -647,7 +648,7 @@ export class ApiService {
    */
   updateRepeatingCostItem(vin: string, username: string, id: string, item: RepeatingCostItem): Observable<ApiOutput> {
     return this.http.put<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
       item,
       {
         headers: this.generateHeader(),
@@ -674,7 +675,7 @@ export class ApiService {
    */
   updateFuelCostItem(vin: string, username: string, id: string, item: FuelCostItem): Observable<ApiOutput> {
     return this.http.put<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
       item,
       {
         headers: this.generateHeader(),
@@ -700,7 +701,7 @@ export class ApiService {
    */
   deleteSingleCostItem(vin: string, username: string, id: string): Observable<ApiOutput> {
     return this.http.delete<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/singleCosts/${id}`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -725,7 +726,7 @@ export class ApiService {
    */
   deleteRepeatingCostItem(vin: string, username: string, id: string): Observable<ApiOutput> {
     return this.http.delete<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/repeatingCosts/${id}`,
       {
         headers: this.generateHeader(),
         observe: 'response'
@@ -750,7 +751,7 @@ export class ApiService {
    */
   deleteFuelCostItem(vin: string, username: string, id: string): Observable<ApiOutput> {
     return this.http.delete<HttpResponse<any>>(
-      `${this.baseUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
+      `${this.configService.backendUrl}/users/${username.toLowerCase()}/vehicles/${vin.toUpperCase()}/fuelCosts/${id}`,
       {
         headers: this.generateHeader(),
         observe: 'response'

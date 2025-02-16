@@ -16,7 +16,3 @@ export const colors = {
   repeatingCosts: '#FF4D4F',
   fuelCosts: '#FF69B4'
 };
-
-export const backend = {
-  url: 'http://localhost:3000/api',
-};
