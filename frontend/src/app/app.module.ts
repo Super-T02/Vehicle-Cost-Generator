@@ -1,4 +1,4 @@
-import {ErrorHandler, NgModule} from '@angular/core';
+import {ErrorHandler, NgModule, APP_INITIALIZER} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -23,7 +23,12 @@ import {SharedModule} from './shared/shared.module';
 import {NzAlertModule} from 'ng-zorro-antd/alert';
 import {JwtHelperService, JwtModule} from '@auth0/angular-jwt';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import { ConfigService } from './core/guards/config.service';
 registerLocaleData(de);
+
+export function initializeApp(configService: ConfigService): () => Promise<void> {
+  return () => configService.loadConfig();
+}
 
 @NgModule({
 	declarations: [
@@ -57,6 +62,7 @@ registerLocaleData(de);
     })
   ],
 	providers: [
+    {provide: APP_INITIALIZER, useFactory: initializeApp, deps: [ConfigService], multi: true},
     { provide: NZ_I18N, useValue: de_DE },
     {provide: ErrorHandler, useClass: AppComponent},
     {provide: JwtHelperService},
@@ -67,3 +73,4 @@ registerLocaleData(de);
 })
 export class AppModule {
 }
+

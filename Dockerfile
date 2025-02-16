@@ -42,4 +42,4 @@ COPY --from=build /frontend/dist /frontend/dist
 EXPOSE 3000
 
 # Start the backend server
-CMD ["npm", "start"]
+CMD ["/app/start.sh"]
