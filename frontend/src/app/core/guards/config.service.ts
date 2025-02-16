@@ -11,10 +11,13 @@ export class ConfigService {
 
   loadConfig(): Promise<void> {
     return this.http
-      .get('/assets/config.json')
+      .get('./assets/config.json')
       .toPromise()
       .then((data) => {
         this.config = data;
+      })
+      .catch((error) => {
+        console.error('Error loading config file', error);
       });
   }
 
