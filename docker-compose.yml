@@ -1,15 +1,12 @@
-version: '3.8'
-
 services:
   backend:
     build:
       context: .
       dockerfile: Dockerfile
+    # image: tomithebest/vehicle-cost-calculator:latest
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/frontend
-      - /frontend/node_modules
-      - ./backend:/app
-      - /app/node_modules
       - ./backend/databases:/app/databases # Persistent volume for NeDB database files
+    # environment:
+      # - BACKEND_URL=http://<DEVICE-IP>:3000/api

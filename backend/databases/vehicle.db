@@ -1,5 +1,5 @@
+{"username":"test","vin":"123123","name":"12312","year":"2020-02-13T16:29:30.660Z","make":"asdf","model":"123","type":"234","color":"123","weight":12,"license":"asdf","_id":"Y6Z679cHmQtrP3v2"}
 {"username":"example user","vin":"EXAMPLEVIN1","name":"Example Car","year":"2010-12-12T10:34:07.773Z","make":"BMW","model":"116i","type":"Little Car","color":"Black","weight":1750,"license":"EX-AM-01","_id":"glA3XWYErx1zDoQ9"}
 {"username":"tom","vin":"WBAUK31050VM63456ASDFASDF","name":"Test Car","year":null,"make":"BMW","model":null,"type":null,"color":null,"weight":null,"license":null,"_id":"sHZ4leFv9qn9RW3Q"}
 {"username":"tom","vin":"WBAUK31050VM63456","name":"Toms Car","year":"Tue Dec 08 2020 23:04:41 GMT+0100 (Mitteleuropäische Normalzeit)","make":"BMW","model":"116i","type":"Little Car","color":"Black","weight":1751,"license":"TÜ-T-7502","_id":"vfc8q4MlyMXzaqMX"}
 {"username":"testuser","vin":"MEINE_VIN","name":"Test-12","year":null,"make":"Test","model":null,"type":null,"color":null,"weight":null,"license":null,"_id":"wcuCEZBM9TD2gEI6"}
-{"username":"test","vin":"123123","name":"12312","year":"2020-02-13T16:29:30.660Z","make":"asdf","model":"123","type":"234","color":"123","weight":12,"license":"asdf","_id":"Y6Z679cHmQtrP3v2"}

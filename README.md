@@ -31,8 +31,22 @@ a table of all users of VCC. He is able to delete them and edit their role and e
 - Firefox ESR
 - not IE 11
 
+## Installation - Docker (Prod)
 
-## Installation
+This application provides already a working docker image at docker hub. Simply run:
+
+```sh
+docker pull tomithebest/vehicle-cost-calculator:latest
+```
+
+or 
+
+```sh
+cd <Working Dir>
+docker-compose up
+```
+
+## Installation - On Device (Dev)
 
 1. At first unzip the .zip archive. 
 2. Then go into the frontend folder.
@@ -94,7 +108,7 @@ OpenApi.
 ### 1. Frontend
 
 - SVGs on the page from: [unDraw](https://undraw.co/)
-- [Angular 12](https://angular.io/)
+- [Angular 14](https://angular.io/)
 - Design with [NG-Zorro](https://ng.ant.design/docs/introduce/en)
 - For the token management [auth0/angular-jwt](https://www.npmjs.com/package/@auth0/angular-jwt)
 - For the charts [ngx-echarts](https://xieziyu.github.io/ngx-echarts/api-doc/overview.html) 

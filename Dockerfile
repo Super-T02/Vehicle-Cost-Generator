@@ -1,5 +1,5 @@
-# Use a compatible Node.js version for Angular 12
-FROM node:14
+# Stage 1: Build Stage
+FROM node:16-slim AS build
 
 # Create a directory for the frontend
 RUN mkdir /frontend
@@ -11,13 +11,17 @@ WORKDIR /frontend
 COPY frontend/package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --omit=dev
 
 # Copy the rest of the application code
 COPY frontend/ .
 
 # Build the Angular application
 RUN npm run build
+
+
+# Stage 2: Production Stage
+FROM node:16-slim
 
 # Set the working directory
 WORKDIR /app
@@ -26,13 +30,16 @@ WORKDIR /app
 COPY backend/package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --omit=dev
 
 # Copy the rest of the application code
 COPY backend/ .
+
+# Copy the built frontend from the build stage
+COPY --from=build /frontend/dist /frontend/dist
 
 # Expose the port the backend runs on
 EXPOSE 3000
 
 # Start the backend server
-CMD ["npm", "start"]
+CMD ["/app/start.sh"]
