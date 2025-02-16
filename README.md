@@ -1,7 +1,7 @@
 > IMPORTANT
 > THIS PROJECT IS NOT LONGER MAINTAINED. THERE WILL BE NO NEW VERSION!
 
-# Web-Engineering-Project - Vehicle Cost Calculator
+# Web-Engineering-Project - Vehicle Cost Calculator [![Build and Push Multi-Arch Docker Image](https://github.com/Super-T02/Vehicle-Cost-Generator/actions/workflows/docker-build.yml/badge.svg)](https://github.com/Super-T02/Vehicle-Cost-Generator/actions/workflows/docker-build.yml)
 
 ## Functionality
 
